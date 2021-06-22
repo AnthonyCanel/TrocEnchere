@@ -5,7 +5,7 @@ import fr.eni.bll.BusinessException;
 import java.time.LocalDate;
 import java.util.List;
 
-interface DAO<T>{
+public interface DAO<T>{
 
     List<T> selectAll() throws BusinessException, DALException;
     T selectById(int id);
