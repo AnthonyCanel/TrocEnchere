@@ -17,7 +17,7 @@ public abstract class DAOFactory {
     }
 
     public static Dao getRetraitDAO(){
-        return new UtilisateurDAOJdbcImpl();
+        return new RetraitDAOJdbcImpl();
     }
 
     public static Dao getUtilisateurDAO(){
