@@ -1,10 +1,12 @@
 package fr.eni.dal;
 
+import fr.eni.bll.BusinessException;
+
 import java.util.List;
 
 interface Dao<T>{
 
-    List<T> selectAll();
+    List<T> selectAll() throws BusinessException;
     T selectById(T id);
     void insert(T data);
     void update(T data);
