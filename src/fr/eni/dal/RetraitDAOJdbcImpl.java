@@ -34,7 +34,6 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
             rs.close();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-            BusinessException businessException = new BusinessException();
             businessException.ajouterErreur(CodesResultatDAL.LECTURE_RETRAIT_ECHEC);
         }
         return listeRetraits;
@@ -56,17 +55,20 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-            BusinessException businessException = new BusinessException();
             businessException.ajouterErreur(CodesResultatDAL.LECTURE_RETRAIT_ECHEC);
             throw businessException;
         }
         return null;
     }
 
+    /**
+     * Insertion de l'objet Retrait dans la table RETRAITS
+     * @param retrait
+     * @throws BusinessException
+     */
     @Override
     public void insert(Retrait retrait) throws BusinessException {
         if(retrait == null){
-            BusinessException businessException = new BusinessException();
             businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
             throw businessException;
         }
@@ -78,13 +80,12 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
             pstt.executeUpdate();
             ResultSet rs = pstt.getGeneratedKeys();
             if(rs.next()){
-                retrait.setId(rs.getInt(1)); //TODO à vérifier
+                retrait.setId(rs.getInt(1));
             }
             rs.close();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-            BusinessException businessException = new BusinessException();
-            businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+            businessException.ajouterErreur(CodesResultatDAL.INSERT_RETRAIT_ECHEC);
             throw businessException;
         }
     }
@@ -101,19 +102,24 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
 
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-            BusinessException businessException = new BusinessException();
-            businessException.ajouterErreur(CodesResultatDAL.UPDATE_OBJET_ECHEC);
+            businessException.ajouterErreur(CodesResultatDAL.UPDATE_RETRAIT_ECHEC);
             throw businessException;
         }
 
     }
 
+    /**
+     * Supprimer un lieu de retrait
+     * @param id
+     * @throws BusinessException
+     */
     @Override
     public void delete(int id) throws BusinessException {
         try (Connection cnx = ConnectionProvider.getConnection();
             PreparedStatement pstt = cnx.prepareStatement(DELETE)) {
             pstt.setInt(1,id);
-            Retrait retrait = selectById(id);
+//            Retrait retrait = selectById(id);
+
 //            List<Article> listeArticles = articleDao.getByRetrait(retrait);
 //            for(Article article: listeArticles){
 //                Article.setLieuRetrait = null;
@@ -122,8 +128,7 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
 
         } catch (Exception e) {
             e.printStackTrace();
-            BusinessException businessException = new BusinessException();
-            businessException.ajouterErreur(CodesResultatDAL.DELETE_OBJET_ECHEC);
+            businessException.ajouterErreur(CodesResultatDAL.DELETE_RETRAIT_ECHEC);
             throw businessException;
         }
 

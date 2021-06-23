@@ -17,6 +17,7 @@ public class CodesResultatBLL {
      * Echec suite à la vérification de l'adresse de Utilisateur
      */
     public static final int REGLE_UTILISATEURS_ADRESSE_ERREUR = 20003;
+
     /**
      * Echec suite à import des données à la bll
      */
