@@ -6,6 +6,9 @@ import fr.eni.dal.DAO;
 import fr.eni.dal.DAOFactory;
 import fr.eni.BusinessException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RetraitManager {
     private DAO retraitDao;
     private static BusinessException businessException = new BusinessException();
@@ -42,6 +45,12 @@ public class RetraitManager {
         Retrait retrait = (Retrait) retraitDao.selectById(id);
         return retrait;
     }
+
+    /**
+     * Modifier le lieu retrait
+     * @param retrait
+     * @throws BusinessException
+     */
     public void modifierRetrait(Retrait retrait) throws BusinessException {
         validerAdresse(retrait,  businessException);
         if(!businessException.hasErreurs()){
@@ -49,12 +58,24 @@ public class RetraitManager {
         }
     }
 
+    public List<Retrait> trouverTous(){
+        List<Retrait> listeRetraits = new ArrayList<>();
+        try {
+            listeRetraits = retraitDao.selectAll();
+        } catch (BusinessException e) {
+            e.printStackTrace();
+        } catch (DALException e) {
+            e.printStackTrace();
+        }
+        return listeRetraits;
+    }
+
     /**
      * Méthode pour vérifier que les champs sont remplis car obligatoires
      * @param retrait
      * @param bE
      */
-    private void validerAdresse(Retrait retrait, BusinessException bE){
+    public void validerAdresse(Retrait retrait, BusinessException bE){
         if(retrait.getRue() == null || retrait.getCodePostal() == null || retrait.getVille() == null ||
             retrait.getRue().trim().equals("") || retrait.getCodePostal().trim().equals("") ||
             retrait.getVille().trim().equals("")){
