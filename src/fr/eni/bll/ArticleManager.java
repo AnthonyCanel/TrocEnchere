@@ -1,7 +1,7 @@
 package fr.eni.bll;
 
+import fr.eni.BusinessException;
 import fr.eni.bo.Article;
-import fr.eni.dal.DALException;
 import fr.eni.dal.DAO;
 import fr.eni.dal.DAOFactory;
 
@@ -29,13 +29,11 @@ public class ArticleManager {
     public List<Article> affichageArticlesConnexion(String utilisateur, String motCle, String categorie, String achatOuVente){
         return null;
     }
-    public List<Article>affichageArticles(String categorie, String motCle){
+    public List<Article> affichageArticles(String categorie, String motCle){
         List<Article> listeArticle = new ArrayList<>();
         try {
             listeArticle = articleDao.selectAll();
         } catch (BusinessException e) {
-            e.printStackTrace();
-        } catch (DALException e) {
             e.printStackTrace();
         }
         return listeArticle;
