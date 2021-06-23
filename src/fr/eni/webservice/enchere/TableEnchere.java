@@ -1,4 +1,4 @@
-package fr.eni;
+package fr.eni.webservice.enchere;
 
 
 import fr.eni.bll.BusinessException;
@@ -26,7 +26,7 @@ public class TableEnchere {
     }
 
     @GET
-    public List<Enchere> getVoitures() {
+    public List<Enchere> getListEncheres() {
         return listEncheres;
     }
 
