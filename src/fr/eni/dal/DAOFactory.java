@@ -4,23 +4,23 @@ import fr.eni.bo.Utilisateur;
 
 public abstract class DAOFactory {
 
-    public static Dao getArticleDAO(){
-        return new ArticleDAOJdbcImpl();
-    }
+//    public static DAO getArticleDAO(){
+//        return new ArticleDAOJdbcImpl();
+//    }
+//
+//    public static DAO getCategorieDAO(){
+//        return new CategorieDAOJdbcImpl();
+//    }
+//
+//    public static DAO getEnchereDAO(){
+//        return new EnchereDAOJdbcImpl();
+//    }
 
-    public static Dao getCategorieDAO(){
-        return new CategorieDAOJdbcImpl();
-    }
-
-    public static Dao getEnchereDAO(){
-        return new EnchereDAOJdbcImpl();
-    }
-
-    public static Dao getRetraitDAO(){
+    public static DAO getRetraitDAO(){
         return new RetraitDAOJdbcImpl();
     }
 
-    public static Dao getUtilisateurDAO(){
+    public static DAO getUtilisateurDAO(){
         return new UtilisateurDAOJdbcImpl();
     }
 }
