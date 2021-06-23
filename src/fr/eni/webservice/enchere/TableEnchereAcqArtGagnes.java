@@ -1,48 +1,35 @@
 package fr.eni.webservice.enchere;
 
-import fr.eni.bll.BusinessException;
-import fr.eni.bll.EnchereManager;
+import fr.eni.BusinessException;
 import fr.eni.bo.Enchere;
-
+import fr.eni.dal.EnchereDAOJdbcImpl;
+import fr.eni.webservice.CodeResultIhm;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//package fr.eni.webservice.enchere;
-
-
-        import fr.eni.bll.BusinessException;
-        import fr.eni.bll.EnchereManager;
-        import fr.eni.bo.Enchere;
-        import fr.eni.dal.DALException;
-import fr.eni.dal.EnchereDAOJdbcImpl;
-
-import javax.ws.rs.*;
-        import java.util.ArrayList;
-        import java.util.List;
+@Path("/encheres")
+public class TableEnchereAcqArtGagnes {
+    private static BusinessException businessException = new BusinessException();
+    private static List<Enchere> listEncheres = new ArrayList<>();
 
 
-
-//@Path("/encheres")
-//public class TableEnchereAcqArtGagnes {
-//
-//    private static List<Enchere> listEncheres = new ArrayList<>();
-//    EnchereDAOJdbcImpl e =null;
-//
-//    {
-//        try {
-//            e = new EnchereDAOJdbcImpl();
-//            listEncheres = e.selectByAcqEtArtVendu();
-//        } catch ( BusinessException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
+//todo ajouer l'acquereur lors que la session et faite
 //    @GET
-//    public List<Enchere> getVoitures() {
+//    public List<Enchere> getEncheresGagnees() {
+//
+//        EnchereDAOJdbcImpl eDJI =null;
+//
+//        try {
+//            eDJI = new EnchereDAOJdbcImpl();
+//            listEncheres = eDJI.selectByAcqEtArtVendu();
+//        } catch ( Exception e) {
+//            e.printStackTrace();
+//            businessException.ajouterErreur(CodeResultIhm.IMPORT_WEBSERVICE_TAB_ENCHERE_ARTICLES_GAGNES);
+//        }
+//
 //        return listEncheres;
 //    }
-//
-//}
+
+}
