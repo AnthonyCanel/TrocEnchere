@@ -45,4 +45,13 @@ public class CodesResultatDAL {
      * Erreur à la modification
      */
     public static final int UPDATE_OBJET_ECHEC = 10008;
+    /**
+     * Lors de l'import de la table enchere dans la dal
+     */
+    public static final int IMPORT_DAL_ENCHERE = 10050;
+    /**
+     * Lors de l'import des objets gagnés par l'utilisateur de la table enchere dans la dal
+     */
+    public static final int IMPORT_DAL_ENCHERE_GAGNE = 10051;
+
 }
