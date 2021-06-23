@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleDAOJdbcImpl implements DAO<Article>{
-
+    BusinessException businessException = new BusinessException();
     private static final String SELECT_ALL = "SELECT TOP(6) no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, photo, vues,\n" +
             "no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur\n" +
             "FROM V_ARTICLES_CATEGORIES_UTILISATEURS";
@@ -78,7 +78,6 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
 
         } catch (Exception e) {
           e.printStackTrace();
-          BusinessException businessException = new BusinessException();
           businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTES_ECHEC);
           throw businessException;
         }
@@ -98,7 +97,6 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
     @Override
     public void insert(Article article) throws BusinessException {
      if(article == null){
-         BusinessException businessException = new BusinessException();
          businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
          throw businessException;
      }
@@ -136,7 +134,6 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
         }
     } catch (Exception e) {
         e.printStackTrace();
-        BusinessException businessException = new BusinessException();
         businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
         throw businessException;
     }
@@ -164,7 +161,6 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
             pstmt.executeUpdate();
         } catch (SQLException e) {
          e.printStackTrace();
-         BusinessException businessException = new BusinessException();
          businessException.ajouterErreur(CodesResultatDAL.UPDATE_OBJET_ECHEC);
          throw businessException;
         }
