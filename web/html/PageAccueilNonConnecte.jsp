@@ -1,8 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="fr">
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
@@ -12,12 +13,12 @@
 </head>
 <body class="container-fluid">
 <div class="row">
-    <div class="d-flex justify-content-around">
+    <div class="d-flex justify-content-around">     
         <div class="d-flex">
-            <h1>ENI-Encheres</h1>
+            <h1>ENI-Enchères</h1>
         </div>
         <div class="d-flex">
-            <a href="PageConnexion.jsp">S'inscrire - Se connecter</a>
+            <a href="html\PageConnexion.jsp">S'inscrire - Se connecter</a>
         </div>
     </div>
 </div>
