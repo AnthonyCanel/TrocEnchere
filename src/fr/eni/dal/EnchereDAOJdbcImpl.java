@@ -10,10 +10,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnchereDAOJdbcImpl implements DAO {
+public class EnchereDAOJdbcImpl implements DAO<Enchere> {
 
     private static final String SELECTALL = "SELECT * FROM ENCHERES";
-
+    private static final String SELECT_BY_ACQ_ET_ART_VENDU ="SELECT * FROM ENCHERES WHERE (no_acquereur=? and etat_enchere='Vendu')";
 
     @Override
     public List selectAll() throws DALException{
@@ -51,19 +51,55 @@ public class EnchereDAOJdbcImpl implements DAO {
     }
 
     @Override
-    public Object selectById(int id) {
+    public Enchere selectById(int id) {
         return null;
     }
 
     @Override
-    public void insert(Object objet) {
+    public void insert(Enchere objet) {
 
     }
 
     @Override
-    public void update(Object objet) {
+    public void update(Enchere objet) {
 
     }
+
+    /**
+     *
+     * @param acquereur
+     * @return List of encheres that user win. check no_user and etat_enchere='Vendu'
+     * @throws DALException
+     */
+    public List<Enchere> selectByAcqEtArtVendu(int acquereur) throws DALException {
+        List<Enchere> listEnchere = new ArrayList<>();
+
+        try (
+                Connection cnx = ConnectionProvider.getConnection()
+
+                )
+        {
+            PreparedStatement pst = cnx.prepareStatement(SELECT_BY_ACQ_ET_ART_VENDU);
+            pst.setInt(1,acquereur );
+            pst.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DALException("Import des encheres gagnées par utilisateur impossible");
+        }
+
+        return listEnchere;
+    }
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public void delete(int id) {
