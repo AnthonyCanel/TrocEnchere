@@ -13,14 +13,13 @@ import java.util.List;
 public class EnchereManager {
     private DAO generiqueDao;
 
+    /**
+     * return List of enchere 's table
+     * @throws BusinessException
+     */
     public EnchereManager() throws BusinessException {
 
-        try {
-            this.generiqueDao = DAOFactory.getEnchereDAO();
-        } catch (DALException e) {
-            e.printStackTrace();
-            throw new BusinessException("création de l'enchere Manager impossible");
-        }
+        this.generiqueDao = DAOFactory.getEnchereDAO();
     }
 
     public List<Enchere> importEncheres() throws BusinessException {
@@ -28,20 +27,10 @@ public class EnchereManager {
 
         try {
             listEnchere = generiqueDao.selectAll();
-        } catch (DALException e) {
+        } catch (DALException | fr.eni.BusinessException e) {
             e.printStackTrace();
             throw new BusinessException("Import de la table Enchere impossible dans la businessException");
         }
-//        A supprimer a la fin
-//        for (Enchere e : listEnchere
-//        ) {
-//            System.out.println(
-//                    e.getDateEnchere() + "\n" +
-//                    e.getEtatEnchere() + "\n" +
-//                    e.getMontantEnchere() + "\n" +
-//                    e.getNoArticle() + "\n" +
-//                    e.getDateEnchere());
-//        }
 
         return listEnchere;
 
