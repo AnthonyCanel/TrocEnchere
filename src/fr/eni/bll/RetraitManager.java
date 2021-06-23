@@ -1,7 +1,6 @@
 package fr.eni.bll;
 
 import fr.eni.bo.Retrait;
-import fr.eni.dal.DALException;
 import fr.eni.dal.DAO;
 import fr.eni.dal.DAOFactory;
 import fr.eni.BusinessException;
@@ -38,10 +37,9 @@ public class RetraitManager {
      * Recherche par Id retrait
      * @param id
      * @return objet Retrait
-     * @throws DALException
      * @throws BusinessException
      */
-    public Retrait rechercheParCle(int id) throws DALException, BusinessException {
+    public Retrait rechercheParCle(int id) throws BusinessException {
         Retrait retrait = (Retrait) retraitDao.selectById(id);
         return retrait;
     }
@@ -56,6 +54,9 @@ public class RetraitManager {
         if(!businessException.hasErreurs()){
             retraitDao.update(retrait);
         }
+        else{
+            throw businessException;
+        }
     }
 
     public List<Retrait> trouverTous(){
@@ -63,8 +64,6 @@ public class RetraitManager {
         try {
             listeRetraits = retraitDao.selectAll();
         } catch (BusinessException e) {
-            e.printStackTrace();
-        } catch (DALException e) {
             e.printStackTrace();
         }
         return listeRetraits;
