@@ -1,6 +1,6 @@
 package fr.eni.dal;
 
-import fr.eni.bll.BusinessException;
+import fr.eni.BusinessException;
 import fr.eni.bo.Utilisateur;
 
 import java.sql.*;
@@ -34,7 +34,12 @@ public class UtilisateurDAOJdbcImpl implements DAO{
                 String villeUti = rs.getString("ville");
                 String pwdUti = rs.getString("mot_de_passe");
                 int creditUti = rs.getInt("credit");
-                Boolean adminUti = rs.getBoolean("adminisitrateur");
+                boolean adminUti = true;
+                if(rs.getByte("administrateur")==0){
+                    adminUti = false;
+                }
+
+//                Boolean adminUti = rs.getByte("adminisitrateur");
                 //Création de l'objet
                 Utilisateur util = new Utilisateur(idUti,pseudoUti,nomUti, prenomUti,emailUti, telUti, rueUti, codePostalUti, villeUti, pwdUti, creditUti, adminUti);
                 listUtilisateurs.add(util);
