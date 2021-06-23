@@ -1,6 +1,6 @@
 package fr.eni.dal;
 
-import fr.eni.bll.BusinessException;
+import fr.eni.BusinessException;
 import fr.eni.bo.Article;
 import fr.eni.bo.Categorie;
 import fr.eni.bo.Utilisateur;
@@ -11,16 +11,21 @@ import java.util.List;
 
 public class ArticleDAOJdbcImpl implements DAO<Article>{
 
-    private static final String SELECT_ALL = "SELECT TOP(6) A.no_article, A.nom_article, A.description, A.date_debut_encheres, A.date_fin_encheres, A.prix_initial, A.prix_vente, A.etat_article, A.photo, A.vues,\n" +
-            "C.no_categorie, C.libelle, U.no_utilisateur, U.pseudo, U.nom, U.prenom, U.email, U.telephone, U.rue, U.code_postal, U.ville, U.mot_de_passe, U.credit, U.administrateur\n" +
+    private static final String SELECT_ALL = "SELECT TOP(6) no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, photo, vues,\n" +
+            "no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur\n" +
             "FROM V_ARTICLES_CATEGORIES_UTILISATEURS";
-//    private static final String SELECT_BY_ID = "eieeffezq";
+//  private static final String SELECT_BY_ID = "eieeffezq";
     private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, no_utilisateur, no_categorie) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_ARTICLE = "UPDATE ARTICLES SET no_article = ?, nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, etat_article = ?, photo = ?, no_utilisateur = ?, no_categorie = ?, vues = ? where id=?";
     private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES WHERE id=?";
 
+    /**
+     * Récupère toute les données de la table article
+     * @return
+     * @throws BusinessException
+     */
     @Override
-    public List<Article> selectAll() throws BusinessException{
+    public List<Article> selectAll() throws BusinessException {
         List<Article> listeArticle = new ArrayList<>();
         List<Utilisateur> listeUtilisateur = new ArrayList<>();
         List<Categorie> listeCategorie = new ArrayList<>();
@@ -31,18 +36,22 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
             while (rs.next()) {
                 if(rs.getInt(1) != utilisateurEnCours.getNoUtilisateur()){
                     utilisateurEnCours = new Utilisateur();
-                    utilisateurEnCours.setNoUtilisateur(rs.getInt(1));
-                    utilisateurEnCours.setPseudo(rs.getString(2).toString());
-                    utilisateurEnCours.setPrenom(rs.getString(3).toString());
-                    utilisateurEnCours.setNom(rs.getString(4).toString());
-                    utilisateurEnCours.setEmail(rs.getString(5).toString());
-                    utilisateurEnCours.setTelephone(rs.getString(6).toString());
-                    utilisateurEnCours.setRue(rs.getString(7).toString());
-                    utilisateurEnCours.setCodePostal(rs.getString(8).toString());
-                    utilisateurEnCours.setVille(rs.getString(9).toString());
-                    utilisateurEnCours.setMotDePasse(rs.getString(10).toString());
-                    utilisateurEnCours.setCredit(rs.getInt(11));
-                    utilisateurEnCours.setAdmin(rs.getBoolean(12));
+                    utilisateurEnCours.setNoUtilisateur(rs.getInt(13));
+                    utilisateurEnCours.setPseudo(rs.getString(14).toString());
+                    utilisateurEnCours.setNom(rs.getString(15).toString());
+                    utilisateurEnCours.setPrenom(rs.getString(16).toString());
+                    utilisateurEnCours.setEmail(rs.getString(17).toString());
+                    utilisateurEnCours.setTelephone(rs.getString(18).toString());
+                    utilisateurEnCours.setRue(rs.getString(19).toString());
+                    utilisateurEnCours.setCodePostal(rs.getString(20).toString());
+                    utilisateurEnCours.setVille(rs.getString(21).toString());
+                    utilisateurEnCours.setMotDePasse(rs.getString(22).toString());
+                    utilisateurEnCours.setCredit(rs.getInt(23));
+                    boolean admin = true;
+                    if (rs.getByte(24) == 0){
+                        admin = false;
+                    }
+                    utilisateurEnCours.setAdmin(admin);
                     listeUtilisateur.add(utilisateurEnCours);
                 }
                 Categorie categorieEnCours = new Categorie();
@@ -68,10 +77,10 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
             }
 
         } catch (Exception e) {
-//          e.printStackTrace();
-//          BusinessException businessException = new BusinessException();
-//          businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTES_ECHEC);
-//          throw businessException;
+          e.printStackTrace();
+          BusinessException businessException = new BusinessException();
+          businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTES_ECHEC);
+          throw businessException;
         }
         return listeArticle;
     }
@@ -81,13 +90,18 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
         return null;
     }
 
+    /**
+     * Insertion d'article dans la table article
+     * @param article
+     * @throws BusinessException
+     */
     @Override
     public void insert(Article article) throws BusinessException {
-//     if(Article == null){
-//         BusinessException businessException = new BusinessException();
-//         businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
-//         throw businessException;
-//     }
+     if(article == null){
+         BusinessException businessException = new BusinessException();
+         businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+         throw businessException;
+     }
 
         try(Connection cnx = ConnectionProvider.getConnection()){
             try{
@@ -120,14 +134,19 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
             cnx.rollback();
             throw e;
         }
-} catch (Exception e) {
-//    e.printStackTrace();
-//    BusinessException businessException = new BusinessException();
-//    businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
-//    throw businessException;
+    } catch (Exception e) {
+        e.printStackTrace();
+        BusinessException businessException = new BusinessException();
+        businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+        throw businessException;
     }
     }
 
+    /**
+     * Update tout les paramètre d'un article
+     * @param article
+     * @throws BusinessException
+     */
     @Override
     public void update(Article article) throws BusinessException{
         try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -144,13 +163,17 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
             pstmt.setInt(10, article.getCategorie().getNoCategorie());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-//         e.printStackTrace();
-//         BusinessException businessException = new BusinessException();
-//         businessException.ajouterErreur(CodesResultatDAL.DECOCHE_ARTICLE_ERREUR);
-//         throw businessException;
+         e.printStackTrace();
+         BusinessException businessException = new BusinessException();
+         businessException.ajouterErreur(CodesResultatDAL.UPDATE_OBJET_ECHEC);
+         throw businessException;
         }
     }
-
+    /**
+     * Supprime un article selon son id
+     * @param id
+     * @throws BusinessException
+     */
     @Override
     public void delete(int id) throws BusinessException {
         try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -158,10 +181,10 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-//         e.printStackTrace();
-//         BusinessException businessException = new BusinessException();
-//         businessException.ajouterErreur(CodesResultatDAL.SUPPRESSION_LISTE_ERREUR);
-//         throw businessException;
+         e.printStackTrace();
+         BusinessException businessException = new BusinessException();
+         businessException.ajouterErreur(CodesResultatDAL.SUPPRESSION_LISTE_ERREUR);
+         throw businessException;
      }
     }
 }

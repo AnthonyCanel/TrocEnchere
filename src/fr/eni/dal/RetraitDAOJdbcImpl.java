@@ -18,7 +18,7 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
     private static final String DELETE = "DELETE RETRAITS WHERE no_article = ?";
 
     @Override
-    public List<Retrait> selectAll() throws  DALException {
+    public List<Retrait> selectAll() throws BusinessException {
         List<Retrait> listeRetraits = new ArrayList<>();
         try (Connection cnx = ConnectionProvider.getConnection();
              Statement stt = cnx.createStatement()) {
@@ -114,10 +114,10 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
             PreparedStatement pstt = cnx.prepareStatement(DELETE)) {
             pstt.setInt(1,id);
             Retrait retrait = selectById(id);
-            List<Article> listeArticles = articleDao.getByRetrait(retrait);
-            for(Article article: listeArticles){
-                Article.setLieuRetrait = null;
-            }
+//            List<Article> listeArticles = articleDao.getByRetrait(retrait);
+//            for(Article article: listeArticles){
+//                Article.setLieuRetrait = null;
+//            }
             pstt.executeUpdate();
 
         } catch (Exception e) {
