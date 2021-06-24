@@ -42,7 +42,8 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <input type="submit" name="Connexion?Connexion=true" value="Connexion"/>
+                        <a href="${pageContext.request.contextPath}/PagesListeEncheresConnecte"><input type="submit" name="Connexion?Connexion=true" value="Connexion"/></a>
+
         <%--                <button type="button" name="Connexion?Connexion=true" class="btn btn-outline-secondary btn-lg mb-3">--%>
         <%--                    Connexion</button>--%>
                     </div>
@@ -55,10 +56,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <button type="button" name="CreerUnCompte?CreerUnCompte=true" class="btn btn-outline-secondary btn-lg mb-3"
-                            style="width: 400px">Créer un
-                    compte
-                    </button>
+                    <a href="${pageContext.request.contextPath}/PageCreerCompte"><button type="button" name="CreerUnCompte?CreerUnCompte=true" class="btn btn-outline-secondary btn-lg mb-3" style="width: 400px">Créer un compte</button></a>
                 </div>
             </form>
         </div>
