@@ -78,7 +78,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
 
         } catch (Exception e) {
           e.printStackTrace();
-          businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTES_ECHEC);
+          businessException.ajouterErreur(CodesResultatDAL.LECTURE_ARTICLE_ECHEC);
           throw businessException;
         }
         return listeArticle;
@@ -134,13 +134,13 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
         }
     } catch (Exception e) {
         e.printStackTrace();
-        businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+        businessException.ajouterErreur(CodesResultatDAL.INSERT_ARTICLE_ECHEC);
         throw businessException;
     }
     }
 
     /**
-     * Update tout les paramètre d'un article
+     * Update tous les paramètres d'un article
      * @param article
      * @throws BusinessException
      */
@@ -161,7 +161,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
             pstmt.executeUpdate();
         } catch (SQLException e) {
          e.printStackTrace();
-         businessException.ajouterErreur(CodesResultatDAL.UPDATE_OBJET_ECHEC);
+         businessException.ajouterErreur(CodesResultatDAL.UPDATE_ARTICLE_ECHEC);
          throw businessException;
         }
     }
@@ -179,7 +179,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
         } catch (SQLException e) {
          e.printStackTrace();
          BusinessException businessException = new BusinessException();
-         businessException.ajouterErreur(CodesResultatDAL.SUPPRESSION_LISTE_ERREUR);
+         businessException.ajouterErreur(CodesResultatDAL.DELETE_ARTICLE_ERREUR);
          throw businessException;
      }
     }

@@ -16,7 +16,8 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
     private String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
     private String INSERT= "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
     private String UPDATE_DELETE= "UPDATE UTILISATEURS SET pseudo = 'compte supprimé', nom = 'compte supprimé', prenom = 'compte supprimé', email = 'compte supprimé', telephone = 'compte supprimé', rue = 'compte supprimé',code_postal = 'compte supprimé', mot_de_passe='compte supprimé', credit = 0 WHERE no_utilisateur = ?";
-
+    private String SELECTBYMAIL= "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email = ?";
+    private String SELECTBYPSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ?";
     @Override
     public List<Utilisateur> selectAll() throws BusinessException{
         List<Utilisateur> listUtilisateurs = new ArrayList<>();
@@ -179,4 +180,39 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
         }
     }
 
+    @Override
+    public boolean verifMail(String email) throws BusinessException {
+        boolean unique = false;
+        try (Connection cnx = ConnectionProvider.getConnection();
+             PreparedStatement pstt = cnx.prepareStatement(SELECTBYMAIL)) {
+            pstt.setString(1,email);
+            ResultSet rs = pstt.executeQuery();
+            if(rs.next()){
+                unique = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            businessException.ajouterErreur(CodesResultatDAL.EMAIL_UTILISATEUR_ECHEC);
+            throw businessException;
+        }
+        return unique;
+    }
+
+    @Override
+    public boolean verifUtilisateur(String pseudo) throws BusinessException {
+        boolean unique = false;
+        try (Connection cnx = ConnectionProvider.getConnection();
+             PreparedStatement pstt = cnx.prepareStatement(SELECTBYPSEUDO)) {
+            pstt.setString(1,pseudo);
+            ResultSet rs = pstt.executeQuery();
+            if(rs.next()){
+                unique = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            businessException.ajouterErreur(CodesResultatDAL.PSEUDO_UTILISATEUR_ECHEC);
+            throw businessException;
+        }
+        return unique;
+    }
 }

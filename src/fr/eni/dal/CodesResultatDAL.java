@@ -27,6 +27,7 @@ public class CodesResultatDAL {
      * Echec à la suppression d'un lieu de retrait
      */
     public static final int DELETE_RETRAIT_ECHEC = 10005;
+
     /**
      * Echec lors de la lecture dans la table Utilisateurs
      */
@@ -43,6 +44,12 @@ public class CodesResultatDAL {
      * Echec lors de la suppression dans la table Utilisateurs
      */
     public static final int DELETE_UTILISATEUR_ECHEC = 10009;
+
+    public static final int EMAIL_UTILISATEUR_ECHEC = 10010;
+
+    public static final int PSEUDO_UTILISATEUR_ECHEC = 10011;
+
+
 
     /**
      * Echec de la lecture de la table Articles
