@@ -12,6 +12,15 @@ public class UtilisateurManager {
     private DAO utilisateurDao;
     private static BusinessException businessException = new BusinessException();
 
+    public Utilisateur getUtilisateurExiste(String pseudo, String pwd) throws BusinessException {
+        Utilisateur util = null;
+
+        this.utilisateurDao = DAOFactory.getUtilisateurDAO();
+        util = utilisateurDao.getUtilisateur(pseudo, pwd);
+
+        return util;
+    }
+
     public UtilisateurManager() {
         utilisateurDao = DAOFactory.getUtilisateurDAO();
     }
@@ -120,6 +129,7 @@ public class UtilisateurManager {
             bE.ajouterErreur(CodesResultatBLL.UTILISATEURS_PSEUDO_ERREUR);
         }
     }
+
     private void verifEmail(String email, BusinessException bE) throws BusinessException {
         boolean emailExiste = utilisateurDao.verifMail(email);
         if(emailExiste){

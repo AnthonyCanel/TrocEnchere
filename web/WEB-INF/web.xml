@@ -5,12 +5,12 @@
          version="4.0">
 <!--    Servlets-->
     <servlet>
-        <servlet-name>PageAccueilNonConnecte</servlet-name>
-        <servlet-class>fr.eni.servlet.PageAccueilNonConnecte</servlet-class>
+        <servlet-name>PageAccueilEnchere</servlet-name>
+        <servlet-class>fr.eni.servlet.PageAccueilEnchere</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>PageAccueilNonConnecte</servlet-name>
-        <url-pattern>/PageAccueilNonConnecte</url-pattern>
+        <servlet-name>PageAccueilEnchere</servlet-name>
+        <url-pattern>/PageAccueilEnchere</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -39,9 +39,11 @@
     </servlet-mapping>
 <!--    SESSION-->
     <session-config>
-        <session-timeout>30</session-timeout>
+        <session-timeout>5</session-timeout>
     </session-config>
 <!--WELCOME FILE-->
+
+
     <welcome-file-list>
         <welcome-file>PageAccueilNonConnecte</welcome-file>
     </welcome-file-list>
