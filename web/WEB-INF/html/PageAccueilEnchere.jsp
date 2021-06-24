@@ -13,15 +13,13 @@
 
     <title>Accueil</title>
 </head>
-<body class="container-fluid">
+<body class="container-fluid mx-auto">
 <div class="row">
     <div class="d-flex justify-content-around">
         <div class="d-flex">
             <h1>ENI-Enchères</h1>
         </div>
         <div class="d-flex">
-
-
             <c:choose>
                 <c:when test="${sessionScope.utilisateur != null}">
                     <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
@@ -30,8 +28,6 @@
                     <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
                 </c:otherwise>
             </c:choose>
-            <%--                <a href="${pageContext.request.contextPath}/PageConnexion">S'inscrire - Se connecter</a>--%>
-
         </div>
     </div>
 </div>

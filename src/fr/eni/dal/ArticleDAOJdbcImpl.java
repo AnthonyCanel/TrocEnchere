@@ -6,18 +6,86 @@ import fr.eni.bo.Categorie;
 import fr.eni.bo.Utilisateur;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArticleDAOJdbcImpl implements DAO<Article>{
+public class ArticleDAOJdbcImpl implements DAO<Article> {
     BusinessException businessException = new BusinessException();
-    private static final String SELECT_ALL = "SELECT TOP(6) no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, photo, vues,\n" +
-            "no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur\n" +
-            "FROM V_ARTICLES_CATEGORIES_UTILISATEURS";
-//  private static final String SELECT_BY_ID = "eieeffezq";
+
+    private static final String SELECT_ALL = "SELECT TOP(6) no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, photo, vues,no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM V_ARTICLES_CATEGORIES_UTILISATEURS";
+
     private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, no_utilisateur, no_categorie) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
     private static final String UPDATE_ARTICLE = "UPDATE ARTICLES SET no_article = ?, nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, etat_article = ?, photo = ?, no_utilisateur = ?, no_categorie = ?, vues = ? where id=?";
+
     private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES WHERE id=?";
+
+    private static String selectByIdUtilisateurAndDateFinEnchere ="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente,etat_article, photo, vues, no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM V_ARTICLES_CATEGORIES_UTILISATEURS where no_utilisateur=? and date_fin_encheres>?";
+
+    public List<Article> selectByIdDateFinEnchere(int idUtilisateur, int idCategorie) throws BusinessException {
+        List<Article> listArticles = null;
+        Categorie  cat = new Categorie();
+        Utilisateur util = new Utilisateur();
+        try (
+                Connection cxn = ConnectionProvider.getConnection();
+                )
+        {
+            //TOdo tester avec la valeur par défaut de la combobox
+            String restrictionComplementaire = " no_categorie=?";
+            if(idCategorie>0){
+                selectByIdUtilisateurAndDateFinEnchere=
+                        selectByIdUtilisateurAndDateFinEnchere+restrictionComplementaire;
+            }
+        PreparedStatement pst = cxn.prepareStatement(selectByIdUtilisateurAndDateFinEnchere);
+        pst.setInt(1, idUtilisateur);
+        pst.setDate(2, java.sql.Date.valueOf(LocalDateTime.now().toLocalDate()));
+        ResultSet rs = pst.executeQuery();
+        while(rs.next()){
+            cat.setNoCategorie(rs.getInt("no_categorie"));
+            cat.setLibelle(rs.getString("libelle"));
+
+                    util.setNoUtilisateur(rs.getInt("no_utilisateur"));
+                    util.setPseudo(rs.getString("pseudo"));
+                    util.setNom(rs.getString("nom"));
+
+                    util.setPrenom(rs.getString("prenom"));
+                    util.setEmail(rs.getString("email"));
+                    util.setTelephone(rs.getString("telephone"));
+
+                    util.setRue(rs.getString("rue"));
+                    util.setCodePostal(rs.getString("code_postal"));
+                    util.setVille(rs.getString("ville"));
+
+                    util.setMotDePasse(rs.getString("mot_de_passe"));
+                    util.setCredit(rs.getInt("credit"));
+                    util.setAdmin(false);
+
+            listArticles.add(new Article(
+                    rs.getInt("no_article"),
+                    rs.getString("nom_article"),
+                    rs.getString("description"),
+                    rs.getDate("date_debut_enchere"),
+                    rs.getDate("date_fin_enchere"),
+                    rs.getInt("prix_initial"),
+                    rs.getInt("prix_vente"),
+                    rs.getString("etat_article"),
+                    "",
+                    util,
+                    cat,
+          0
+            ));
+        }
+        rs.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_ARTICLE_ECHEC);
+            throw businessException;
+        }
+
+        return listArticles;
+    }
 
     /**
      * Récupère toute les données de la table article
