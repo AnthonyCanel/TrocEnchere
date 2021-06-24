@@ -29,9 +29,11 @@ public class CodesResultatBLL {
     public static final int REGLE_UTILISATEURS_VILLE_ERREUR = 20012;
     public static final int REGLE_UTILISATEURS_MOTDEPASSE_ERREUR = 20013;
 
+
     public static final int UTILISATEURS_PSEUDO_ERREUR = 20014;
 
     public static final int UTILISATEURS_EMAIL_ERREUR = 20015;
+
 
     /**
      * Echec suite à import des données à la bll
@@ -39,5 +41,7 @@ public class CodesResultatBLL {
     public static final int IMPORT_BLL_ENCHERE = 20050;
 
     public static final int IMPORT_BLL_ENCHERES_GAGNEES=20051;
+
+    public static final int UTILISATEUR_CONNECTION_IMPOSSIBLE = 20052;
 
 }

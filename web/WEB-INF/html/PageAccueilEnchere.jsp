@@ -18,7 +18,9 @@
             <h1>ENI-Enchères</h1>
         </div>
         <div class="d-flex">
-            <a href="html\PageConnexion.jsp">S'inscrire - Se connecter</a>
+            <form action="PageConnexion" method="get">
+                <a href="${pageContext.request.contextPath}/PageConnexion">S'inscrire - Se connecter</a>
+            </form>
         </div>
     </div>
 </div>
