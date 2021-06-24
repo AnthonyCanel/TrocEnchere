@@ -26,4 +26,5 @@ public interface DAO<T>{
     default Utilisateur getUtilisateur(String pseudo, String pwd) throws BusinessException {
         return null;
     }
+
 }
