@@ -1,6 +1,7 @@
 package fr.eni.dal;
 
 import fr.eni.BusinessException;
+import fr.eni.bo.Utilisateur;
 
 import java.util.List;
 
@@ -21,5 +22,8 @@ public interface DAO<T>{
     }
     default boolean verifUtilisateur(String nom) throws BusinessException {
         return false;
+    }
+    default Utilisateur getUtilisateur(String pseudo, String pwd) throws BusinessException {
+        return null;
     }
 }

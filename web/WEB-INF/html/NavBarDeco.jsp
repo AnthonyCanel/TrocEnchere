@@ -1,5 +1,5 @@
 <div class="col">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"></a>
             <div class="collapse navbar-collapse" id="navbarText">
