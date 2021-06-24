@@ -3,4 +3,30 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+<!--    Servlets-->
+    <servlet>
+        <servlet-name>PageAccueilNonConnecte</servlet-name>
+        <servlet-class>fr.eni.servlet.PageAccueilNonConnecte</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PageAccueilNonConnecte</servlet-name>
+        <url-pattern>/PageAccueilNonConnecte</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PageConnexion</servlet-name>
+        <servlet-class>fr.eni.servlet.PageConnexion</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PageConnexion</servlet-name>
+        <url-pattern>/PageConnexion</url-pattern>
+    </servlet-mapping>
+<!--    SESSION-->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+<!--WELCOME FILE-->
+    <welcome-file-list>
+        <welcome-file>PageAccueilNonConnecte</welcome-file>
+    </welcome-file-list>
 </web-app>

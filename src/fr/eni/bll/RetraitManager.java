@@ -1,10 +1,12 @@
 package fr.eni.bll;
 
 import fr.eni.bo.Retrait;
-import fr.eni.dal.DALException;
 import fr.eni.dal.DAO;
 import fr.eni.dal.DAOFactory;
 import fr.eni.BusinessException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RetraitManager {
     private DAO retraitDao;
@@ -35,30 +37,56 @@ public class RetraitManager {
      * Recherche par Id retrait
      * @param id
      * @return objet Retrait
-     * @throws DALException
      * @throws BusinessException
      */
-    public Retrait rechercheParCle(int id) throws DALException, BusinessException {
+    public Retrait rechercheParCle(int id) throws BusinessException {
         Retrait retrait = (Retrait) retraitDao.selectById(id);
         return retrait;
     }
+
+    /**
+     * Modifier le lieu retrait
+     * @param retrait
+     * @throws BusinessException
+     */
     public void modifierRetrait(Retrait retrait) throws BusinessException {
         validerAdresse(retrait,  businessException);
         if(!businessException.hasErreurs()){
             retraitDao.update(retrait);
         }
+        else{
+            throw businessException;
+        }
+    }
+
+    /**
+     * Liste tous les lieux de retrait
+     * @return
+     */
+    public List<Retrait> trouverTous(){
+        List<Retrait> listeRetraits = new ArrayList<>();
+        try {
+            listeRetraits = retraitDao.selectAll();
+        } catch (BusinessException e) {
+            e.printStackTrace();
+        }
+        return listeRetraits;
     }
 
     /**
      * Méthode pour vérifier que les champs sont remplis car obligatoires
      * @param retrait
-     * @param bE
+     * @param businessException
      */
-    private void validerAdresse(Retrait retrait, BusinessException bE){
-        if(retrait.getRue() == null || retrait.getCodePostal() == null || retrait.getVille() == null ||
-            retrait.getRue().trim().equals("") || retrait.getCodePostal().trim().equals("") ||
-            retrait.getVille().trim().equals("")){
-            businessException.ajouterErreur(CodesResultatBLL.REGLE_RETRAITS_ADRESSE_ERREUR);
+    public void validerAdresse(Retrait retrait, BusinessException businessException){
+        if(retrait.getRue() == null || retrait.getRue().trim().equals("") || retrait.getRue().length() > 30){
+            businessException.ajouterErreur(CodesResultatBLL.REGLE_RETRAITS_RUE_ERREUR);
+        }
+        if(retrait.getCodePostal() == null ||retrait.getCodePostal().trim().equals("") || retrait.getCodePostal().length() > 5){
+            businessException.ajouterErreur(CodesResultatBLL.REGLE_RETRAITS_CODEPOSTAL_ERREUR);
+        }
+        if(retrait.getVille() == null ||retrait.getVille().trim().equals("") || retrait.getVille().length() > 30){
+            businessException.ajouterErreur(CodesResultatBLL.REGLE_RETRAITS_VILLE_ERREUR);
         }
     }
 }

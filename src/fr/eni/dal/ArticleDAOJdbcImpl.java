@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleDAOJdbcImpl implements DAO<Article>{
-
+    BusinessException businessException = new BusinessException();
     private static final String SELECT_ALL = "SELECT TOP(6) no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, photo, vues,\n" +
             "no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur\n" +
             "FROM V_ARTICLES_CATEGORIES_UTILISATEURS";
@@ -78,8 +78,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
 
         } catch (Exception e) {
           e.printStackTrace();
-          BusinessException businessException = new BusinessException();
-          businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTES_ECHEC);
+          businessException.ajouterErreur(CodesResultatDAL.LECTURE_ARTICLE_ECHEC);
           throw businessException;
         }
         return listeArticle;
@@ -98,7 +97,6 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
     @Override
     public void insert(Article article) throws BusinessException {
      if(article == null){
-         BusinessException businessException = new BusinessException();
          businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
          throw businessException;
      }
@@ -136,14 +134,13 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
         }
     } catch (Exception e) {
         e.printStackTrace();
-        BusinessException businessException = new BusinessException();
-        businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+        businessException.ajouterErreur(CodesResultatDAL.INSERT_ARTICLE_ECHEC);
         throw businessException;
     }
     }
 
     /**
-     * Update tout les paramètre d'un article
+     * Update tous les paramètres d'un article
      * @param article
      * @throws BusinessException
      */
@@ -164,8 +161,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
             pstmt.executeUpdate();
         } catch (SQLException e) {
          e.printStackTrace();
-         BusinessException businessException = new BusinessException();
-         businessException.ajouterErreur(CodesResultatDAL.UPDATE_OBJET_ECHEC);
+         businessException.ajouterErreur(CodesResultatDAL.UPDATE_ARTICLE_ECHEC);
          throw businessException;
         }
     }
@@ -183,7 +179,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article>{
         } catch (SQLException e) {
          e.printStackTrace();
          BusinessException businessException = new BusinessException();
-         businessException.ajouterErreur(CodesResultatDAL.SUPPRESSION_LISTE_ERREUR);
+         businessException.ajouterErreur(CodesResultatDAL.DELETE_ARTICLE_ERREUR);
          throw businessException;
      }
     }
