@@ -72,6 +72,10 @@ public class UtilisateurManager {
             throw businessException;
         }
     }
+
+    public void supprimer(int id) throws BusinessException {
+        utilisateurDao.delete(id);
+    }
     /**
      * Méthode pour vérifier que les champs sont remplis car obligatoires
      *
