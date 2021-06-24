@@ -27,7 +27,6 @@ public class CodesResultatDAL {
      * Echec à la suppression d'un lieu de retrait
      */
     public static final int DELETE_RETRAIT_ECHEC = 10005;
-
     /**
      * Echec lors de la lecture dans la table Utilisateurs
      */
@@ -44,13 +43,22 @@ public class CodesResultatDAL {
      * Echec lors de la suppression dans la table Utilisateurs
      */
     public static final int DELETE_UTILISATEUR_ECHEC = 10009;
-
+    /**
+     * Erreur l'adresse mail est déjà présente
+     */
     public static final int EMAIL_UTILISATEUR_ECHEC = 10010;
-
+    /**
+     * Erreur le pseudo est déjà présent
+     */
     public static final int PSEUDO_UTILISATEUR_ECHEC = 10011;
-
-
-
+    /**
+     * Lors de l'import de la table enchere dans la dal
+     */
+    public static final int IMPORT_DAL_ENCHERE = 10050;
+    /**
+     * Lors de l'import des objets gagnés par l'utilisateur de la table enchere dans la dal
+     */
+    public static final int IMPORT_DAL_ENCHERE_GAGNE = 10051;
     /**
      * Echec de la lecture de la table Articles
      */
@@ -83,13 +91,5 @@ public class CodesResultatDAL {
      * Echec lors de la suppression d'un catégorie
      */
     public static final int DELETE_CATEGORIE_ERREUR=10107;
-    /**
-     * Lors de l'import de la table enchere dans la dal
-     */
-    public static final int IMPORT_DAL_ENCHERE = 10050;
-    /**
-     * Lors de l'import des objets gagnés par l'utilisateur de la table enchere dans la dal
-     */
-    public static final int IMPORT_DAL_ENCHERE_GAGNE = 10051;
 
 }

@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="col">
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container-fluid">
