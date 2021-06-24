@@ -45,6 +45,6 @@
 
 
     <welcome-file-list>
-        <welcome-file>PageAccueilNonConnecte</welcome-file>
+        <welcome-file>PageAccueilEnchere</welcome-file>
     </welcome-file-list>
 </web-app>
