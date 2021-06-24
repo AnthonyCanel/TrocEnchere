@@ -54,7 +54,6 @@ public class UtilisateurManager {
         return util;
     }
 
-
     /**
      * Méthode pour vérifier que les champs sont remplis car obligatoires
      *

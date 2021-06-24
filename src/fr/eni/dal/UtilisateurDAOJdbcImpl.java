@@ -45,7 +45,7 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-            businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTES_ECHEC);
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
             throw businessException;
 
         }
@@ -76,7 +76,7 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             rs.close();
         } catch (Exception e) {
             e.printStackTrace();
-            businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTES_ECHEC);
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
             throw businessException;
         }
         return util;
@@ -93,21 +93,27 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
             throw businessException;
         }
-
         try (Connection cnx = ConnectionProvider.getConnection();
             PreparedStatement pstt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)) {
             pstt.setString(1, util.getPseudo());
             pstt.setString(2, util.getNom());
             pstt.setString(3, util.getPrenom());
             pstt.setString(4, util.getEmail());
-            pstt.setString(5, util.getTelephone());
+            //Gestion numéro de téléphone si null
+            if(util.getTelephone() != null){
+                pstt.setString(5, util.getTelephone());
+            }
+            else{
+                pstt.setNull(5, Types.CHAR);
+            }
             pstt.setString(6, util.getRue());
             pstt.setString(7,util.getCodePostal());
             pstt.setString(8, util.getVille());
-            pstt.setString(8, util.getMotDePasse());
-            pstt.setInt(9, util.getCredit()); //TODO peut-être initialiser à 0??
-            pstt.setBoolean(10, false); //TODO vérification à l'insertion
+            pstt.setString(9, util.getMotDePasse());
+            pstt.setInt(10, util.getCredit()); //TODO peut-être initialiser à 0??
+            pstt.setBoolean(11, util.isAdmin());
             pstt.executeUpdate();
+
             ResultSet rs = pstt.getGeneratedKeys();
             if(rs.next()){
                 util.setNoUtilisateur(rs.getInt(1));
@@ -116,7 +122,7 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
         } catch (Exception e) {
             e.printStackTrace();
             BusinessException businessException = new BusinessException();
-            businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
+            businessException.ajouterErreur(CodesResultatDAL.INSERT_UTILISATEUR_NULL);
             throw businessException;
         }
     }
@@ -133,23 +139,33 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             pstt.setString(2, util.getNom());
             pstt.setString(3, util.getPrenom());
             pstt.setString(4, util.getEmail());
-            pstt.setString(5, util.getTelephone());
+            if(util.getTelephone()!=null){
+                pstt.setString(5, util.getTelephone());
+            }
+            else{
+                pstt.setNull(5, Types.CHAR);
+            }
             pstt.setString(6, util.getRue());
             pstt.setString(7,util.getCodePostal());
             pstt.setString(8, util.getVille());
             pstt.setString(8, util.getMotDePasse());
             pstt.setInt(9, util.getCredit()); //TODO peut-être initialiser à 0??
-            pstt.setBoolean(10, false); //TODO vérification à l'insertion
+            pstt.setBoolean(10, util.isAdmin());
             pstt.setInt(11, util.getNoUtilisateur());
             pstt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
             BusinessException businessException = new BusinessException();
-            businessException.ajouterErreur(CodesResultatDAL.UPDATE_OBJET_ECHEC);
+            businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
             throw businessException;
         }
     }
 
+    /**
+     * Si un utilisateur est supprimé on anonymise son compte afin de garder l'historique
+     * @param id
+     * @throws BusinessException
+     */
     @Override
     public void delete(int id) throws BusinessException {
         try (Connection cnx = ConnectionProvider.getConnection();
@@ -158,8 +174,9 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             pstt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
-            businessException.ajouterErreur(CodesResultatDAL.DELETE_OBJET_ECHEC);
+            businessException.ajouterErreur(CodesResultatDAL.DELETE_UTILISATEUR_ECHEC);
             throw businessException;
         }
     }
+
 }

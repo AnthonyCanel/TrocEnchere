@@ -12,39 +12,70 @@ public class CodesResultatDAL {
     public static final int INSERT_OBJET_ECHEC=10001;
 
     /**
-     * Echec de la lecture des listes de course
+     * Echec de la lecture des lieux de retrait
      */
-    public static final int LECTURE_LISTES_ECHEC = 10002;
+    public static final int LECTURE_RETRAIT_ECHEC = 10002;
+    /**
+     * Echec de l'insertion d'un lieu de retrait
+     */
+    public static final int INSERT_RETRAIT_ECHEC = 10003;
+    /**
+     * Echec à la modification d'un lieu de retrait
+     */
+    public static final int UPDATE_RETRAIT_ECHEC = 10004;
+    /**
+     * Echec à la suppression d'un lieu de retrait
+     */
+    public static final int DELETE_RETRAIT_ECHEC = 10005;
+    /**
+     * Echec lors de la lecture dans la table Utilisateurs
+     */
+    public static final int LECTURE_UTILISATEUR_ECHEC=10006;
+    /**
+     * Echec lors de l'insertion dans la table Utilisateurs
+     */
+    public static final int INSERT_UTILISATEUR_NULL=10007;
+    /**
+     * Echec lors de la mise à jour dans la table Utilisateurs
+     */
+    public static final int UPDATE_UTILISATEUR_ECHEC=10008;
+    /**
+     * Echec lors de la suppression dans la table Utilisateurs
+     */
+    public static final int DELETE_UTILISATEUR_ECHEC = 10009;
 
     /**
-     * Echec de la lecture d'une liste de course
+     * Echec de la lecture de la table Articles
      */
-    public static final int LECTURE_LISTE_ECHEC = 10003;
-
+    public static final int LECTURE_ARTICLE_ECHEC =10100;
     /**
-     * Liste de course inexistante
+     * Echec lors de l'insertion d'un article
      */
-    public static final int LECTURE_LISTE_INEXISTANTE = 10004;
-
+    public static final int INSERT_ARTICLE_ECHEC =10101;
     /**
-     * Erreur à la suppression d'un article
+     * Echec lors de la modification d'un article
      */
-    public static final int DELETE_OBJET_ECHEC = 10005;
-
+    public static final int UPDATE_ARTICLE_ECHEC =10102;
     /**
-     * Erreur à la suppression d'une liste
+     * Echec lors de la suppression d'un article
      */
-    public static final int SUPPRESSION_LISTE_ERREUR = 10006;
-
+    public static final int DELETE_ARTICLE_ERREUR =10103;
     /**
-     * Erreur
+     * Echec de la lecture de la table Catégories
      */
-    public static final int LECTURE_RETRAIT_ECHEC = 10007;
-
+    public static final int LECTURE_CATEGORIE_ECHEC=10104;
     /**
-     * Erreur à la modification
+     * Echec lors de l'insertion de la table Catégories
      */
-    public static final int UPDATE_OBJET_ECHEC = 10008;
+    public static final int INSERT_CATEGORIE_ECHEC=10105;
+    /**
+     * Echec lors de la mise à jour d'une catégorie
+     */
+    public static final int UPDATE_CATEGORIE_ECHEC=10106;
+    /**
+     * Echec lors de la suppression d'un catégorie
+     */
+    public static final int DELETE_CATEGORIE_ERREUR=10107;
     /**
      * Lors de l'import de la table enchere dans la dal
      */

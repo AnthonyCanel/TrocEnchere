@@ -33,7 +33,7 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
         } catch (Exception e) {
             e.printStackTrace();
             BusinessException businessException = new BusinessException();
-            businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTES_ECHEC);
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_CATEGORIE_ECHEC);
             throw businessException;
         }
     }
@@ -80,7 +80,7 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
         } catch (Exception e) {
             e.printStackTrace();
             BusinessException businessException = new BusinessException();
-            businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+            businessException.ajouterErreur(CodesResultatDAL.INSERT_CATEGORIE_ECHEC);
             throw businessException;
         }
     }
@@ -99,7 +99,7 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
         } catch (SQLException e) {
             e.printStackTrace();
             BusinessException businessException = new BusinessException();
-            businessException.ajouterErreur(CodesResultatDAL.UPDATE_OBJET_ECHEC);
+            businessException.ajouterErreur(CodesResultatDAL.UPDATE_CATEGORIE_ECHEC);
             throw businessException;
         }
     }
@@ -118,7 +118,7 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
         } catch (SQLException e) {
             e.printStackTrace();
             BusinessException businessException = new BusinessException();
-            businessException.ajouterErreur(CodesResultatDAL.SUPPRESSION_LISTE_ERREUR);
+            businessException.ajouterErreur(CodesResultatDAL.DELETE_CATEGORIE_ERREUR);
             throw businessException;
         }
     }
