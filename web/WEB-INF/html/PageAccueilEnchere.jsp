@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="fr">
@@ -7,20 +8,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Accueil</title>
 </head>
 <body class="container-fluid">
 <div class="row">
-    <div class="d-flex justify-content-around">     
+    <div class="d-flex justify-content-around">
         <div class="d-flex">
             <h1>ENI-Enchères</h1>
         </div>
         <div class="d-flex">
-            <form action="PageConnexion" method="get">
-                <a href="${pageContext.request.contextPath}/PageConnexion">S'inscrire - Se connecter</a>
-            </form>
+
+
+            <c:choose>
+                <c:when test="${sessionScope.utilisateur != null}">
+                    <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
+                </c:when>
+                <c:otherwise>
+                    <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
+                </c:otherwise>
+            </c:choose>
+            <%--                <a href="${pageContext.request.contextPath}/PageConnexion">S'inscrire - Se connecter</a>--%>
+
         </div>
     </div>
 </div>
@@ -38,7 +49,7 @@
     <div class="col col-6">
         <div class="input-group mb-3">
             <span class="input-group-text">Search</span>
-            <input type="text" class="form-control" />
+            <input type="text" class="form-control"/>
         </div>
         <div class="row">
             <div class="col">
