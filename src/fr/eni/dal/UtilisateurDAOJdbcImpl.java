@@ -18,6 +18,9 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
     private String UPDATE_DELETE= "UPDATE UTILISATEURS SET pseudo = 'compte supprimé', nom = 'compte supprimé', prenom = 'compte supprimé', email = 'compte supprimé', telephone = 'compte supprimé', rue = 'compte supprimé',code_postal = 'compte supprimé', mot_de_passe='compte supprimé', credit = 0 WHERE no_utilisateur = ?";
     private String SELECTBYMAIL= "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email = ?";
     private String SELECTBYPSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ?";
+    private String SELECTBYPSEUDOANDPWD = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, " +
+            "code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ? and  mot_de_passe=?";
+
     @Override
     public List<Utilisateur> selectAll() throws BusinessException{
         List<Utilisateur> listUtilisateurs = new ArrayList<>();
@@ -214,5 +217,36 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             throw businessException;
         }
         return unique;
+    }
+
+    public Utilisateur getUtilisateur(String pseudo, String pwd) throws BusinessException {
+        Utilisateur util = null;
+        try (Connection cnx = ConnectionProvider.getConnection();
+             PreparedStatement pstt = cnx.prepareStatement(SELECTBYPSEUDOANDPWD)) {
+            pstt.setString(1,pseudo);
+            pstt.setString(2,pwd);
+            ResultSet rs = pstt.executeQuery();
+            if(rs.next()){
+                int idUti = rs.getInt("no_utilisateur");
+                String pseudoUti = rs.getString("pseudo");
+                String nomUti = rs.getString("nom");
+                String prenomUti = rs.getString("prenom");
+                String emailUti = rs.getString("email");
+                String telUti = rs.getString("telephone");
+                String rueUti = rs.getString("rue");
+                String codePostalUti = rs.getString("code_postal");
+                String villeUti = rs.getString("ville");
+                String pwdUti = "";
+                int creditUti = rs.getInt("credit");
+                Boolean adminUti = rs.getBoolean("administrateur");
+                util = new Utilisateur(pseudoUti, nomUti, prenomUti, emailUti, telUti, rueUti, codePostalUti, villeUti, pwdUti, creditUti);
+            }
+            rs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
+            throw businessException;
+        }
+        return util;
     }
 }
