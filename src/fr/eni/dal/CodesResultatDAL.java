@@ -54,7 +54,7 @@ public class CodesResultatDAL {
     /**
      * Echec de la lecture de la table Articles
      */
-    public static final int LECTURE_LISTES_ECHEC =10100;
+    public static final int LECTURE_ARTICLE_ECHEC =10100;
     /**
      * Echec lors de l'insertion d'un article
      */
