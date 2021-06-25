@@ -28,7 +28,7 @@
                 <p>Description</p>
             </div>
             <div class="col-8">
-                <p>zvoequqvvrvrizvhiuzrhihzruzrrhirruerr</p>
+                <p>C'est un PC qui fonctionne comme un malade vous serrez pas déçu</p>
             </div>
         </div>
 
@@ -74,7 +74,7 @@
                 <p>Mail : </p>
             </div>
             <div class="col-8">
-                <p>cbuinjiveovroevr@gmail.com</p>
+                <p>(Mon mail)</p>
             </div>
         </div>
 
