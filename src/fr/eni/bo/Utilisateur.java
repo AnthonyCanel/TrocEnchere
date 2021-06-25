@@ -62,6 +62,21 @@ public class Utilisateur {
         CodePostal = codePostal;
         this.ville = ville;
         this.motDePasse = motDePasse;
+        this.credit = credit;
+    }
+
+    public Utilisateur(int noUtilisateur, String pseudo, String prenom, String nom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit) {
+        this.noUtilisateur = noUtilisateur;
+        this.pseudo = pseudo;
+        this.prenom = prenom;
+        this.nom = nom;
+        this.email = email;
+        this.telephone = telephone;
+        this.rue = rue;
+        CodePostal = codePostal;
+        this.ville = ville;
+        this.motDePasse = motDePasse;
+        this.credit = credit;
     }
 
     public Utilisateur(int noUtilisateur, String pseudo, String prenom, String nom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit, boolean admin) {

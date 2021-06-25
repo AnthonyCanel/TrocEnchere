@@ -52,8 +52,10 @@
     </session-config>
 <!--WELCOME FILE-->
 
+
     <welcome-file-list>
         <welcome-file>PageAccueilEnchere</welcome-file>
     </welcome-file-list>
+
 
 </web-app>
