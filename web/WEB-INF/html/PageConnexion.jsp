@@ -28,7 +28,7 @@
                     Identifiant :
                 </div>
                 <div class="col-7 mb-3">
-                    <input type="text" name="Identifiant" placeholder="Identifiant">
+                    <input type="text" name="Identifiant" placeholder="Identifiant" required>
                 </div>
             </div>
 
@@ -37,7 +37,7 @@
                     Mot de passe :
                 </div>
                 <div class="col-7 mb-3">
-                    <input type="password" name="MotDePasse" placeholder="Mot de passe">
+                    <input type="password" name="MotDePasse" placeholder="Mot de passe" required>
                 </div>
             </div>
 

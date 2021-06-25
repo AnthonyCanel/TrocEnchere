@@ -64,6 +64,7 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             pstt.setInt(1,id);
             ResultSet rs = pstt.executeQuery();
             if(rs.next()){
+                int idUti = id;
                 String pseudoUti = rs.getString("pseudo");
                 String nomUti = rs.getString("nom");
                 String prenomUti = rs.getString("prenom");
@@ -74,8 +75,8 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
                 String villeUti = rs.getString("ville");
                 String pwdUti = rs.getString("mot_de_passe");
                 int creditUti = rs.getInt("credit");
-                Boolean adminUti = rs.getBoolean("adminisitrateur");
-                util = new Utilisateur(pseudoUti, nomUti, prenomUti, emailUti, telUti, rueUti, codePostalUti, villeUti, pwdUti, creditUti);
+                Boolean adminUti = rs.getBoolean("administrateur");
+                util = new Utilisateur(idUti, pseudoUti, nomUti, prenomUti, emailUti, telUti, rueUti, codePostalUti, villeUti, pwdUti, creditUti);
             }
             rs.close();
         } catch (Exception e) {

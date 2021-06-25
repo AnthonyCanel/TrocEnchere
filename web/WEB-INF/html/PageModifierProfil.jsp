@@ -19,7 +19,7 @@
 </header>
 <div class="container shadow p-4">
     <h1 class="row d-flex justify-content-center mb-5 p-2">Mon Profil</h1>
-    <form action="">
+    <form action="PageModifierProfil" method="post">
         <div class="p-3">
             <div class="row mb-3">
                 <div class="col">
@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="pseudo" required>
+                                <input class="w-100" type="text" name="pseudo" id="pseudo" value="${pseudo}" required>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="nom" required pattern="[a-z][A-Z]">
+                                <input class="w-100" type="text" name="nom" id="nom" value="${nom}" required pattern="[a-z][A-Z]">
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="prenom" required pattern="[a-z][A-Z]">
+                                <input class="w-100" type="text" name="prenom" id="prenom" value="${prenom}" required pattern="[a-z][A-Z]">
                             </div>
                         </div>
                     </div>
@@ -67,11 +67,14 @@
                             <label>Email : </label>
                         </div>
                         <div class="col-8">
-                            <div class="input-group input-group-sm mb-3">
+                            <div>
+
+                            </div>
+                            <div class="input-group input-group-md mb-3">
                                 <!--Vérification Mail abc@example.com # Minimum three characters
                                     ABC.xyz@example.com # Accepts Caps as well.
                                     abce.xyz@example.co.in # Accepts . before @-->
-                                <input type="email" class="form-control" id="email" required pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})">
+                                <input class="w-100" type="email" name="email" id="email" value="${email}" required pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})">
                             </div>
                         </div>
                     </div>
@@ -86,7 +89,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="telephone" required pattern="^[0-9-.// |]$">
+                                <input class="w-100" type="text" name="telephone" id="telephone" value="${telephone}" required pattern="^[0-9-.// |]$">
                             </div>
                         </div>
                     </div>
@@ -98,7 +101,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="rue" required>
+                                <input class="w-100" type="text" name="rue" id="rue" value="${rue}" required>
                             </div>
                         </div>
                     </div>
@@ -113,7 +116,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="codePostal" required pattern="[0-9]">
+                                <input class="w-100" type="text" name="CP" id="codePostal" value="${CP}" required pattern="[0-9]">
                             </div>
                         </div>
                     </div>
@@ -125,7 +128,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="ville" required pattern="^[A-Za-z'- ]">
+                                <input class="w-100" type="text" name="ville" id="ville" value="${ville}" required pattern="^[A-Za-z'- ]">
                             </div>
                         </div>
                     </div>
@@ -140,7 +143,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="password" class="form-control" id="motPasseActuel">
+                                <input class="w-100" type="password" name="mdpa" id="motPasseActuel" value="${mdpa}">
                             </div>
                         </div>
                     </div>
@@ -165,7 +168,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="password" class="form-control" id="nouveauMotPasse">
+                                <input class="w-100" type="password" class="nmdp" id="nouveauMotPasse">
                             </div>
                         </div>
                     </div>
@@ -177,7 +180,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="password" class="form-control" id="confirmationMotPasse" required>
+                                <input class="w-100" type="password" class="cmdp" id="confirmationMotPasse" required>
                             </div>
                         </div>
                     </div>
@@ -187,12 +190,12 @@
             <div class="row mb-3">
                 <div class="col">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-2">
                             <label>Crédit : </label>
                         </div>
-                        <div class="col-8">
+                        <div class="col-1">
                             <div class="input-group input-group-sm mb-3">
-                                <label id="credit" name="credit"></label>
+                                <label id="credit" name="credit">${credit}</label>
                             </div>
                         </div>
                     </div>
@@ -200,22 +203,13 @@
             </div>
 
             <div class="row mb-3">
-                <div class="col">
-                    <div class="row">
-                        <div class="col-4">
-                            <label></label>
-                        </div>
-                        <div class="col-8">
-                            <button type="button" class="btn btn-outline-dark">Enregistrer</button>
-                        </div>
-                    </div>
+                <div class="col  d-flex justify-content-center">
+                    <a href="${pageContext.request.contextPath}/PageMonProfil">
+                        <button type="button" class="btn btn-outline-dark">Enregistrer</button>
+                    </a>
                 </div>
-                <div class="col">
-                    <div class="row">
-                        <div class="col-4">
-                            <button type="button" class="btn btn-outline-dark">Supprimer mon compte</button>
-                        </div>
-                    </div>
+                <div class="col  d-flex justify-content-center">
+                    <button type="button" class="btn btn-outline-dark">Supprimer mon compte</button>
                 </div>
             </div>
         </div>

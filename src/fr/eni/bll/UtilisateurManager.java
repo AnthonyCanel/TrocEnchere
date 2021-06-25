@@ -14,7 +14,7 @@ public class UtilisateurManager {
 
     public Utilisateur getUtilisateurExiste(String pseudo, String pwd) throws BusinessException {
         Utilisateur util = null;
-
+        //TODO vérifier que les champs sont remplis
         this.utilisateurDao = DAOFactory.getUtilisateurDAO();
         util = utilisateurDao.getUtilisateur(pseudo, pwd);
 
@@ -123,6 +123,12 @@ public class UtilisateurManager {
         }
     }
 
+    /**
+     * Vérification que le Pseudo est unique dans la base de données
+     * @param pseudo
+     * @param bE
+     * @throws BusinessException
+     */
     private void verifUtilisateur(String pseudo, BusinessException bE) throws BusinessException {
         boolean utilisateurExiste = utilisateurDao.verifUtilisateur(pseudo);
         if(utilisateurExiste){
