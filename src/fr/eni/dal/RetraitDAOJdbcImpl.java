@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RetraitDAOJdbcImpl implements DAO<Retrait>{
-    private static DAO articleDao = new ArticleDAOJdbcImpl();
+
     private static BusinessException businessException = new BusinessException();
     private static final String INSERT = "INSERT INTO RETRAITS (rue, code_postal, ville) values (?,?,?)";
     private static final String SELECTBYID = "SELECT no_article, rue, code_postal, ville FROM RETRAITS WHERE no_article = ?";

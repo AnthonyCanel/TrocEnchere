@@ -129,10 +129,15 @@
             <div class="row mt-5">
                 <h4 class="text-align-center mb-5 text-uppercase text-danger fw-bold d-flex justify-content-center" id="msg" name="msgError">Coucou</h4>
                 <div class="col mr-5 d-flex flex-row-reverse">
-                    <button class="btn btn-outline-secondary">Créer</button>
+                    <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
+                        <button class="btn btn-outline-secondary">Créer</button>
+                    </a>
                 </div>
                 <div class="col ml-5 ">
-                    <button class="btn btn-outline-secondary">Annuler</button>
+                    <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
+                        <button class="btn btn-outline-secondary">Annuler</button>
+                    </a>
+
                 </div>
             </div>
         </div>

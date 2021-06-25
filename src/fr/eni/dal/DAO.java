@@ -1,6 +1,7 @@
 package fr.eni.dal;
 
 import fr.eni.BusinessException;
+import fr.eni.bo.Article;
 import fr.eni.bo.Utilisateur;
 
 import java.util.List;
@@ -24,6 +25,9 @@ public interface DAO<T>{
         return false;
     }
     default Utilisateur getUtilisateur(String pseudo, String pwd) throws BusinessException {
+        return null;
+    }
+    default List<Article> selectByIdDateFinEnchere(int idUtilisateur, int idCategorie) throws BusinessException{
         return null;
     }
 

@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!doctype html>
 <html lang="fr">
 <head>
     <!-- Required meta tags -->
@@ -13,15 +12,13 @@
 
     <title>Accueil</title>
 </head>
-<body class="container-fluid">
+<body>
 <div class="row">
-    <div class="d-flex justify-content-around">
-        <div class="d-flex">
-            <h1>ENI-Enchères</h1>
+    <div class="row d-flex justify-content-around">
+        <div class="col d-flex">
+            <h1 class="m-5 mt-3">ENI-Enchères</h1>
         </div>
-        <div class="d-flex">
-
-
+        <div class="col d-flex m-5 mt-3">
             <c:choose>
                 <c:when test="${sessionScope.utilisateur != null}">
                     <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
@@ -30,86 +27,104 @@
                     <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
                 </c:otherwise>
             </c:choose>
-            <%--                <a href="${pageContext.request.contextPath}/PageConnexion">S'inscrire - Se connecter</a>--%>
-
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="columns">
-        <h2 class="text-center">Liste des Enchères</h2>
-    </div>
-</div>
-<div class="row">
-    <label class="text-start mb-3">Filtres :</label>
-</div>
-
-<div class="row align-items-center">
-
-    <div class="col col-6">
-        <div class="input-group mb-3">
-            <span class="input-group-text">Search</span>
-            <input type="text" class="form-control"/>
-        </div>
+<div class="d-flex justify-content-center">
+    <div class="shadow p-5 w-75 ">
         <div class="row">
-            <div class="col">
-                <label>Catégorie :</label>
-            </div>
-            <div class="col">
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+            <div>
+                <h2 class="text-center mb-4">Liste des Enchères</h2>
             </div>
         </div>
-    </div>
 
-    <div class="col col-6">
-        <button type="button" class="btn btn-outline-secondary btn-lg mb-3">Rechercher</button>
-    </div>
+        <div class="row">
+            <label class="text-start mb-3">Filtres :</label>
+        </div>
 
-</div>
-<div class="row ">
-    <!-- la boucle est a mettre ici-->
-    <div class="col">
-            <span class="border border-primary">
-                <div class="row ">
-                    <div class="col-3">
-                        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Flaboutiquedessaucissons.fr%2Fles-saucissons-de-nos-regions%2F31-saucisson-sec-pur-porc-des-cevennes.html&psig=AOvVaw3fWGcYdpgsTgriXSNamHBK&ust=1624528671658000&source=images&cd=vfe&ved=2ahUKEwiZ4L2Ev63xAhXODuwKHVzzCL4Qr4kDegUIARDhAQ"></img>
 
+        <div class="row mb-5">
+            <div class="col-5">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Search</span>
+                    <input type="text" class="form-control"/>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="row">
+                    <div class="col-4 text-center">
+                        <label>Catégorie :</label>
                     </div>
-                    <div class="col">
-                        <label>nom de l'article</label>
-                        <label>Prix : 654 banane</label>
-                        <label>Fin de l'enchère : 654 banane</label>
-                        <label>Vendeur : 654 banane</label>
+                    <div class="col-8">
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
                     </div>
                 </div>
-
-            </span>
-    </div>
-    <!-- fin de la boucle-->
-    <!-- article complementaire a enlever une fois la boucle faite-->
-    <div class="col">
-            <span class="border border-primary">
-                <div class="row ">
+            </div>
+            <div class="col-2">
+                <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
+                    <button type="button" class="btn btn-outline-dark btn mb-3">Rechercher</button>
+                </a>
+            </div>
+        </div>
+        <div class="row ">
+            <!-- la boucle est a mettre ici-->
+            <div class="col bg-light shadow-sm p-3 m-3 d-flex align-items-center">
+                <div class="w-100 row">
                     <div class="col-3">
-                        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Flaboutiquedessaucissons.fr%2Fles-saucissons-de-nos-regions%2F31-saucisson-sec-pur-porc-des-cevennes.html&psig=AOvVaw3fWGcYdpgsTgriXSNamHBK&ust=1624528671658000&source=images&cd=vfe&ved=2ahUKEwiZ4L2Ev63xAhXODuwKHVzzCL4Qr4kDegUIARDhAQ"></img>
-
+                        <img src="img/fromage.jpg"></img>
                     </div>
-                    <div class="col">
-                        <label>nom de l'article</label>
-                        <label>Prix : 654 banane</label>
-                        <label>Fin de l'enchère : 654 banane</label>
-                        <label>Vendeur : 654 banane</label>
+                    <div class="col-9">
+                        <div>
+                            <div class="row">
+                                <h5 class="font-weight-bold">Saucisson</h5>
+                            </div>
+                            <div class="row">
+                                <label>Prix : 654 banane</label>
+                            </div>
+                            <div class="row">
+                                <label>Fin de l'enchère : 654 banane</label>
+                            </div>
+                            <div class="row">
+                                <label>Vendeur : 654 banane</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-            </span>
+            </div>
+            <!-- fin de la boucle-->
+            <!-- article complementaire a enlever une fois la boucle faite-->
+            <div class="col bg-light shadow-sm p-3 m-3 d-flex align-items-center">
+                <div class="w-100 row">
+                    <div class="col-3">
+                        <img src="img/fromage.jpg"></img>
+                    </div>
+                    <div class="col-9">
+                        <div>
+                            <div class="row">
+                                <h5 class="font-weight-bold">Comté</h5>
+                            </div>
+                            <div class="row">
+                                <label>Prix : 654 banane</label>
+                            </div>
+                            <div class="row">
+                                <label>Fin de l'enchère : 654 banane</label>
+                            </div>
+                            <div class="row">
+                                <label>Vendeur : 654 banane</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- fin de l'article complementaire a enlever une fois la boucle faite-->
+        </div>
     </div>
-    <!-- fin de l'article complementaire a enlever une fois la boucle faite-->
 </div>
+
 </body>
 </html>

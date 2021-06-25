@@ -63,6 +63,11 @@
                 <label id="ville">vbiqvuvhivhiov</label>
             </div>
         </div>
+        <div class="row d-flex justify-content-center">
+            <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
+                <button>Retour</button>
+            </a>
+        </div>
     </div>
 </div>
 </body>
