@@ -71,7 +71,7 @@
                                 <!--Vérification Mail abc@example.com # Minimum three characters
                                     ABC.xyz@example.com # Accepts Caps as well.
                                     abce.xyz@example.co.in # Accepts . before @-->
-                                <input type="text" class="form-control" id="email" required pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})">
+                                <input type="email" class="form-control" id="email" required pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})">
                             </div>
                         </div>
                     </div>

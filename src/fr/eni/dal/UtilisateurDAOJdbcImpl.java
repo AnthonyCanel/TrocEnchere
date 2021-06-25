@@ -114,7 +114,7 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             pstt.setString(7,util.getCodePostal());
             pstt.setString(8, util.getVille());
             pstt.setString(9, util.getMotDePasse());
-            pstt.setInt(10, util.getCredit()); //TODO peut-être initialiser à 0??
+            pstt.setInt(10, 0);
             pstt.setBoolean(11, util.isAdmin());
             pstt.executeUpdate();
 
@@ -239,7 +239,7 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
                 String pwdUti = "";
                 int creditUti = rs.getInt("credit");
                 Boolean adminUti = rs.getBoolean("administrateur");
-                util = new Utilisateur(pseudoUti, nomUti, prenomUti, emailUti, telUti, rueUti, codePostalUti, villeUti, pwdUti, creditUti);
+                util = new Utilisateur(idUti, pseudoUti, nomUti, prenomUti, emailUti, telUti, rueUti, codePostalUti, villeUti, pwdUti, creditUti);
             }
             rs.close();
         } catch (Exception e) {
