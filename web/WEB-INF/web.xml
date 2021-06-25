@@ -61,4 +61,14 @@
     <welcome-file-list>
         <welcome-file>PageAccueilEnchere</welcome-file>
     </welcome-file-list>
+
+    <servlet>
+        <servlet-name>PageVendreUnArticle</servlet-name>
+        <servlet-class>fr.eni.servlet.PageVendreUnArticle</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PageVendreUnArticle</servlet-name>
+        <url-pattern>/PageVendreUnArticle</url-pattern>
+    </servlet-mapping>
+
 </web-app>

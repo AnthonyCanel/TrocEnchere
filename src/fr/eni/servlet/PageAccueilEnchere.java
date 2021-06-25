@@ -21,6 +21,8 @@ public class PageAccueilEnchere extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        req.getRequestDispatcher("/WEB-INF/html/PageConnexion.jsp").forward(req,resp);
+        String achatVente = req.getParameter("AchatsVentes");
+        req.setAttribute("etat", achatVente);
+        this.doGet(req, resp);
     }
 }

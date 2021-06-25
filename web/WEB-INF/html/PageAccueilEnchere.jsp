@@ -71,6 +71,15 @@
                 </a>
             </div>
         </div>
+        <form action="/PageAccueilEnchere" method="post">
+        <div class="row">
+                <c:if test="${sessionScope.utilisateur != null}">
+                    <jsp:include page="inclusion/CheckBoxAchats.jsp"></jsp:include>
+                </c:if>
+            <div class="col-4"></div>
+        <div class="col-4"></div>
+        </div>
+        </form>
         <div class="row ">
             <!-- la boucle est a mettre ici-->
             <div class="col bg-light shadow-sm p-3 m-3 d-flex align-items-center">
