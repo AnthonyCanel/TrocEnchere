@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="fr">
@@ -14,10 +15,22 @@
 </head>
 <body class="container-fluid">
 <div class="row">
-    <div class="d-flex justify-content-around">
-        <div class="d-flex mb-5">
-            <h1>ENI-Encheres</h1>
+    <div class="col-6 p-0">
+        <div class="m-5 mt-3">
+            <a class="btn btn-white" href="${pageContext.request.contextPath}/PageAccueilEnchere">
+                <h1>ENI Enchère</h1>
+            </a>
         </div>
+    </div>
+    <div class="col-6">
+        <c:choose>
+            <c:when test="${sessionScope.utilisateur != null}">
+                <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
+            </c:when>
+            <c:otherwise>
+                <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 <div class="mx-auto" style="width: 400px;">
