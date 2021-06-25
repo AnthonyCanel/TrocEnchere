@@ -6,6 +6,7 @@ import fr.eni.bo.Categorie;
 import fr.eni.bo.Utilisateur;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,75 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
     private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES WHERE id=?";
 
     private static String selectByIdUtilisateurAndDateFinEnchere ="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente,etat_article, photo, vues, no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM V_ARTICLES_CATEGORIES_UTILISATEURS where no_utilisateur=? and date_fin_encheres>?";
+
+    private static String SELECT_BY_DATE_INF_DEB_ENCHERE ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_date_debut_encheres, encs_montant_enchere,utils_nom, utils_no_utilisateur, cats_no_categorie, cats_libelle from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres";
+
+    private static String SELECT_BY_ID_AND_DATE_FIN_ENCHERE="SELECT no_utilisateur, nom, pseudo, nom_article, montant_enchere, date_fin_encheres FROM V_UTILISATEURS_ENCHERES_ARTICLES_RETRAITS_CATEGORIES WHERE ?=date_fin_encheres and no_utilisateur=? and etat_enchere='Vendu'";
+
+    public List<Article> selectByIdDateEnchereEtatEnchere(int idUtilisateur){
+        List<Article> listArticle = new ArrayList<>();
+        Article article = new Article();
+        try (
+                Connection cxn = ConnectionProvider.getConnection();
+                PreparedStatement ptt = cxn.prepareStatement(SELECT_BY_ID_AND_DATE_FIN_ENCHERE);
+                ){
+            ptt.setDate(1,java.sql.Date.valueOf(LocalDate.now()));
+            ptt.setInt(2,idUtilisateur);
+
+            ResultSet rs = ptt.executeQuery();
+
+            while(rs.next()){
+                article.setNoArticle(rs.getInt("no_article"));
+                article.setNomArticle(rs.getString("nom_article"));
+                article.getEnchere().setMontantEnchere(rs.getInt("montant_enchere"));
+                article.getCategorie().setNoCategorie(rs.getInt("no_categorie"));
+                article.getCategorie().setLibelle(rs.getString("libelle"));
+                article.setDateFinEncheres(rs.getDate("date_fin_encheres"));
+                article.getUtilisateur().setNoUtilisateur(rs.getInt("no_utilisateur"));
+                article.getUtilisateur().setNom(rs.getString("nom"));
+                article.getEnchere().setNoAcquereur(rs.getInt("no_acquereur"));
+
+                listArticle.add(article);
+            }
+            rs.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            businessException.ajouterErreur(CodesResultatDAL.IMPORT_VENTES_TERMINEES);
+        }
+        return listArticle;
+    }
+
+    public List<Article> selectByDateInfDebEnchere(){
+        List<Article> listArticle = null;
+
+        try (
+            Connection cxn = ConnectionProvider.getConnection();
+            PreparedStatement ptt = cxn.prepareStatement(SELECT_BY_DATE_INF_DEB_ENCHERE);
+            ){
+            ptt.setDate(1,java.sql.Date.valueOf(LocalDate.now()));
+            ResultSet rs = ptt.executeQuery();
+
+            while(rs.next()) {
+                listArticle.add(new Article(
+                        rs.getInt("arts_no_article"),
+                        rs.getString("arts_nom_article"),
+                        rs.getInt("arts_prix_initial"),
+                        rs.getDate("arts_date_debut_enchere"),
+                        rs.getInt("encs_montant_enchere"),
+                        rs.getString("utils_nom"),
+                        rs.getInt("utils_no_utilisateur"),
+                        rs.getInt("cats_no_categorie"),
+                        rs.getString("cats_labelle")
+                ));
+            }
+            rs.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            businessException.ajouterErreur(CodesResultatDAL.IMPORT_VENTES_NON_DEBUTEES);
+        }
+    return listArticle;
+    }
 
     public List<Article> selectByIdDateFinEnchere(int idUtilisateur, int idCategorie) throws BusinessException {
         List<Article> listArticles = null;
@@ -89,8 +159,8 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
 
     /**
      * Récupère toute les données de la table article
-     * @return
-     * @throws BusinessException
+     * @return listeArticle
+     * @throws BusinessException LECTURE_ARTICLE_ECHEC
      */
     @Override
     public List<Article> selectAll() throws BusinessException {
