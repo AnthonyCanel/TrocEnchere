@@ -12,7 +12,6 @@
         <servlet-name>PageAccueilEnchere</servlet-name>
         <url-pattern>/PageAccueilEnchere</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>PageConnexion</servlet-name>
         <servlet-class>fr.eni.servlet.PageConnexion</servlet-class>
@@ -37,14 +36,39 @@
         <servlet-name>SupprimerCompte</servlet-name>
         <url-pattern>/SupprimerCompte</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>PageModifierProfil</servlet-name>
+        <servlet-class>fr.eni.servlet.PageModifierProfil</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PageModifierProfil</servlet-name>
+        <url-pattern>/PageModifierProfil</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>PageMonProfil</servlet-name>
+        <servlet-class>fr.eni.servlet.PageMonProfil</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PageMonProfil</servlet-name>
+        <url-pattern>/PageMonProfil</url-pattern>
+    </servlet-mapping>
+
 <!--    SESSION-->
     <session-config>
         <session-timeout>5</session-timeout>
     </session-config>
 <!--WELCOME FILE-->
-
-
     <welcome-file-list>
         <welcome-file>PageAccueilEnchere</welcome-file>
     </welcome-file-list>
+
+    <servlet>
+        <servlet-name>PageVendreUnArticle</servlet-name>
+        <servlet-class>fr.eni.servlet.PageVendreUnArticle</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PageVendreUnArticle</servlet-name>
+        <url-pattern>/PageVendreUnArticle</url-pattern>
+    </servlet-mapping>
+
 </web-app>

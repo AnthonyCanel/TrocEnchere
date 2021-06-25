@@ -95,10 +95,10 @@ public class UtilisateurManager {
         if (util.getPseudo() == null || util.getPseudo().trim().equals("")){
             bE.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEURS_PSEUDO_ERREUR);
         }
-        if(util.getNom() == null || util.getNom().trim().equals("") || util.getNom().length()>30){
+        if(util.getNom() == null || util.getNom().trim().equals("") || util.getNom().length()>30 || util.getNom().contains("[0-9]")){
             bE.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEURS_NOM_ERREUR);
         }
-        if(util.getPrenom() == null || util.getPrenom().trim().equals("") || util.getPrenom().length() >30){
+        if(util.getPrenom() == null || util.getPrenom().trim().equals("") || util.getPrenom().length() >30 || util.getNom().contains("[0-9]")){
             bE.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEURS_PRENOM_ERREUR);
         }
         if(util.getEmail() == null || util.getEmail().trim().equals("") || util.getEmail().length() > 75
@@ -115,7 +115,7 @@ public class UtilisateurManager {
         if(util.getCodePostal() == null ||  util.getCodePostal().trim().equals("") || util.getCodePostal().length() > 10 || util.getCodePostal().contains("[a-zA-Z]")){
             bE.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEURS_CODEPOSTAL_ERREUR);
         }
-        if(util.getVille() == null || util.getVille().trim().equals("") || util.getVille().length() >30){
+        if(util.getVille() == null || util.getVille().trim().equals("") || util.getVille().length() >30 || util.getNom().contains("[0-9]")){
             bE.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEURS_VILLE_ERREUR);
         }
         if(util.getMotDePasse() == null || util.getMotDePasse().trim().equals("") || util.getMotDePasse().length() >30) {

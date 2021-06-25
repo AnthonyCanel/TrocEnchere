@@ -25,7 +25,7 @@
           <label>Pseudo : </label>
         </div>
         <div class="col mt-2 mb-2">
-          <label></label>
+          <label name="pseudo">${pseudo}</label>
         </div>
       </div>
       <div class="row">
@@ -33,7 +33,7 @@
           <label>Nom :</label>
         </div>
         <div class="col mt-2 mb-2">
-          <label></label>
+          <label name="nom">${nom}</label>
         </div>
       </div>
       <div class="row">
@@ -41,7 +41,7 @@
           <label>Prénom :</label>
         </div>
         <div class="col mt-2 mb-2">
-          <label></label>
+          <label name="prenom">${prenom}</label>
         </div>
       </div>
       <div class="row">
@@ -49,7 +49,7 @@
           <label>Email : </label>
         </div>
         <div class="col mt-2 mb-2">
-          <label></label>
+          <label name="email">${email}</label>
         </div>
       </div>
       <div class="row">
@@ -57,7 +57,7 @@
           <label>Téléphone : </label>
         </div>
         <div class="col mt-2 mb-2">
-          <label></label>
+          <label name="telephone">${telephone}</label>
         </div>
       </div>
       <div class="row">
@@ -65,7 +65,7 @@
           <label>Rue </label>
         </div>
         <div class="col mt-2 mb-2">
-          <label></label>
+          <label name="rue">${rue}</label>
         </div>
       </div>
       <div class="row">
@@ -73,7 +73,7 @@
           <label>Code postal </label>
         </div>
         <div class="col mt-2 mb-2">
-          <label>dgwdghwdgh</label>
+          <label name="CP">${CP}</label>
         </div>
       </div>
       <div class="row">
@@ -81,7 +81,7 @@
           <label>Ville </label>
         </div>
         <div class="col mt-2 mb-2">
-          <label></label>
+          <label name="ville">${ville}</label>
         </div>
       </div>
       <div class="row m-5 mt-3">

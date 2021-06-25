@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="pseudo">
+                                <input type="text" class="form-control" id="pseudo" required>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="nom">
+                                <input type="text" class="form-control" id="nom" required pattern="[a-z][A-Z]">
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="prenom">
+                                <input type="text" class="form-control" id="prenom" required pattern="[a-z][A-Z]">
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,10 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="email">
+                                <!--Vérification Mail abc@example.com # Minimum three characters
+                                    ABC.xyz@example.com # Accepts Caps as well.
+                                    abce.xyz@example.co.in # Accepts . before @-->
+                                <input type="email" class="form-control" id="email" required pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})">
                             </div>
                         </div>
                     </div>
@@ -83,7 +86,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="telephone">
+                                <input type="text" class="form-control" id="telephone" required pattern="^[0-9-.// |]$">
                             </div>
                         </div>
                     </div>
@@ -95,7 +98,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="rue">
+                                <input type="text" class="form-control" id="rue" required>
                             </div>
                         </div>
                     </div>
@@ -110,7 +113,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="codePostal">
+                                <input type="text" class="form-control" id="codePostal" required pattern="[0-9]">
                             </div>
                         </div>
                     </div>
@@ -122,7 +125,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="ville">
+                                <input type="text" class="form-control" id="ville" required pattern="^[A-Za-z'- ]">
                             </div>
                         </div>
                     </div>
@@ -137,7 +140,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="motPasseActuel">
+                                <input type="password" class="form-control" id="motPasseActuel">
                             </div>
                         </div>
                     </div>
@@ -162,7 +165,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="nouveauMotPasse">
+                                <input type="password" class="form-control" id="nouveauMotPasse">
                             </div>
                         </div>
                     </div>
@@ -174,7 +177,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" id="confirmationMotPasse">
+                                <input type="password" class="form-control" id="confirmationMotPasse" required>
                             </div>
                         </div>
                     </div>
@@ -189,7 +192,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <label></label>
+                                <label id="credit" name="credit"></label>
                             </div>
                         </div>
                     </div>

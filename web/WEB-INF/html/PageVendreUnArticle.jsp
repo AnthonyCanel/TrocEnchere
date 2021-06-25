@@ -119,13 +119,19 @@
 
         <div class=" row m-2">
             <div class="col">
-                <input type="button" value="Enregistrer">
+                <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
+                    <input type="button" value="Enregistrer">
+                </a>
             </div>
             <div class="col">
-                <input type="button" value="Annuler">
+                <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
+                    <input type="button" value="Annuler">
+                </a>
             </div>
             <div class="col">
-                <input type="button" value="Annuler la vente">
+                <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
+                    <input type="button" value="Annuler la vente">
+                </a>
             </div>
         </div>
     </div>

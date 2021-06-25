@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Accueil</title>
+    <title>Connexion</title>
 </head>
 <body class="container-fluid">
 <div class="row">
@@ -22,39 +22,49 @@
 </div>
 <div class="mx-auto" style="width: 400px;">
     <form action="PageConnexion" method="post">
-        <div class="row">
-
-            <div class="col mb-5">
-                Identifiant :
-            </div>
-            <div class="col mb-5">
-                <input type="text" name="Identifiant" placeholder="Identifiant">
+        <div class="shadow p-5">
+            <div class="row">
+                <div class="col-5 mb-3">
+                    Identifiant :
+                </div>
+                <div class="col-7 mb-3">
+                    <input type="text" name="Identifiant" placeholder="Identifiant">
+                </div>
             </div>
 
             <div class="row">
-                <div class="col mb-5">
+                <div class="col-5 mb-3">
                     Mot de passe :
                 </div>
-                <div class="col mb-5">
+                <div class="col-7 mb-3">
                     <input type="password" name="MotDePasse" placeholder="Mot de passe">
                 </div>
             </div>
 
             <div class="row">
-                <div class="col mb-5">
-                    <button type="submit" name="Connexion?Connexion=true" class="btn btn-outline-secondary btn-lg mb-3 mb-5">Connexion</button>
+                <div class="col-5 mb-3">
+                    <button type="submit" name="Connexion?Connexion=true" class="btn btn-outline-dark mb-3 mb-5">Connexion</button>
                 </div>
-                <div class="col mb-5">
-                    <div class="form-check">
-                        <input class="form-check-input mb-5" type="checkbox" value="" id="flexCheckDefault"/>
-                        <label class="form-check-label" for="flexCheckDefault"> Se souvenir de moi</label>
-                        <a href="">Mot de passe oublié</a>
+
+                <div class="col-7 mb-3">
+                    <div class="row form-check">
+                        <div class="col-2 ">
+                            <input class="form-check-input" type="checkbox" id="flexCheckDefault"/>
+                        </div>
+                        <div class="col-10 ms-2 ps-1 pe-0">
+                            <label class="form-check-label" for="flexCheckDefault"> Se souvenir de moi</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <a class="nav-link" href="">Mot de passe oublié</a>
                     </div>
                 </div>
             </div>
-            <div class="row mb-5">
-                <button type="button" name="CreerUnCompte?CreerUnCompte=true" class="btn btn-outline-secondary btn-lg mb-3"
-                        style="width: 400px">Créer un                    compte</button>
+            <div class="row mb-2">
+                <div class="d-flex justify-content-center">
+                    <button type="button" name="CreerUnCompte?CreerUnCompte=true" class="btn btn-outline-dark btn-lg "
+                            style="width: 400px">Créer un compte</button>
+                </div>
             </div>
 
         </div>
