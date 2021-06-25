@@ -13,5 +13,6 @@
 <body>
     <h1>Erreur 418</h1>
     <h2>I'm a teapot</h2>
+    <img width="80" height="80" src="${pageContext.request.contextPath}/img/Error_418.png" alt="I am a teapot">
 </body>
 </html>
