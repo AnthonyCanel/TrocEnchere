@@ -48,6 +48,7 @@ public class EnchereDAOJdbcImpl implements DAO<Enchere> {
 
     @Override
     public Enchere selectById(int id) {
+
         return null;
     }
 

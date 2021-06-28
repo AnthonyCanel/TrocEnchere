@@ -1,7 +1,6 @@
 package fr.eni.servlet;
 
-import fr.eni.bll.CategorieManager;
-import fr.eni.bo.Categorie;
+import fr.eni.bo.Utilisateur;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

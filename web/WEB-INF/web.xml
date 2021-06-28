@@ -5,6 +5,15 @@
          version="4.0">
 <!--    Servlets-->
     <servlet>
+        <servlet-name>PageCreerCompte</servlet-name>
+        <servlet-class>fr.eni.servlet.PageCreerCompte</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PageCreerCompte</servlet-name>
+        <url-pattern>/PageCreerCompte</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>PageAccueilEnchere</servlet-name>
         <servlet-class>fr.eni.servlet.PageAccueilEnchere</servlet-class>
     </servlet>
@@ -12,6 +21,7 @@
         <servlet-name>PageAccueilEnchere</servlet-name>
         <url-pattern>/PageAccueilEnchere</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>PageConnexion</servlet-name>
         <servlet-class>fr.eni.servlet.PageConnexion</servlet-class>
@@ -37,6 +47,14 @@
         <url-pattern>/SupprimerCompte</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>PageVendreUnArticle</servlet-name>
+        <servlet-class>fr.eni.servlet.PageVendreUnArticle</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PageVendreUnArticle</servlet-name>
+        <url-pattern>/PageVendreUnArticle</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>PageModifierProfil</servlet-name>
         <servlet-class>fr.eni.servlet.PageModifierProfil</servlet-class>
     </servlet>
@@ -52,14 +70,6 @@
         <servlet-name>PageMonProfil</servlet-name>
         <url-pattern>/PageMonProfil</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>PageVendreUnArticle</servlet-name>
-        <servlet-class>fr.eni.servlet.PageVendreUnArticle</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>PageVendreUnArticle</servlet-name>
-        <url-pattern>/PageVendreUnArticle</url-pattern>
-    </servlet-mapping>
     <!-- PARAMETRE GLOBAL-->
     <context-param>
         <param-name>MAX_AGE_COOKIE</param-name>
@@ -73,5 +83,24 @@
     <welcome-file-list>
         <welcome-file>PageAccueilEnchere</welcome-file>
     </welcome-file-list>
+
+    <!-- Filtre-->
+    <filter>
+        <filter-name>FiltreConnexion</filter-name>
+        <filter-class>fr.eni.ihm.FiltreConnexion</filter-class>
+    </filter>
+    <filter-mapping >
+        <filter-name>FiltreConnexion</filter-name>
+
+        <url-pattern>/PageAccueilEnchere</url-pattern>
+
+        <url-pattern>/PageConnexion</url-pattern>
+        <url-pattern>/PageCreerCompte</url-pattern>
+        <url-pattern>/PageModifierProfil</url-pattern>
+        <url-pattern>/PageMonProfil</url-pattern>
+        <url-pattern>/PageVendreUnArticle</url-pattern>
+        <url-pattern>/SupprimerCompte</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
 
 </web-app>
