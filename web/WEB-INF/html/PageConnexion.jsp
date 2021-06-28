@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -33,8 +32,9 @@
     </c:choose>
 </div>
 <div class="mx-auto" style="width: 400px;">
-    <form action="PageConnexion" method="post">
-        <div class="shadow p-5">
+
+    <div class="shadow p-5">
+        <form action="PageConnexion" method="post">
             <div class="row">
                 <div class="col-5 mb-3">
                     Identifiant :
@@ -76,16 +76,20 @@
                     </div>
                 </div>
             </div>
+        </form>
+        <form action="PageCreerCompte" method="get">
             <div class="row mb-2">
                 <div class="d-flex justify-content-center">
-                    <button type="button" name="CreerUnCompte?CreerUnCompte=true" class="btn btn-outline-dark btn-lg "
+                    <button type="submit" name="CreerUnCompte" class="btn btn-outline-dark btn-lg "
                             style="width: 400px">Créer un compte
                     </button>
                 </div>
             </div>
+        </form>
 
-        </div>
-    </form>
+    </div>
+
+
 </div>
 </body>
 </html>

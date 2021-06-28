@@ -208,22 +208,24 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row mb-3">
-                <div class="col  d-flex justify-content-center">
-                    <input type="hidden" name="action" value="valider"/>
-                    <a href="${pageContext.request.contextPath}/PageMonProfil">
-
-                        <button type="submit" name="valider?valider=true" class="btn btn-outline-dark">Enregistrer
-                        </button>
-                    </a>
-                </div>
-                <div class="col  d-flex justify-content-center">
-                    <button type="button" name="effacer" class="btn btn-outline-dark">Supprimer mon compte</button>
-                </div>
-            </div>
         </div>
     </form>
+    <div class="row mb-3">
+        <div class="col  d-flex justify-content-center">
+            <input type="hidden" name="action" value="valider"/>
+            <a href="${pageContext.request.contextPath}/PageMonProfil">
+                <button type="submit" name="button" class="btn btn-outline-dark" value="valider">Enregistrer</button>
+            </a>
+        </div>
+        <form method="post" action="<%=request.getContextPath()%>/PageModifierProfil">
+        <div class="col  d-flex justify-content-center">
+            <input type="hidden" name="action" value="supprimer"/>
+            <a href="${pageContext.request.contextPath}/PageModifierProfil">
+                <button type="submit" name="button" class="btn btn-outline-dark" value="supprimer">Supprimer mon compte</button>
+            </a>
+        </div>
+        </form>
+    </div>
 </div>
 </body>
 </html>

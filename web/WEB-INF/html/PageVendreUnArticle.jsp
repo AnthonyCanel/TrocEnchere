@@ -1,4 +1,5 @@
 <%@ page import="fr.eni.bo.Categorie" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -11,7 +12,7 @@
 </head>
 <body class="container-fluid">
 <header class="row">
-    <div class="col-4">
+    <div class="col">
         <a class="btn btn-white m-5 mt-3" href="${pageContext.request.contextPath}/PageAccueilEnchere">
             <h1>ENI Enchère</h1>
         </a>
