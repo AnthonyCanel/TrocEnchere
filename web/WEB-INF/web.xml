@@ -70,6 +70,14 @@
         <servlet-name>PageMonProfil</servlet-name>
         <url-pattern>/PageMonProfil</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>PageEncherir</servlet-name>
+        <servlet-class>fr.eni.servlet.PageEncherir</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PageEncherir</servlet-name>
+        <url-pattern>/PageEncherir</url-pattern>
+    </servlet-mapping>
     <!-- PARAMETRE GLOBAL-->
     <context-param>
         <param-name>MAX_AGE_COOKIE</param-name>
