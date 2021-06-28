@@ -12,6 +12,10 @@ public class UtilisateurManager {
     private DAO utilisateurDao;
     private static BusinessException businessException = new BusinessException();
 
+    public UtilisateurManager() {
+        utilisateurDao = DAOFactory.getUtilisateurDAO();
+    }
+
     public Utilisateur getUtilisateurExiste(String pseudo, String pwd) throws BusinessException {
         Utilisateur util = null;
         //TODO vérifier que les champs sont remplis
@@ -21,9 +25,6 @@ public class UtilisateurManager {
         return util;
     }
 
-    public UtilisateurManager() {
-        utilisateurDao = DAOFactory.getUtilisateurDAO();
-    }
 
     /**
      * Choisir un utilisateur en fonction de son identifiant

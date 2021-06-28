@@ -1,11 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ajouhanneau2021
-  Date: 24/06/2021
-  Time: 15:12
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <!--BOOTSTRAP CSS-->
@@ -15,10 +9,10 @@
 </head>
 <body>
 <header>
-    <div class="col d-flex">
-        <h1 class="m-5 mt-3">ENI-Enchères</h1>
-    </div>
-    <div class="col d-flex m-5 mt-3"> <!--Affichage de la barre de navigation en fonction de l'état de connexion-->
+    <div class="row">
+        <div class="col">
+            <h1 class="m-5 mt-3">ENI-Enchères</h1>
+        </div>
         <c:choose>
             <c:when test="${sessionScope.utilisateur != null}">
                 <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
@@ -217,8 +211,11 @@
 
             <div class="row mb-3">
                 <div class="col  d-flex justify-content-center">
+                    <input type="hidden" name="action" value="valider"/>
                     <a href="${pageContext.request.contextPath}/PageMonProfil">
-                        <button type="submit" name="valider" class="btn btn-outline-dark">Enregistrer</button>
+
+                        <button type="submit" name="valider?valider=true" class="btn btn-outline-dark">Enregistrer
+                        </button>
                     </a>
                 </div>
                 <div class="col  d-flex justify-content-center">
@@ -227,6 +224,18 @@
             </div>
         </div>
     </form>
+
+    <div class="col  d-flex justify-content-center">
+        <input type="hidden" name="action" value="supprimer"/>
+        <a href="${pageContext.request.contextPath}/PageModifierProfil">
+
+            <button type="button" name="supprimer?supprimer=true" class="btn btn-outline-dark">Supprimer mon compte
+            </button>
+        </a>
+    </div>
+
+
+
 </div>
 </body>
 </html>

@@ -55,6 +55,14 @@
         <url-pattern>/PageVendreUnArticle</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>PageModifierProfil</servlet-name>
+        <servlet-class>fr.eni.servlet.PageModifierProfil</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PageModifierProfil</servlet-name>
+        <url-pattern>/PageModifierProfil</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>PageMonProfil</servlet-name>
         <servlet-class>fr.eni.servlet.PageMonProfil</servlet-class>
     </servlet>
@@ -62,7 +70,11 @@
         <servlet-name>PageMonProfil</servlet-name>
         <url-pattern>/PageMonProfil</url-pattern>
     </servlet-mapping>
-
+    <!-- PARAMETRE GLOBAL-->
+    <context-param>
+        <param-name>MAX_AGE_COOKIE</param-name>
+        <param-value>2147483647</param-value>
+    </context-param>
 <!--    SESSION-->
     <session-config>
         <session-timeout>5</session-timeout>
