@@ -70,6 +70,11 @@
         <servlet-name>PageMonProfil</servlet-name>
         <url-pattern>/PageMonProfil</url-pattern>
     </servlet-mapping>
+    <!--ERROR-->
+<!--    <error-page>-->
+<!--        <error-code>418</error-code>-->
+<!--        <location>/erreur418.jsp</location>-->
+<!--    </error-page>-->
     <!-- PARAMETRE GLOBAL-->
     <context-param>
         <param-name>MAX_AGE_COOKIE</param-name>
