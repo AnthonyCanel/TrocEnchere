@@ -11,21 +11,19 @@
 <body>
 <header>
     <div class="row">
-        <div class="col-6">
+        <div class="col">
             <a class="btn btn-white m-5 mt-3" href="${pageContext.request.contextPath}/PageAccueilEnchere">
                 <h1>ENI Enchère</h1>
             </a>
         </div>
-        <div class="col-6">
-            <c:choose>
-                <c:when test="${sessionScope.utilisateur != null}">
-                    <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
-                </c:when>
-                <c:otherwise>
-                    <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
-                </c:otherwise>
-            </c:choose>
-        </div>
+        <c:choose>
+            <c:when test="${sessionScope.utilisateur != null}">
+                <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
+            </c:when>
+            <c:otherwise>
+                <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
+            </c:otherwise>
+        </c:choose>
     </div>
 </header>
 <div class="container-xl d-flex justify-content-center">

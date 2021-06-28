@@ -46,6 +46,14 @@
         <url-pattern>/PageVendreUnArticle</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>PageModifierProfil</servlet-name>
+        <servlet-class>fr.eni.servlet.PageModifierProfil</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PageModifierProfil</servlet-name>
+        <url-pattern>/PageModifierProfil</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>PageMonProfil</servlet-name>
         <servlet-class>fr.eni.servlet.PageMonProfil</servlet-class>
     </servlet>

@@ -3,7 +3,8 @@
 <html>
 <head>
     <title>Page Enchérir</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body class="container-fluid">
 <header class=" row m-2">
@@ -101,7 +102,8 @@
                         <input type="number" id="maProposition" min="0" max="150">
                     </div>
                     <div class="col">
-                        <a href="${pageContext.request.contextPath}/PageAccueilEnchere"><input type="button" value="Enchérir"></a>
+                        <a href="${pageContext.request.contextPath}/PageAccueilEnchere"><input type="button"
+                                                                                               value="Enchérir"></a>
                     </div>
                 </div>
             </div>

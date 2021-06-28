@@ -1,24 +1,19 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ajouhanneau2021
-  Date: 24/06/2021
-  Time: 15:12
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <!--BOOTSTRAP CSS-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Modifier Profil</title>
 </head>
 <body>
 <header>
-    <div class="col d-flex">
-        <h1 class="m-5 mt-3">ENI-Enchères</h1>
-    </div>
-    <div class="col d-flex m-5 mt-3"> <!--Affichage de la barre de navigation en fonction de l'état de connexion-->
+    <div class="row">
+        <div class="col">
+            <h1 class="m-5 mt-3">ENI-Enchères</h1>
+        </div>
         <c:choose>
             <c:when test="${sessionScope.utilisateur != null}">
                 <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
@@ -53,7 +48,8 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="nom" id="nom" value="${nom}" required pattern="[A-Za-z]{1,30}">
+                                <input class="w-100" type="text" name="nom" id="nom" value="${nom}" required
+                                       pattern="[A-Za-z]{1,30}">
                             </div>
                         </div>
                     </div>
@@ -68,7 +64,8 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="prenom" id="prenom" value="${prenom}" required pattern="[A-Za-z]{1,30}">
+                                <input class="w-100" type="text" name="prenom" id="prenom" value="${prenom}" required
+                                       pattern="[A-Za-z]{1,30}">
                             </div>
                         </div>
                     </div>
@@ -102,7 +99,8 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="telephone" id="telephone" value="${telephone}" required pattern="^[0-9-.// |]{1,15}">
+                                <input class="w-100" type="text" name="telephone" id="telephone" value="${telephone}"
+                                       required pattern="^[0-9-.// |]{1,15}">
                             </div>
                         </div>
                     </div>
@@ -129,7 +127,8 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="CP" id="codePostal" value="${CP}" required pattern="[0-9]{1,5}">
+                                <input class="w-100" type="text" name="CP" id="codePostal" value="${CP}" required
+                                       pattern="[0-9]{1,5}">
                             </div>
                         </div>
                     </div>
@@ -141,7 +140,8 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="ville" id="ville" value="${ville}" required pattern="^[A-Za-z'- ]{1,30}">
+                                <input class="w-100" type="text" name="ville" id="ville" value="${ville}" required
+                                       pattern="^[A-Za-z'- ]{1,30}">
                             </div>
                         </div>
                     </div>
