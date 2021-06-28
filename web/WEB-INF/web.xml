@@ -45,17 +45,20 @@
         <servlet-name>PageVendreUnArticle</servlet-name>
         <url-pattern>/PageVendreUnArticle</url-pattern>
     </servlet-mapping>
-
-    <!--    SESSION-->
+    <servlet>
+        <servlet-name>PageMonProfil</servlet-name>
+        <servlet-class>fr.eni.servlet.PageMonProfil</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PageMonProfil</servlet-name>
+        <url-pattern>/PageMonProfil</url-pattern>
+    </servlet-mapping>
+<!--    SESSION-->
     <session-config>
         <session-timeout>5</session-timeout>
     </session-config>
 <!--WELCOME FILE-->
-
-
     <welcome-file-list>
         <welcome-file>PageAccueilEnchere</welcome-file>
     </welcome-file-list>
-
-
 </web-app>

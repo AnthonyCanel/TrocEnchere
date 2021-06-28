@@ -91,7 +91,7 @@
             <div class="col bg-light shadow-sm p-3 m-3 d-flex align-items-center">
                 <div class="w-100 row">
                     <div class="col-3">
-                        <img src="img/fromage.jpg"></img>
+                        <img src="img/saucisson.jpg"></img>
                     </div>
                     <div class="col-9">
                         <div>
