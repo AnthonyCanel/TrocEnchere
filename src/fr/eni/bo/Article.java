@@ -19,6 +19,19 @@ public class Article {
     private Categorie categorie;
     private Retrait retrait;
     private int vues;
+    private Enchere enchere;
+
+    public Article(int noArticle,String nomArticle, int articlePrixInitial, Date articleDateDebutEncheres,int encherePrix,String nomUtilisateur,int noUtilisateur,int noCategorie,String categorieLabelle){
+        this.noArticle=noArticle;
+        this.nomArticle= nomArticle;
+        this.prixInitial = articlePrixInitial;
+        this.dateDebutEncheres = articleDateDebutEncheres;
+        this.enchere.setMontantEnchere(encherePrix);
+        this.utilisateur.setNom(nomUtilisateur);
+        this.utilisateur.setNoUtilisateur(noUtilisateur);
+        this.categorie.setNoCategorie(noCategorie);
+        this.categorie.setLibelle(categorieLabelle);
+    }
 
     public Article() {
 

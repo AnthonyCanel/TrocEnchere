@@ -9,11 +9,18 @@ import fr.eni.dal.DAOFactory;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ArticleManager {
     private DAO articleDao;
+
+    public List<Article> ventesNonDebutees(){
+
+        ArticleDAOJdbcImpl adao = new ArticleDAOJdbcImpl();
+        List<Article> listArticle =  adao.selectByDateInfDebEnchere();
+
+        return listArticle;
+    }
 
     public ArticleManager() {
         articleDao = DAOFactory.getArticleDAO();

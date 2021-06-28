@@ -60,6 +60,14 @@ public class CodesResultatDAL {
      */
     public static final int IMPORT_DAL_ENCHERE_GAGNE = 10051;
     /**
+     * Import des ventes no débutées
+     */
+    public static final int IMPORT_VENTES_NON_DEBUTEES = 10052;
+    /**
+     * Import des ventes terminées impossible
+     */
+    public static final int IMPORT_VENTES_TERMINEES = 10053;
+    /**
      * Echec de la lecture de la table Articles
      */
     public static final int LECTURE_ARTICLE_ECHEC =10100;
