@@ -26,7 +26,7 @@
 </header>
 <div class="container shadow p-4">
     <h1 class="row d-flex justify-content-center mb-5 p-2">Mon Profil</h1>
-    <form action="">
+    <form action="PageCreerCompte" method="post">
         <div class="p-3">
             <div class="row mb-3">
                 <div class="col">
@@ -154,11 +154,11 @@
                     <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
                         <button class="btn btn-outline-secondary">Annuler</button>
                     </a>
-
                 </div>
             </div>
         </div>
     </form>
+    <label>${message}</label>
 </div>
 </body>
 </html>

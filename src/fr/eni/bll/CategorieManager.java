@@ -17,7 +17,7 @@ public class CategorieManager {
         categorieDAO = DAOFactory.getCategorieDAO();
     }
 
-    public List<Categorie> AfficherCategories(int no_categorie, String libelle){
+    public List<Categorie> AfficherCategories(){
         List<Categorie> listeCategorie = new ArrayList<>();
         try {
             listeCategorie = categorieDAO.selectAll();

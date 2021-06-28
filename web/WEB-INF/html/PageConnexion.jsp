@@ -65,7 +65,7 @@
                 <div class="col-7 mb-3">
                     <div class="row form-check">
                         <div class="col-2 ">
-                            <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="souvenir"/>
+                            <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="souvenir" ${(cookie.utilisateurCookie.value != null) ? "checked" : ""}/>
                         </div>
                         <div class="col-10 ms-2 ps-1 pe-0">
                             <label class="form-check-label" for="flexCheckDefault"> Se souvenir de moi</label>

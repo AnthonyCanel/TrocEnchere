@@ -3,12 +3,13 @@
 <html>
 <head>
     <title>Création Compte</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script language="JavaScript" type="text/javascript" src="Scripts\monscript.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <%
+        List<Categorie> listeCategories = (List<Categorie>) request.getAttribute("categorie");
+    %>
 </head>
 <body class="container-fluid">
-<header class=" row">
+<header class="row">
     <div class="col-4">
         <a class="btn btn-white m-5 mt-3" href="${pageContext.request.contextPath}/PageAccueilEnchere">
             <h1>ENI Enchère</h1>
@@ -46,7 +47,7 @@
                 <label for="description">Description :</label>
             </div>
             <div class="col-8">
-                <input type="area" id="description" row m-2s="5" cols="33">
+                <input type="area" id="description"  row m-2s="5" cols="33">
             </div>
         </div>
 
@@ -56,8 +57,14 @@
             </div>
             <div class="col-8">
                 <select id="catégorie">
-                    <option value=""> -- Choisir une catégorie --</option>
-
+                    <option value="" name="combo"> -- Choisir une catégorie --</option>
+                    <% //plus simple de construire la comboBox
+                        if (listeCategories != null) {
+                            for(Categorie chaqueCategorie : listeCategories){
+                                out.print("<option value=" + chaqueCategorie.getLibelle() + ">" + chaqueCategorie.getLibelle() + "</option>");
+                            }
+                        }
+                    %>
                 </select>
             </div>
         </div>

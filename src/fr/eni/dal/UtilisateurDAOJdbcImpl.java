@@ -11,7 +11,6 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
     private static BusinessException businessException = new BusinessException();
     private String SELECTALL="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
     private String SELECTBYID = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
-    private String CONNEXION = "SELECT nom, prenom WHERE pseudo=? AND mot_de_passe = ?";
     private String UPDATE_UTILISATEURS= "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, administrateur = ? WHERE no_utilisateur = ?";
     private String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
     private String INSERT= "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
@@ -183,6 +182,12 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
         }
     }
 
+    /**
+     * Vérification de l'unicité du courriel de l'utilisateur
+     * @param email
+     * @return
+     * @throws BusinessException
+     */
     @Override
     public boolean verifMail(String email) throws BusinessException {
         boolean unique = false;
@@ -201,6 +206,12 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
         return unique;
     }
 
+    /**
+     * Vérification de l'unicité du pseudo de l'utilisateur
+     * @param pseudo
+     * @return
+     * @throws BusinessException
+     */
     @Override
     public boolean verifUtilisateur(String pseudo) throws BusinessException {
         boolean unique = false;

@@ -40,7 +40,7 @@ public class PageConnexion extends HttpServlet {
         if(souvenir != null){
             //création cookie avec encodage UTF-8
             Cookie c = new Cookie("utilisateurCookie", java.net.URLDecoder.decode(identifiant, "UTF-8"));
-            c.setMaxAge(2147483647); //valeur maxi en int //TODO mettre en paramètre XML
+            c.setMaxAge(Integer.parseInt(getServletContext().getInitParameter("MAX_AGE_COOKIE"))); //valeur maxi en int
             c.setHttpOnly(true);
             resp.addCookie(c);
         }

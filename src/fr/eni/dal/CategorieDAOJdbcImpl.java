@@ -9,10 +9,10 @@ import java.util.List;
 
 public class CategorieDAOJdbcImpl implements DAO<Categorie> {
 
-    private static final String SELECT_ALL = " SELECT no_categorie, libelle FROM TROC_ENCHERES";
+    private static final String SELECT_ALL = " SELECT no_categorie, libelle FROM CATEGORIES";
     private static final String INSERT_CATEGORIES = "INSERT into CATEGORIES(no_categorie, libelle) VALUES(?,?)";
-    private static final String DELETE_CATEGORIES = "delete from ARTICLES where id=?";
-    private static final String UPDATE_CATEGORIES = "UPDATE ARTICLES SET libelle = ?, where id=?";
+    private static final String DELETE_CATEGORIES = "delete from CATEGORIES where no_categorie=?";
+    private static final String UPDATE_CATEGORIES = "UPDATE CATEGORIES SET libelle = ?, where no_categorie=?";
 
     /**
      * Récupère les catégories et leur numéros
@@ -27,9 +27,9 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
             ResultSet rs = pstmt.executeQuery(SELECT_ALL);
             while (rs.next()) {
                 listeCategorie.add(new Categorie(rs.getInt("no_categorie"),
-                        rs.getString("libelle").toString()));
+                                                 rs.getString("libelle")));
             }
-            return null;
+            return listeCategorie;
         } catch (Exception e) {
             e.printStackTrace();
             BusinessException businessException = new BusinessException();
