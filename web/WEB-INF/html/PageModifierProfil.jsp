@@ -224,18 +224,6 @@
             </div>
         </div>
     </form>
-
-    <div class="col  d-flex justify-content-center">
-        <input type="hidden" name="action" value="supprimer"/>
-        <a href="${pageContext.request.contextPath}/PageModifierProfil">
-
-            <button type="button" name="supprimer?supprimer=true" class="btn btn-outline-dark">Supprimer mon compte
-            </button>
-        </a>
-    </div>
-
-
-
 </div>
 </body>
 </html>

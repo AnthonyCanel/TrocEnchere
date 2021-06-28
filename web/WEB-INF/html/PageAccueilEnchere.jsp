@@ -1,3 +1,5 @@
+<%@ page import="fr.eni.bo.Categorie" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="fr">
@@ -67,7 +69,7 @@
                             <option selected>Toutes</option>
                             <% //plus simple de construire la comboBox
                                 if (listeCategories != null) {
-                                    for(Categorie chaqueCategorie : listeCategories){
+                                    for (Categorie chaqueCategorie : listeCategories) {
                                         out.print("<option value=" + chaqueCategorie.getLibelle() + ">" + chaqueCategorie.getLibelle() + "</option>");
                                     }
                                 }
@@ -93,51 +95,59 @@
         </form>
         <div class="row ">
             <!-- la boucle est a mettre ici-->
-            <div class="col bg-light shadow-sm p-3 m-3 d-flex align-items-center">
-                <div class="w-100 row">
-                    <div class="col-3">
-                    </div>
-                    <div class="col-9">
-                        <div>
-                            <div class="row">
-                                <h5 class="font-weight-bold">Saucisson</h5>
-                            </div>
-                            <div class="row">
-                                <label>Prix : 654 banane</label>
-                            </div>
-                            <div class="row">
-                                <label>Fin de l'enchère : 654 banane</label>
-                            </div>
-                            <div class="row">
-                                <label>Vendeur : 654 banane</label>
+
+
+                <div class="col bg-light shadow-sm p-3 m-3 d-flex align-items-center">
+                    <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir">
+                    <div class="w-100 row">
+                        <div class="col-3">
+                        </div>
+                        <div class="col-9">
+                            <div>
+                                <div class="row">
+                                    <h5 class="font-weight-bold">Saucisson</h5>
+                                </div>
+                                <div class="row">
+                                    <label>Prix : 654 banane</label>
+                                </div>
+                                <div class="row">
+                                    <label>Fin de l'enchère : 654 banane</label>
+                                </div>
+                                <div class="row">
+                                    <label>Vendeur : 654 banane</label>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
-            </div>
+
+
             <!-- fin de la boucle-->
             <!-- article complementaire a enlever une fois la boucle faite-->
             <div class="col bg-light shadow-sm p-3 m-3 d-flex align-items-center">
-                <div class="w-100 row">
-                    <div class="col-3">
-                    </div>
-                    <div class="col-9">
-                        <div>
-                            <div class="row">
-                                <h5 class="font-weight-bold">Comté</h5>
-                            </div>
-                            <div class="row">
-                                <label>Prix : 654 banane</label>
-                            </div>
-                            <div class="row">
-                                <label>Fin de l'enchère : 654 banane</label>
-                            </div>
-                            <div class="row">
-                                <label>Vendeur : 654 banane</label>
+                <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir">
+                    <div class="w-100 row">
+                        <div class="col-3">
+                        </div>
+                        <div class="col-9">
+                            <div>
+                                <div class="row">
+                                    <h5 class="font-weight-bold">Saucisson</h5>
+                                </div>
+                                <div class="row">
+                                    <label>Prix : 654 banane</label>
+                                </div>
+                                <div class="row">
+                                    <label>Fin de l'enchère : 654 banane</label>
+                                </div>
+                                <div class="row">
+                                    <label>Vendeur : 654 banane</label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <!-- fin de l'article complementaire a enlever une fois la boucle faite-->
         </div>
