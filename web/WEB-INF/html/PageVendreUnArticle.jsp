@@ -12,7 +12,7 @@
 </head>
 <body class="container-fluid">
 <header class="row">
-    <div class="col-4">
+    <div class="col">
         <a class="btn btn-white m-5 mt-3" href="${pageContext.request.contextPath}/PageAccueilEnchere">
             <h1>ENI Enchère</h1>
         </a>
