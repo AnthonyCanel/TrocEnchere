@@ -92,10 +92,6 @@
     <filter-mapping >
         <filter-name>FiltreConnexion</filter-name>
 
-        <url-pattern>/PageAccueilEnchere</url-pattern>
-
-        <url-pattern>/PageConnexion</url-pattern>
-        <url-pattern>/PageCreerCompte</url-pattern>
         <url-pattern>/PageModifierProfil</url-pattern>
         <url-pattern>/PageMonProfil</url-pattern>
         <url-pattern>/PageVendreUnArticle</url-pattern>

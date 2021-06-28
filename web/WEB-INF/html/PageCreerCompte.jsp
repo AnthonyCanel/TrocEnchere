@@ -3,7 +3,8 @@
 <html>
 <head>
     <title>Page créer compte </title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body class="container-fluid">
 <header>
@@ -34,7 +35,7 @@
                             <label for="pseudo">Pseudo :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" id="pseudo">
+                            <input type="text" name="pseudo" id="pseudo">
                         </div>
                     </div>
                 </div>
@@ -44,7 +45,7 @@
                             <label for="nom">Nom : </label>
                         </div>
                         <div class="col-8">
-                            <input type="text" id="nom">
+                            <input type="text" name="nom" id="nom">
                         </div>
                     </div>
                 </div>
@@ -57,7 +58,7 @@
                             <label for="prenom">Prenom :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" id="prenom">
+                            <input type="text" name="prenom" id="prenom">
                         </div>
                     </div>
                 </div>
@@ -67,7 +68,7 @@
                             <label for="email">Email :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" id="email">
+                            <input type="text" name="email" id="email">
                         </div>
                     </div>
                 </div>
@@ -80,7 +81,7 @@
                             <label for="tel">Téléhone :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" id="tel">
+                            <input type="text" name="tel" id="tel">
                         </div>
                     </div>
                 </div>
@@ -90,7 +91,7 @@
                             <label for="rue">Rue :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" id="rue">
+                            <input type="text" name="rue" id="rue">
                         </div>
                     </div>
                 </div>
@@ -103,7 +104,7 @@
                             <label for="CP">Code postal :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" id="CP">
+                            <input type="text" name="CP" id="CP">
                         </div>
                     </div>
                 </div>
@@ -113,7 +114,7 @@
                             <label for="ville">Ville :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" id="ville">
+                            <input type="text" name="ville" id="ville">
                         </div>
                     </div>
                 </div>
@@ -126,7 +127,7 @@
                             <label for="mdp">Mot de passe :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" id="mdp">
+                            <input type="text" name="mdp" id="mdp">
                         </div>
                     </div>
                 </div>
@@ -136,21 +137,22 @@
                             <label for="mdpC">Confirmation :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" id="mdpC">
+                            <input type="text" name="mdpC" id="mdpC">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row mt-5">
-                <h4 class="text-align-center mb-5 text-uppercase text-danger fw-bold d-flex justify-content-center" id="msg" name="msgError">Coucou</h4>
+                <h4 class="text-align-center mb-5 text-uppercase text-danger fw-bold d-flex justify-content-center"
+                    id="msg" name="msgError">Coucou</h4>
                 <div class="col mr-5 d-flex flex-row-reverse">
                     <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
-                        <button class="btn btn-outline-secondary">Créer</button>
+                        <button class="btn btn-outline-secondary" name="Creer?Creer=creer" >Créer</button>
                     </a>
                 </div>
                 <div class="col ml-5 ">
                     <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
-                        <button class="btn btn-outline-secondary">Annuler</button>
+                        <button class="btn btn-outline-secondary" name="Annuler?Annuler=annuler">Annuler</button>
                     </a>
                 </div>
             </div>
