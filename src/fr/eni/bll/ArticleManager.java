@@ -14,6 +14,28 @@ import java.util.List;
 public class ArticleManager {
     private DAO articleDao;
 
+
+
+    public ArticleManager() {
+        articleDao = DAOFactory.getArticleDAO();
+    }
+
+    /**
+     * retourne toutes les ventes Terminées (etat enchere 'Vendu') auquelles l'utilisateur a participé de la plus récente a la plus ancienne.
+     * @param idUtilisateur
+     * @return
+     */
+    public List<Article> ventesTerminées(int idUtilisateur){
+        ArticleDAOJdbcImpl adao = new ArticleDAOJdbcImpl();
+        List<Article> listArticles = adao.selectByIdDateEnchereEtatEnchere(idUtilisateur);
+        return listArticles;
+
+    }
+
+    /**
+     * retourne les ventes non débutées
+     * @return une liste d'article
+     */
     public List<Article> ventesNonDebutees(){
 
         ArticleDAOJdbcImpl adao = new ArticleDAOJdbcImpl();
@@ -21,11 +43,6 @@ public class ArticleManager {
 
         return listArticle;
     }
-
-    public ArticleManager() {
-        articleDao = DAOFactory.getArticleDAO();
-    }
-
     /**
      * Recherche en étant connecté
      *
