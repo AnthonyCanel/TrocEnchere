@@ -26,10 +26,13 @@ public class FiltreConnexion implements Filter {
         Utilisateur util = new Utilisateur();
 
         if(session.getAttribute("utilisateur")!=null){
-            session.setAttribute("utilisateur",util);
+            isConnected.doFilter(req, servletResponse);
+        }else{
+            req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req,servletResponse);
         }
-        isConnected.doFilter(req, servletResponse);
-        System.out.println("je suis dans le filtre");
+
+
+
 //        req.getRequestDispatcher("PageAccueilEnchere").forward(req,servletResponse);
 
     }
