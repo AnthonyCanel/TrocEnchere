@@ -1,3 +1,5 @@
+<%@ page import="fr.eni.bo.Categorie" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="fr">
@@ -9,7 +11,9 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <%
+        List<Categorie> listeCategories = (List<Categorie>) request.getAttribute("categorie");
+    %>
     <title>Accueil</title>
 </head>
 <body>
@@ -56,11 +60,15 @@
                         <label>Catégorie :</label>
                     </div>
                     <div class="col-8">
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="combo">
+                            <option selected>Toutes</option>
+                            <% //plus simple de construire la comboBox
+                                if (listeCategories != null) {
+                                    for(Categorie chaqueCategorie : listeCategories){
+                                        out.print("<option value=" + chaqueCategorie.getLibelle() + ">" + chaqueCategorie.getLibelle() + "</option>");
+                                    }
+                                }
+                            %>
                         </select>
                     </div>
                 </div>

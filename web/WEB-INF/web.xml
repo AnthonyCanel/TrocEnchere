@@ -52,16 +52,6 @@
         <servlet-name>PageMonProfil</servlet-name>
         <url-pattern>/PageMonProfil</url-pattern>
     </servlet-mapping>
-
-<!--    SESSION-->
-    <session-config>
-        <session-timeout>5</session-timeout>
-    </session-config>
-<!--WELCOME FILE-->
-    <welcome-file-list>
-        <welcome-file>PageAccueilEnchere</welcome-file>
-    </welcome-file-list>
-
     <servlet>
         <servlet-name>PageVendreUnArticle</servlet-name>
         <servlet-class>fr.eni.servlet.PageVendreUnArticle</servlet-class>
@@ -70,5 +60,18 @@
         <servlet-name>PageVendreUnArticle</servlet-name>
         <url-pattern>/PageVendreUnArticle</url-pattern>
     </servlet-mapping>
+    <!-- PARAMETRE GLOBAL-->
+    <context-param>
+        <param-name>MAX_AGE_COOKIE</param-name>
+        <param-value>2147483647</param-value>
+    </context-param>
+<!--    SESSION-->
+    <session-config>
+        <session-timeout>5</session-timeout>
+    </session-config>
+<!--WELCOME FILE-->
+    <welcome-file-list>
+        <welcome-file>PageAccueilEnchere</welcome-file>
+    </welcome-file-list>
 
 </web-app>

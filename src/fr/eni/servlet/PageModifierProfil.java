@@ -25,7 +25,11 @@ public class PageModifierProfil extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        req.getParameter("supprimer");
+        req.setAttribute("page", req.getParameter("action"));
+        System.out.println(req.getParameter("action"));
+        System.out.println(req.getParameter("supprimer"));
+        //Récupère la session
         HttpSession session = req.getSession();
         util = (Utilisateur) session.getAttribute("utilisateur");
         //Si utilisateur est connecté
@@ -41,7 +45,7 @@ public class PageModifierProfil extends HttpServlet {
                 req.setAttribute("rue", utilEnCours.getRue());
                 req.setAttribute("CP", utilEnCours.getCodePostal());
                 req.setAttribute("ville", utilEnCours.getVille());
-                req.setAttribute("mdpa", utilEnCours.getMotDePasse());
+                req.setAttribute("mdp", utilEnCours.getMotDePasse()); // Ne pas afficher le message
                 req.setAttribute("credit",utilEnCours.getCredit());
             } catch (BusinessException e) {
                 e.printStackTrace();
@@ -59,43 +63,47 @@ public class PageModifierProfil extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //Récupère la session
-        HttpSession session = req.getSession();
-        util = (Utilisateur) session.getAttribute("utilisateur");
-        //Si utilisateur est connecté
-        if(session.getAttribute("utilisateur") != null ) {
-            //Récupération des différents champs afin de faire un update
-            int idUtilisateur = util.getNoUtilisateur();
-            String pseudo = req.getParameter("pseudo");
-            String nom = req.getParameter("nom");
-            String prenom = req.getParameter("prenom");
-            String email = req.getParameter("email");
-            String tel = req.getParameter("telephone");
-            String rue = req.getParameter("rue");
-            String cP = req.getParameter("CP");
-            String ville = req.getParameter("ville");
-            String motPasse = "";
-            //si mot de passe actuel différent de nouveau Mot de passe et que confirmation Mot de passe est rempli
-            if((req.getParameter("mdpa") != req.getParameter("nmdp")) && req.getParameter("cmdp") != ""){
-                if(req.getParameter("nmdp") == req.getParameter("cmdp")){
-                    motPasse = req.getParameter("nmdp");
-                }else{
-                    businessException.ajouterErreur(CodesResultatServlet.REGLE_UTILISATEUR_NOUVEAUMOTDEPASSE_ERREUR);
+            req.getParameter("supprimer");
+            req.setAttribute("page", req.getParameter("action"));
+            System.out.println(req.getParameter("action"));
+            //Récupère la session
+            HttpSession session = req.getSession();
+            util = (Utilisateur) session.getAttribute("utilisateur");
+            //Si utilisateur est connecté
+            if (session.getAttribute("utilisateur") != null) {
+                //Récupération des différents champs afin de faire un update
+                int idUtilisateur = util.getNoUtilisateur();
+                String pseudo = req.getParameter("pseudo");
+                String nom = req.getParameter("nom");
+                String prenom = req.getParameter("prenom");
+                String email = req.getParameter("email");
+                String tel = req.getParameter("telephone");
+                String rue = req.getParameter("rue");
+                String cP = req.getParameter("CP");
+                String ville = req.getParameter("ville");
+                String motPasse = "";
+                //si mot de passe actuel différent de nouveau Mot de passe et que confirmation Mot de passe est rempli
+                if ((req.getParameter("mdpa") != req.getParameter("nmdp")) && req.getParameter("cmdp") != "") {
+                    if (req.getParameter("nmdp") == req.getParameter("cmdp")) {
+                        motPasse = req.getParameter("nmdp");
+                    } else {
+                        businessException.ajouterErreur(CodesResultatServlet.REGLE_UTILISATEUR_NOUVEAUMOTDEPASSE_ERREUR);
+                    }
+                }
+                if (req.getParameter("nmdp") == "") {
+                    motPasse = req.getParameter("mdpa");
+                }
+                Boolean admin = false;
+                //Création de l'objet utilisateur
+                Utilisateur utilUpdate = new Utilisateur(idUtilisateur, pseudo, nom, prenom, email, tel, rue, cP, ville, motPasse, admin);
+                //Update
+                try {
+                    um.miseAJourUtilisateur(utilUpdate);
+                } catch (BusinessException e) {
+                    e.printStackTrace();
                 }
             }
-            if(req.getParameter("nmdp") == ""){
-                motPasse = req.getParameter("mdpa");
-            }
-            Boolean admin = false;
-            //Création de l'objet utilisateur
-            Utilisateur utilUpdate = new Utilisateur(idUtilisateur, pseudo, nom, prenom, email, tel, rue, cP, ville, motPasse, admin);
-            //Update
-            try {
-                um.miseAJourUtilisateur(utilUpdate);
-            } catch (BusinessException e) {
-                e.printStackTrace();
-            }
+            req.getRequestDispatcher("WEB-INF/html/PageMonProfil.jsp").forward(req, resp);
         }
-    req.getRequestDispatcher("WEB-INF/html/PageMonProfil.jsp").forward(req, resp);
-    }
+
 }
