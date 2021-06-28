@@ -10,7 +10,7 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/PageAccueilEnchere">Enchères</a>
                     <a class="nav-link" href="${pageContext.request.contextPath}/PageVendreUnArticle">Vendre un article</a>
                     <a class="nav-link" href="${pageContext.request.contextPath}/PageMonProfil">Mon profil</a>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/PageAccueilEnchere">Déconnexion</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/PageDeconnexion">Déconnexion</a>
                 </div>
             </div>
         </div>

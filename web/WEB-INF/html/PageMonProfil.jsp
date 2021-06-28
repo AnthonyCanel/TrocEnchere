@@ -94,7 +94,7 @@
       </div>
       <div class="row m-5 mt-3">
         <div class="col mt-2 mb-2">
-          <button type="button" class="btn btn-outline-dark">Modifier</button>
+          <a href="${pageContext.request.contextPath}/PageModifierProfil"><button type="button" class="btn btn-outline-dark">Modifier</button></a>
         </div>
       </div>
     </div>
