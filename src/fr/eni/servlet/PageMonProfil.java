@@ -20,20 +20,24 @@ public class PageMonProfil extends HttpServlet {
         //Récupère la session
         HttpSession session = req.getSession();
         util = (Utilisateur) session.getAttribute("utilisateur");
-
         //Si utilisateur est connecté
         if(session.getAttribute("utilisateur") != null ) {
-            //Mise en place des informations récupérées
-            req.setAttribute("pseudo", util.getPseudo());
-            req.setAttribute("nom", util.getNom());
-            req.setAttribute("prenom", util.getPrenom());
-            req.setAttribute("email", util.getEmail());
-            req.setAttribute("telephone", util.getTelephone());
-            req.setAttribute("rue", util.getRue());
-            req.setAttribute("CP", util.getCodePostal());
-            req.setAttribute("ville", util.getVille());
-            //Affichage de la page
-            req.getRequestDispatcher("WEB-INF/html/PageMonProfil.jsp").forward(req, resp);
+            try {
+                Utilisateur utilEnCours = um.choisirUtilisateur(util.getNoUtilisateur());
+                //Mise en place des informations récupérées
+                req.setAttribute("pseudo", utilEnCours.getPseudo());
+                req.setAttribute("nom", utilEnCours.getNom());
+                req.setAttribute("prenom", utilEnCours.getPrenom());
+                req.setAttribute("email", utilEnCours.getEmail());
+                req.setAttribute("telephone", utilEnCours.getTelephone());
+                req.setAttribute("rue", utilEnCours.getRue());
+                req.setAttribute("CP", utilEnCours.getCodePostal());
+                req.setAttribute("ville", utilEnCours.getVille());
+                //Affichage de la page
+                req.getRequestDispatcher("WEB-INF/html/PageMonProfil.jsp").forward(req, resp);
+            } catch (BusinessException e) {
+                e.printStackTrace();
+            }
         }else{
             req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
         }
@@ -41,7 +45,6 @@ public class PageMonProfil extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("LUT");
-        doGet(req, resp);
+        this.doGet(req, resp);
     }
 }

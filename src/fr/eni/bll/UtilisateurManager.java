@@ -14,7 +14,7 @@ public class UtilisateurManager {
 
     public Utilisateur getUtilisateurExiste(String pseudo, String pwd) throws BusinessException {
         Utilisateur util = null;
-
+        //TODO vérifier que les champs sont remplis
         this.utilisateurDao = DAOFactory.getUtilisateurDAO();
         util = utilisateurDao.getUtilisateur(pseudo, pwd);
 
@@ -67,14 +67,12 @@ public class UtilisateurManager {
     }
 
     /**
-     *
+     * Mise à jour utilisateur
      * @param util
      * @throws BusinessException
      */
     public void miseAJourUtilisateur(Utilisateur util) throws BusinessException {
         validerCoordonnees(util, businessException);
-        verifUtilisateur(util.getPseudo(),businessException);
-        verifEmail(util.getEmail(),businessException);
         if(!businessException.hasErreurs()){
             utilisateurDao.update(util);
         }else{
@@ -123,6 +121,12 @@ public class UtilisateurManager {
         }
     }
 
+    /**
+     * Vérification que le Pseudo est unique dans la base de données
+     * @param pseudo
+     * @param bE
+     * @throws BusinessException
+     */
     private void verifUtilisateur(String pseudo, BusinessException bE) throws BusinessException {
         boolean utilisateurExiste = utilisateurDao.verifUtilisateur(pseudo);
         if(utilisateurExiste){
@@ -130,6 +134,12 @@ public class UtilisateurManager {
         }
     }
 
+    /**
+     * Vérification de l'unicité du courriel
+     * @param email
+     * @param bE
+     * @throws BusinessException
+     */
     private void verifEmail(String email, BusinessException bE) throws BusinessException {
         boolean emailExiste = utilisateurDao.verifMail(email);
         if(emailExiste){

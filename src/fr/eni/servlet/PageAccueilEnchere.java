@@ -1,5 +1,6 @@
 package fr.eni.servlet;
 
+import fr.eni.bll.UtilisateurManager;
 import fr.eni.bo.Utilisateur;
 
 import javax.servlet.ServletException;
@@ -23,6 +24,7 @@ public class PageAccueilEnchere extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String achatVente = req.getParameter("AchatsVentes");
         req.setAttribute("etat", achatVente);
+
         this.doGet(req, resp);
     }
 }

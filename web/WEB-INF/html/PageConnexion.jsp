@@ -1,4 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -14,10 +16,22 @@
 </head>
 <body class="container-fluid">
 <div class="row">
-    <div class="d-flex justify-content-around">
-        <div class="d-flex mb-5">
-            <h1>ENI-Encheres</h1>
+    <div class="col-6 p-0">
+        <div class="m-5 mt-3">
+            <a class="btn btn-white" href="${pageContext.request.contextPath}/PageAccueilEnchere">
+                <h1>ENI Enchère</h1>
+            </a>
         </div>
+    </div>
+    <div class="col-6">
+        <c:choose>
+            <c:when test="${sessionScope.utilisateur != null}">
+                <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
+            </c:when>
+            <c:otherwise>
+                <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 <div class="mx-auto" style="width: 400px;">
@@ -28,7 +42,7 @@
                     Identifiant :
                 </div>
                 <div class="col-7 mb-3">
-                    <input type="text" name="Identifiant" placeholder="Identifiant">
+                    <input type="text" name="Identifiant" placeholder="Identifiant" value="${(cookie.utilisateurCookie.value != null) ? cookie.utilisateurCookie.value : ""}" required>
                 </div>
             </div>
 
@@ -37,7 +51,7 @@
                     Mot de passe :
                 </div>
                 <div class="col-7 mb-3">
-                    <input type="password" name="MotDePasse" placeholder="Mot de passe">
+                    <input type="password" name="MotDePasse" placeholder="Mot de passe" required>
                 </div>
             </div>
 
@@ -49,7 +63,7 @@
                 <div class="col-7 mb-3">
                     <div class="row form-check">
                         <div class="col-2 ">
-                            <input class="form-check-input" type="checkbox" id="flexCheckDefault"/>
+                            <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="souvenir"/>
                         </div>
                         <div class="col-10 ms-2 ps-1 pe-0">
                             <label class="form-check-label" for="flexCheckDefault"> Se souvenir de moi</label>
