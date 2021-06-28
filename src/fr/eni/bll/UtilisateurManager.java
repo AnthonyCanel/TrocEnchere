@@ -67,14 +67,12 @@ public class UtilisateurManager {
     }
 
     /**
-     *
+     * Mise à jour utilisateur
      * @param util
      * @throws BusinessException
      */
     public void miseAJourUtilisateur(Utilisateur util) throws BusinessException {
         validerCoordonnees(util, businessException);
-        verifUtilisateur(util.getPseudo(),businessException);
-        verifEmail(util.getEmail(),businessException);
         if(!businessException.hasErreurs()){
             utilisateurDao.update(util);
         }else{
@@ -136,6 +134,12 @@ public class UtilisateurManager {
         }
     }
 
+    /**
+     * Vérification de l'unicité du courriel
+     * @param email
+     * @param bE
+     * @throws BusinessException
+     */
     private void verifEmail(String email, BusinessException bE) throws BusinessException {
         boolean emailExiste = utilisateurDao.verifMail(email);
         if(emailExiste){

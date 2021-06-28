@@ -12,7 +12,7 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
     private String SELECTALL="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
     private String SELECTBYID = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
     private String CONNEXION = "SELECT nom, prenom WHERE pseudo=? AND mot_de_passe = ?";
-    private String UPDATE_UTILISATEURS= "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ? WHERE no_utilisateur = ?";
+    private String UPDATE_UTILISATEURS= "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, administrateur = ? WHERE no_utilisateur = ?";
     private String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
     private String INSERT= "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
     private String UPDATE_DELETE= "UPDATE UTILISATEURS SET pseudo = 'compte supprimé', nom = 'compte supprimé', prenom = 'compte supprimé', email = 'compte supprimé', telephone = 'compte supprimé', rue = 'compte supprimé',code_postal = 'compte supprimé', mot_de_passe='compte supprimé', credit = 0 WHERE no_utilisateur = ?";
@@ -153,9 +153,8 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             pstt.setString(6, util.getRue());
             pstt.setString(7,util.getCodePostal());
             pstt.setString(8, util.getVille());
-            pstt.setString(8, util.getMotDePasse());
-            pstt.setInt(9, util.getCredit()); //TODO peut-être initialiser à 0??
-            pstt.setBoolean(10, util.isAdmin());
+            pstt.setString(9, util.getMotDePasse());
+            pstt.setByte(10, (byte) 0);
             pstt.setInt(11, util.getNoUtilisateur());
             pstt.executeUpdate();
         } catch (Exception e) {

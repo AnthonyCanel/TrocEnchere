@@ -17,6 +17,7 @@ public class Article {
     private String photo;
     private Utilisateur utilisateur;
     private Categorie categorie;
+    private Retrait retrait;
     private int vues;
 
     public Article() {

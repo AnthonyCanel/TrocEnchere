@@ -18,8 +18,9 @@ public class PageDeconnexion extends HttpServlet {
         Utilisateur util = (Utilisateur) session.getAttribute("utilisateur");
 
         if(session.getAttribute("utilisateur") != null ){
+            //efface la session
             session.invalidate();
-            this.getServletContext().getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
         }
     }
 

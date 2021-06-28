@@ -9,8 +9,8 @@ import java.util.List;
 public class Utilisateur {
     private int noUtilisateur;
     private String pseudo;
-    private String prenom;
     private String nom;
+    private String prenom;
     private String email;
     private String telephone;
     private String rue;
@@ -25,72 +25,155 @@ public class Utilisateur {
         article = new ArrayList<>();
     }
 
-    public Utilisateur(int noUtilisateur, String pseudo, String prenom, String nom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse) {
+    /**
+     *
+     * @param pNoUtilisateur
+     * @param pPseudo
+     * @param pNom
+     * @param pPrenom
+     * @param pEmail
+     * @param pTelephone
+     * @param pRue
+     * @param pCodePostal
+     * @param pVille
+     * @param pMotDePasse
+     */
+    public Utilisateur(int pNoUtilisateur, String pPseudo, String pNom, String pPrenom, String pEmail, String pTelephone, String pRue, String pCodePostal, String pVille, String pMotDePasse) {
+        noUtilisateur = pNoUtilisateur;
+        pseudo = pPseudo;
+        nom = pNom;
+        prenom = pPrenom;
+        email = pEmail;
+        telephone = pTelephone;
+        rue = pRue;
+        CodePostal = pCodePostal;
+        ville = pVille;
+        motDePasse = pMotDePasse;
+    }
+
+    public Utilisateur(int pNoUtilisateur, String pPseudo, String pNom, String pPrenom, String pEmail, String pTelephone, String pRue, String pCodePostal, String pVille, String pMotDePasse, boolean pAdmin) {
+        noUtilisateur = pNoUtilisateur;
+        pseudo = pPseudo;
+        nom = pNom;
+        prenom = pPrenom;
+        email = pEmail;
+        telephone = pTelephone;
+        rue = pRue;
+        CodePostal = pCodePostal;
+        ville = pVille;
+        motDePasse = pMotDePasse;
+        admin = pAdmin;
+    }
+
+    /**
+     *
+     * @param pPseudo
+     * @param pNom
+     * @param pPrenom
+     * @param pEmail
+     * @param pTelephone
+     * @param pRue
+     * @param pCodePostal
+     * @param pVille
+     * @param pMotDePasse
+     * @param pCredit
+     * @param pAdmin
+     */
+    public Utilisateur(String pPseudo, String pNom, String pPrenom, String pEmail, String pTelephone, String pRue, String pCodePostal, String pVille, String pMotDePasse, int pCredit, boolean pAdmin) {
+        pseudo = pPseudo;
+        nom = pNom;
+        prenom = pPrenom;
+        email = pEmail;
+        telephone = pTelephone;
+        rue = pRue;
+        CodePostal = pCodePostal;
+        ville = pVille;
+        motDePasse = pMotDePasse;
+        credit = pCredit;
+        admin = pAdmin;
+    }
+
+    /**
+     *
+     * @param pPseudo
+     * @param pNom
+     * @param pPrenom
+     * @param pEmail
+     * @param pTelephone
+     * @param pRue
+     * @param pCodePostal
+     * @param pVille
+     * @param pMotDePasse
+     * @param pCredit
+     */
+    public Utilisateur(String pPseudo, String pNom, String pPrenom, String pEmail, String pTelephone, String pRue, String pCodePostal, String pVille, String pMotDePasse, int pCredit) {
+        pseudo = pPseudo;
+        nom = pNom;
+        prenom = pPrenom;
+        email = pEmail;
+        telephone = pTelephone;
+        rue = pRue;
+        CodePostal = pCodePostal;
+        ville = pVille;
+        motDePasse = pMotDePasse;
+        credit = pCredit;
+    }
+
+    /**
+     *
+     * @param noUtilisateur
+     * @param pPseudo
+     * @param pNom
+     * @param pPrenom
+     * @param pEmail
+     * @param pTelephone
+     * @param pRue
+     * @param pCodePostal
+     * @param pVille
+     * @param pMotDePasse
+     * @param pCredit
+     */
+    public Utilisateur(int noUtilisateur, String pPseudo, String pNom, String pPrenom, String pEmail, String pTelephone, String pRue, String pCodePostal, String pVille, String pMotDePasse, int pCredit) {
         this.noUtilisateur = noUtilisateur;
-        this.pseudo = pseudo;
-        this.prenom = prenom;
-        this.nom = nom;
-        this.email = email;
-        this.telephone = telephone;
-        this.rue = rue;
-        CodePostal = codePostal;
-        this.ville = ville;
-        this.motDePasse = motDePasse;
+        pseudo = pPseudo;
+        nom = pNom;
+        prenom = pPrenom;
+        email = pEmail;
+        telephone = pTelephone;
+        rue = pRue;
+        CodePostal = pCodePostal;
+        ville = pVille;
+        motDePasse = pMotDePasse;
+        credit = pCredit;
     }
 
-    public Utilisateur(String pseudo, String prenom, String nom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit, boolean admin) {
-        this.pseudo = pseudo;
-        this.prenom = prenom;
-        this.nom = nom;
-        this.email = email;
-        this.telephone = telephone;
-        this.rue = rue;
-        CodePostal = codePostal;
-        this.ville = ville;
-        this.motDePasse = motDePasse;
-        this.credit = credit;
-        this.admin = admin;
-    }
-
-    public Utilisateur(String pseudo, String prenom, String nom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit) {
-        this.pseudo = pseudo;
-        this.prenom = prenom;
-        this.nom = nom;
-        this.email = email;
-        this.telephone = telephone;
-        this.rue = rue;
-        CodePostal = codePostal;
-        this.ville = ville;
-        this.motDePasse = motDePasse;
-        this.credit = credit;
-    }
-
-    public Utilisateur(int noUtilisateur, String pseudo, String prenom, String nom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit) {
+    /**
+     *
+     * @param noUtilisateur
+     * @param pPseudo
+     * @param pNom
+     * @param pPrenom
+     * @param pEmail
+     * @param pTelephone
+     * @param pRue
+     * @param pCodePostal
+     * @param pVille
+     * @param pMotDePasse
+     * @param pCredit
+     * @param pAdmin
+     */
+    public Utilisateur(int noUtilisateur, String pPseudo, String pNom, String pPrenom, String pEmail, String pTelephone, String pRue, String pCodePostal, String pVille, String pMotDePasse, int pCredit, boolean pAdmin) {
         this.noUtilisateur = noUtilisateur;
-        this.pseudo = pseudo;
-        this.prenom = prenom;
-        this.nom = nom;
-        this.email = email;
-        this.telephone = telephone;
-        this.rue = rue;
-        CodePostal = codePostal;
-        this.ville = ville;
-        this.motDePasse = motDePasse;
-        this.credit = credit;
-    }
-
-    public Utilisateur(int noUtilisateur, String pseudo, String prenom, String nom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit, boolean admin) {
-        this.noUtilisateur = noUtilisateur;
-        this.pseudo = pseudo;
-        this.prenom = prenom;
-        this.nom = nom;
-        this.email = email;
-        this.telephone = telephone;
-        this.rue = rue;
-        CodePostal = codePostal;
-        this.ville = ville;
-        this.motDePasse = motDePasse;
-        this.credit = credit;
-        this.admin = admin;
+        pseudo = pPseudo;
+        nom = pNom;
+        prenom = pPrenom;
+        email = pEmail;
+        telephone = pTelephone;
+        rue = pRue;
+        CodePostal = pCodePostal;
+        ville = pVille;
+        motDePasse = pMotDePasse;
+        credit = pCredit;
+        admin = pAdmin;
     }
 }
