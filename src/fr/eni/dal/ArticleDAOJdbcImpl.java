@@ -4,6 +4,7 @@ import fr.eni.BusinessException;
 import fr.eni.bo.Article;
 import fr.eni.bo.Categorie;
 import fr.eni.bo.Utilisateur;
+import sun.invoke.empty.Empty;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -24,10 +25,15 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
 
     private static String selectByIdUtilisateurAndDateFinEnchere ="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente,etat_article, photo, vues, no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM V_ARTICLES_CATEGORIES_UTILISATEURS where no_utilisateur=? and date_fin_encheres>?";
 
-    private static String SELECT_BY_DATE_INF_DEB_ENCHERE ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_date_debut_encheres, encs_montant_enchere,utils_nom, utils_no_utilisateur, cats_no_categorie, cats_libelle from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres";
+    private static String SELECT_BY_DATE_INF_DEB_ENCHERE ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_date_debut_encheres, encs_montant_enchere,utils_nom, utils_no_utilisateur, cats_no_categorie, cats_libelle from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres ORDER BY arts_date_debut_encheres DESC";
 
-    private static String SELECT_BY_ID_AND_DATE_FIN_ENCHERE="SELECT no_utilisateur, nom, pseudo, nom_article, montant_enchere, date_fin_encheres FROM V_UTILISATEURS_ENCHERES_ARTICLES_RETRAITS_CATEGORIES WHERE ?=date_fin_encheres and no_utilisateur=? and etat_enchere='Vendu'";
+    private static String SELECT_BY_ID_AND_DATE_FIN_ENCHERE="SELECT no_utilisateur, nom, pseudo, nom_article, montant_enchere, date_fin_encheres FROM V_UTILISATEURS_ENCHERES_ARTICLES_RETRAITS_CATEGORIES WHERE ?>date_fin_encheres and no_utilisateur=? and etat_enchere='Vendu' ORDER BY date_fin_encheres DESC";
 
+    /**
+     * (ventes terminées consulté par l'utilisateur)
+     * @param idUtilisateur
+     * @return list's articles
+     */
     public List<Article> selectByIdDateEnchereEtatEnchere(int idUtilisateur){
         List<Article> listArticle = new ArrayList<>();
         Article article = new Article();
@@ -62,6 +68,11 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
         return listArticle;
     }
 
+    /**
+     * (Ventes non débutées)
+     *return the list's article where the selling haven't started
+     * @return list's article
+     */
     public List<Article> selectByDateInfDebEnchere(){
         List<Article> listArticle = null;
 
@@ -93,7 +104,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
     return listArticle;
     }
 
-    public List<Article> selectByIdDateFinEnchere(int idUtilisateur, int idCategorie) throws BusinessException {
+    public List<Article> selectByIdDateFinEnchere(int idUtilisateur, int idCategorie, String filtreSaisie) throws BusinessException {
         List<Article> listArticles = null;
         Categorie  cat = new Categorie();
         Utilisateur util = new Utilisateur();
@@ -106,6 +117,9 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
             if(idCategorie>0){
                 selectByIdUtilisateurAndDateFinEnchere=
                         selectByIdUtilisateurAndDateFinEnchere+restrictionComplementaire;
+            }
+            if(filtreSaisie!= ""&&filtreSaisie!=null){
+
             }
         PreparedStatement pst = cxn.prepareStatement(selectByIdUtilisateurAndDateFinEnchere);
         pst.setInt(1, idUtilisateur);
