@@ -15,6 +15,8 @@ import java.util.List;
 public class ArticleManager {
     private DAO<Article> articleDao;
 
+
+
     public ArticleManager() {
         articleDao = DAOFactory.getArticleDAO();
     }
@@ -90,6 +92,19 @@ public class ArticleManager {
         listInfoArticles = articleDAO.selectByIdAndDateSupFinEnchere(idUtilisateur, filtreSaisi, noCatSelect);
         return listInfoArticles;
 
+    }
+
+    /**
+     * Choisir un Article selon les enchères pour PageEncherir
+     */
+    public List<Article> ChoisirArticlesEncherir(int idArticle){
+        List<Article> listeArticles = null;
+        try {
+            listeArticles = articleDao.selectByEnchere(idArticle);
+        } catch (BusinessException e) {
+            e.printStackTrace();
+        }
+        return listeArticles;
     }
 
     public List<InfoArticle> mesEncheresRemportees(int idUtilisateur, String filtreSaisi, int noCatSelect) throws BusinessException {

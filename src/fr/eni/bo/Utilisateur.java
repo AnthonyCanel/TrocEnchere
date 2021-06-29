@@ -51,6 +51,20 @@ public class Utilisateur {
         motDePasse = pMotDePasse;
     }
 
+    /**
+     *
+     * @param pNoUtilisateur
+     * @param pPseudo
+     * @param pNom
+     * @param pPrenom
+     * @param pEmail
+     * @param pTelephone
+     * @param pRue
+     * @param pCodePostal
+     * @param pVille
+     * @param pMotDePasse
+     * @param pAdmin
+     */
     public Utilisateur(int pNoUtilisateur, String pPseudo, String pNom, String pPrenom, String pEmail, String pTelephone, String pRue, String pCodePostal, String pVille, String pMotDePasse, boolean pAdmin) {
         noUtilisateur = pNoUtilisateur;
         pseudo = pPseudo;
@@ -176,4 +190,5 @@ public class Utilisateur {
         credit = pCredit;
         admin = pAdmin;
     }
+
 }

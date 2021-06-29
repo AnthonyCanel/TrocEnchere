@@ -63,7 +63,7 @@
                         <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="combo">
                             <option selected>Toutes</option>
                             <c:forEach items="${listeCategories}" var="chaqueCategorie">
-                                out.print("<option name="cat" value="${chaqueCategorie.noCategorie}">${chaqueCategorie.libelle}</option>");
+                                <option name="cat" value="${chaqueCategorie.noCategorie}">${chaqueCategorie.libelle}</option>
                             </c:forEach>
                         </select>
                     </div>

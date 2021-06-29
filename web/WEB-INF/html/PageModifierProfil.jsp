@@ -48,7 +48,8 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="nom" id="nom" value="${nom}" required pattern="[A-Za-z]{1,30}">
+                                <input class="w-100" type="text" name="nom" id="nom" value="${nom}" required
+                                       pattern="[A-Za-z]{1,30}">
                             </div>
                         </div>
                     </div>
@@ -63,7 +64,8 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="prenom" id="prenom" value="${prenom}" required pattern="[A-Za-z]{1,30}">
+                                <input class="w-100" type="text" name="prenom" id="prenom" value="${prenom}" required
+                                       pattern="[A-Za-z]{1,30}">
                             </div>
                         </div>
                     </div>
@@ -78,10 +80,6 @@
 
                             </div>
                             <div class="input-group input-group-md mb-3">
-                                <!--Vérification Mail abc@example.com # Minimum three characters
-                                    ABC.xyz@example.com # Accepts Caps as well.
-                                    abce.xyz@example.co.in # Accepts . before @
-                                    pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"-->
                                 <input class="w-100" type="email" name="email" id="email" value="${email}" required>
                             </div>
                         </div>
@@ -97,6 +95,8 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
+                                <input class="w-100" type="text" name="telephone" id="telephone" value="${telephone}"
+                                       pattern="^[0-9-.// |]{1,15}">
                                 <input class="w-100" type="text" name="telephone" id="telephone" value="${telephone}" required pattern="^[0-9-.// |]{1,15}">
                             </div>
                         </div>
@@ -228,5 +228,7 @@
         </form>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 </body>
 </html>
