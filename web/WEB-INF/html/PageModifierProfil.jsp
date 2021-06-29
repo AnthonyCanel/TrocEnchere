@@ -3,7 +3,8 @@
 <html>
 <head>
     <!--BOOTSTRAP CSS-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Modifier Profil</title>
 </head>
@@ -47,7 +48,8 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="nom" id="nom" value="${nom}" required pattern="[A-Za-z]{1,30}">
+                                <input class="w-100" type="text" name="nom" id="nom" value="${nom}" required
+                                       pattern="[A-Za-z]{1,30}">
                             </div>
                         </div>
                     </div>
@@ -62,7 +64,8 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="prenom" id="prenom" value="${prenom}" required pattern="[A-Za-z]{1,30}">
+                                <input class="w-100" type="text" name="prenom" id="prenom" value="${prenom}" required
+                                       pattern="[A-Za-z]{1,30}">
                             </div>
                         </div>
                     </div>
@@ -96,7 +99,8 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="telephone" id="telephone" value="${telephone}" required pattern="^[0-9-.// |]{1,15}">
+                                <input class="w-100" type="text" name="telephone" id="telephone" value="${telephone}"
+                                       required pattern="^[0-9-.// |]{1,15}">
                             </div>
                         </div>
                     </div>
@@ -123,7 +127,8 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="CP" id="codePostal" value="${CP}" required pattern="[0-9]{1,5}">
+                                <input class="w-100" type="text" name="CP" id="codePostal" value="${CP}" required
+                                       pattern="[0-9]{1,5}">
                             </div>
                         </div>
                     </div>
@@ -135,7 +140,8 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="ville" id="ville" value="${ville}" required pattern="^[A-Za-z'- ]{1,30}">
+                                <input class="w-100" type="text" name="ville" id="ville" value="${ville}" required
+                                       pattern="^[A-Za-z'- ]{1,30}">
                             </div>
                         </div>
                     </div>
@@ -209,21 +215,19 @@
                 </div>
             </div>
         </div>
-    </form>
-    <div class="row mb-3">
-        <div class="col  d-flex justify-content-center">
-            <input type="hidden" name="action" value="valider"/>
-            <a href="${pageContext.request.contextPath}/PageMonProfil">
+        <div class="row mb-3">
+            <div class="col  d-flex justify-content-center">
+                <input type="hidden" name="action" value="valider"/>
                 <button type="submit" name="button" class="btn btn-outline-dark" value="valider">Enregistrer</button>
-            </a>
+            </div>
         </div>
-        <form method="post" action="<%=request.getContextPath()%>/PageModifierProfil">
-        <div class="col  d-flex justify-content-center">
-            <input type="hidden" name="action" value="supprimer"/>
-            <a href="${pageContext.request.contextPath}/PageModifierProfil">
-                <button type="submit" name="button" class="btn btn-outline-dark" value="supprimer">Supprimer mon compte</button>
-            </a>
-        </div>
+    </form>
+
+        <form method="get" action="${pageContext.request.contextPath}/SupprimerCompte">
+            <div class="col  d-flex justify-content-center">
+                <input type="hidden" name="action" value="supprimer"/>
+                    <button type="submit" name="button" class="btn btn-outline-dark" value="supprimer">Supprimer mon compte</button>
+            </div>
         </form>
     </div>
 </div>

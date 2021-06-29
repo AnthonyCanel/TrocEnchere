@@ -13,6 +13,7 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
     private static final String INSERT_CATEGORIES = "INSERT into CATEGORIES(no_categorie, libelle) VALUES(?,?)";
     private static final String DELETE_CATEGORIES = "delete from CATEGORIES where no_categorie=?";
     private static final String UPDATE_CATEGORIES = "UPDATE CATEGORIES SET libelle = ?, where no_categorie=?";
+    private static final String SELECT_BY_ID = "SELECT libelle FROM CATEGORIES WHERE no_categorie = ?";
 
     /**
      * Récupère les catégories et leur numéros
@@ -40,7 +41,23 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
 
         @Override
     public Categorie selectById(int id) throws BusinessException {
-        return null;
+        Categorie categorie = null;
+            try (Connection cnx = ConnectionProvider.getConnection();
+                 PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID)) {
+                pstmt.setInt(1, id);
+                ResultSet rs = pstmt.executeQuery();
+                if(rs.next()){
+                    String libelle = rs.getString(2);
+                    categorie = new Categorie(id, libelle);
+                }
+                rs.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                BusinessException businessException = new BusinessException();
+                businessException.ajouterErreur(CodesResultatDAL.LECTURE_ID_CATEGORIE_ECHEC);
+                throw businessException;
+            }
+            return categorie;
     }
 
     /**

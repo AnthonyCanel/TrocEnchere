@@ -18,6 +18,7 @@ public interface DAO<T>{
     default T restituerPoints(int idvendeur, int idAcquereur) {
         return null;
     }
+
     default boolean verifMail(String email) throws BusinessException {
         return false;
     }
