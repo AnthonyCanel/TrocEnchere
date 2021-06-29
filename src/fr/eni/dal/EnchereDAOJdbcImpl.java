@@ -20,7 +20,7 @@ public class EnchereDAOJdbcImpl implements DAO<Enchere> {
     @Override
     public List selectAll() throws BusinessException {
         List<Enchere> listEnchere = new ArrayList<>();
-
+        Enchere enchere = new Enchere();
         try (
                 Connection cnx = ConnectionProvider.getConnection();
                 Statement stt = cnx.createStatement()
@@ -28,12 +28,14 @@ public class EnchereDAOJdbcImpl implements DAO<Enchere> {
 
             ResultSet rs = stt.executeQuery(SELECTALL);
             while (rs.next()) {
-                listEnchere.add(new Enchere(rs.getInt("no_utilisateur"),
-                        rs.getInt("no_article"),
-                        rs.getTimestamp("date_enchere"),
-                        rs.getInt("montant_enchere"),
-                        rs.getString("etat_enchere"),
-                        rs.getInt("no_vendeur")));
+                enchere.setNoUtilisateur(rs.getInt("no_utilisateur"));
+                enchere.setNoArticle(rs.getInt("no_article"));
+                enchere.setDateEnchere( rs.getTimestamp("date_enchere"));
+                enchere.setMontantEnchere( rs.getInt("montant_enchere"));
+                enchere.setEtatEnchere(rs.getString("etat_enchere"));
+                enchere.setNoAcquereur( rs.getInt("no_acquereur"));
+
+                listEnchere.add(enchere);
             }
             rs.close();
 

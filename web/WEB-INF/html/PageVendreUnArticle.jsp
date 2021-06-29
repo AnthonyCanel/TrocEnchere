@@ -1,14 +1,10 @@
 <%@ page import="fr.eni.bo.Categorie" %>
-<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Création Compte</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <%
-        List<Categorie> listeCategories = (List<Categorie>) request.getAttribute("categorie");
-    %>
 </head>
 <body class="container-fluid">
 <header class="row">
@@ -37,73 +33,69 @@
 
         <div class=" row m-2">
             <div class="col-4">
-                <label for="article">Article :</label>
+                <p>Article :</p>
             </div>
             <div class="col-8">
-                <input type="text" id="article">
+                <input type="text" name="nomArticle">
             </div>
         </div>
 
         <div class=" row m-2">
             <div class="col-4">
-                <label for="description">Description :</label>
+                <p>Description :</p>
             </div>
             <div class="col-8">
-                <input type="area" id="description"  row m-2s="5" cols="33">
+                <input type="area" name="description" row="5" cols="33">
             </div>
         </div>
 
         <div class=" row m-2 m-2">
             <div class="col-4">
-                <label for="catégorie">Catégorie</label>
+                <p>Catégorie</p>
             </div>
             <div class="col-8">
-                <select id="catégorie">
-                    <option value="" name="combo"> -- Choisir une catégorie --</option>
-                    <% //plus simple de construire la comboBox
-                        if (listeCategories != null) {
-                            for(Categorie chaqueCategorie : listeCategories){
-                                out.print("<option value=" + chaqueCategorie.getLibelle() + ">" + chaqueCategorie.getLibelle() + "</option>");
-                            }
-                        }
-                    %>
+                <select name="combo" id="catégorie">
+                    <option value=""> -- Choisir une catégorie --</option>
+                    <c:forEach items="${listeCategories}" var="categorie">
+                        out.print("<option name="categories" value="${categorie.noCategorie}">${categorie.libelle}</option>");
+                    </c:forEach>
                 </select>
             </div>
         </div>
 
         <div class=" row m-2">
             <div class="col-4">
-                <label for="photo">Photo de l'article</label>
+                <p>Photo de l'article</p>
             </div>
             <div class="col-8">
-                <input type="button" id="photo" value="UPLOADER">
+                <input type="button" name="photo" value="UPLOADER">
             </div>
         </div>
 
         <div class=" row m-2">
             <div class="col-4">
-                <label for="prix">Mise à prix :</label>
+                <p>Mise à prix :</p>
             </div>
             <div class="col-8">
-                <input type="number" min="0" max="150" id="prix">
+                <input type="number" min="0" name="prix">
             </div>
         </div>
 
         <div class=" row m-2">
             <div class="col-4">
-                <label for="début">Début de l'enchère</label>
+                <p>Début de l'enchère</p>
             </div>
             <div class="col-8">
-                <input type="date" id="début">
+                <input type="date" name="dateDebut">
             </div>
         </div>
 
         <div class=" row m-2">
             <div class="col-4">
-                <label for="fin">Fin de l'enchère</label>
+                <p>Fin de l'enchère</p>
             </div>
             <div class="col-8">
-                <input type="date" id="fin">
+                <input type="date" name="dateFin">
             </div>
         </div>
 
@@ -112,49 +104,45 @@
                 <h3>Retrait</h3>
                 <div class=" row m-2">
                     <div class="col-4">
-                        <label for="rue">Rue :</label>
+                        <p>Rue :</p>
                     </div>
                     <div class="col-8">
-                        <input type="text" id="rue">
+                        <input type="text" name="rue" value="${rue}">
                     </div>
                 </div>
 
                 <div class=" row m-2">
                     <div class="col-4">
-                        <label for="CP">Code postal :</label>
+                        <p>Code postal :</p>
                     </div>
                     <div class="col-8">
-                        <input type="text" id="CP">
+                        <input type="text" name="CP" value="${CP}">
                     </div>
                 </div>
 
                 <div class=" row m-2">
                     <div class="col-4">
-                        <label for="ville">Ville</label>
+                        <p>Ville</p>
                     </div>
                     <div class="col-8">
-                        <input type="text" id="ville">
+                        <input type="text" name="ville" value="${ville}">
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class=" row m-2">
-            <div class="col">
-                <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
-                    <input type="button" value="Enregistrer">
-                </a>
-            </div>
-            <div class="col">
-                <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
-                    <input type="button" value="Annuler">
-                </a>
-            </div>
-            <div class="col">
-                <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
-                    <input type="button" value="Annuler la vente">
-                </a>
-            </div>
+        <div>
+            <form class="row" action="PageVendreUnArticle" method="post">
+                <div class="col">
+                    <input class="btn btn-outline-dark" type="submit" name="btn" value="enregistrer">
+                </div>
+                <div class="col">
+                    <input class="btn btn-outline-dark" type="submit" name="btn" value="annuler">
+                </div>
+                <div class="col">
+                    <input class="btn btn-outline-dark" type="submit" name="btn" value="annulerVente">
+                </div>
+            </form>
         </div>
     </div>
 </div>
