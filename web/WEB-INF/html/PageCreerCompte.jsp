@@ -7,13 +7,12 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body class="container-fluid">
-<header>
-    <div class="col-6">
+<header class="row">
+    <div class="col">
         <a class="btn btn-white m-5 mt-3" href="${pageContext.request.contextPath}/PageAccueilEnchere">
             <h1>ENI Enchère</h1>
         </a>
     </div>
-    <div class="col-6">
         <c:choose>
             <c:when test="${sessionScope.utilisateur != null}">
                 <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
@@ -22,7 +21,6 @@
                 <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
             </c:otherwise>
         </c:choose>
-    </div>
 </header>
 <div class="container shadow p-4">
     <h1 class="row d-flex justify-content-center mb-5 p-2">Mon Profil</h1>
@@ -144,21 +142,20 @@
             </div>
             <div class="row mt-5">
                 <h4 class="text-align-center mb-5 text-uppercase text-danger fw-bold d-flex justify-content-center"
-                    id="msg" name="msgError">Coucou</h4>
+                    id="msg" name="msgError">${message}</h4>
                 <div class="col mr-5 d-flex flex-row-reverse">
                     <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
-                        <button class="btn btn-outline-secondary" name="Creer?Creer=creer" >Créer</button>
+                        <button class="btn btn-outline-dark" name="Creer?Creer=creer">Créer</button>
                     </a>
                 </div>
                 <div class="col ml-5 ">
                     <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
-                        <button class="btn btn-outline-secondary" name="Annuler?Annuler=annuler">Annuler</button>
+                        <button class="btn btn-outline-dark" name="Annuler?Annuler=annuler">Annuler</button>
                     </a>
                 </div>
             </div>
         </div>
     </form>
-    <label>${message}</label>
 </div>
 </body>
 </html>

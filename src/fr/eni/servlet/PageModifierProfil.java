@@ -104,5 +104,5 @@ public class PageModifierProfil extends HttpServlet {
                 session.invalidate();
                 req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
             }
-        }
+    }
 }
