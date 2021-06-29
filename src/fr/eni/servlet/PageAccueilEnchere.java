@@ -16,6 +16,7 @@ public class PageAccueilEnchere extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Session
+        //todo
         HttpSession session = req.getSession();
         CategorieManager cm =new CategorieManager();
         listeCategories = cm.AfficherCategories();

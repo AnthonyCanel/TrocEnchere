@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtilisateurManager {
-    private DAO utilisateurDao;
-    private static BusinessException businessException = new BusinessException();
+    private DAO<Utilisateur> utilisateurDao;
+    private BusinessException businessException = new BusinessException();
 
     public UtilisateurManager() {
         utilisateurDao = DAOFactory.getUtilisateurDAO();
@@ -34,7 +34,10 @@ public class UtilisateurManager {
      * @throws BusinessException
      */
     public Utilisateur choisirUtilisateur(int id) throws BusinessException {
-        return (Utilisateur) utilisateurDao.selectById(id);
+        utilisateurDao = DAOFactory.getUtilisateurDAO();
+        Utilisateur util = utilisateurDao.selectById(id);
+
+        return util;
     }
 
     /**
@@ -58,6 +61,7 @@ public class UtilisateurManager {
         //verif util existe déjà
         verifUtilisateur(util.getPseudo(),businessException);
         verifEmail(util.getEmail(),businessException);
+
         if(!businessException.hasErreurs()){
             utilisateurDao.insert(util);
         }

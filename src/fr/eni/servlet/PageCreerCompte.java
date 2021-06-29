@@ -17,20 +17,18 @@ import java.io.IOException;
 public class PageCreerCompte extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         req.getRequestDispatcher("WEB-INF/html/PageCreerCompte.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("Annuler")=="annuler") {
 
-            req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere").forward(req, resp);
+        if (req.getParameter("boutonAction").equals("annuler")) {
+            resp.sendRedirect(req.getContextPath() + "/PageAccueilEnchere");
         } else {
             BusinessException businessException = new BusinessException();
             Boolean creationCompteValide = false;
-
-            req.getParameter("mdp");
-            req.getParameter("mdpC");
 
             Utilisateur util = new Utilisateur();
             util.setNom(req.getParameter("nom"));
@@ -50,8 +48,10 @@ public class PageCreerCompte extends HttpServlet {
                 util.setMotDePasse(req.getParameter("mdp"));
                 HttpSession session = req.getSession();
                 session.setAttribute("utilisateur", util);
+
+
             } else {
-                String message = "Le mot de passe et sa confirmation doivent être différents";
+                String message = "Le mot de passe et sa confirmation doivent être identiques";
                 req.setAttribute("message", message);
             }
 

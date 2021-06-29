@@ -23,3 +23,10 @@ INSERT INTO ARTICLES(nom_article, description, date_debut_encheres, date_fin_enc
 INSERT INTO RETRAITS(no_article, rue, code_postal, ville) VALUES(1,'2B rue Benjamin Franklin', '44800, 'Saint-Herblain')
 
 INSERT INTO ENCHERES(no_utilisateur, no_article, date_enchere, montant_enchere, etat_enchere) VALUES(1, 3,CONVERT(DATETIME,'18/06/2021 6:30:00 PM',103), 35, 'NonVendu')
+
+INSERT INTO ENCHERES(no_utilisateur, no_article, date_enchere, montant_enchere, etat_enchere) VALUES(2, 3,CONVERT(DATETIME,'19/06/2021 6:30:00 PM',103), 100, 'NonVendu');
+
+INSERT INTO ENCHERES(no_utilisateur, no_article, date_enchere, montant_enchere, etat_enchere) VALUES(3, 3,CONVERT(DATETIME,'20/06/2021 6:30:00 PM',103), 110, 'NonVendu');
+INSERT INTO ENCHERES(no_utilisateur, no_article, date_enchere, montant_enchere, etat_enchere) VALUES(1, 3,CONVERT(DATETIME,'20/06/2021 6:30:00 PM',103), 120, 'NonVendu');
+INSERT INTO ENCHERES(no_utilisateur, no_article, date_enchere, montant_enchere, etat_enchere) VALUES(2, 3,CONVERT(DATETIME,'20/06/2021 6:30:00 PM',103), 130, 'NonVendu');
+INSERT INTO ENCHERES(no_utilisateur, no_article, date_enchere, montant_enchere, etat_enchere) VALUES(3, 3,CONVERT(DATETIME,'20/06/2021 6:30:00 PM',103), 140, 'NonVendu');

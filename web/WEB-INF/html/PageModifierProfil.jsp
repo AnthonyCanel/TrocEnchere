@@ -217,12 +217,13 @@
                 <button type="submit" name="button" class="btn btn-outline-dark" value="valider">Enregistrer</button>
             </a>
         </div>
-        <form method="post" action="<%=request.getContextPath()%>/PageModifierProfil">
+<%--        <form method="post" action="<%=request.getContextPath()%>/PageModifierProfil">--%>
+        <form method="post" action="${pageContext.request.contextPath}/PageModifierProfil">
         <div class="col  d-flex justify-content-center">
-            <input type="hidden" name="action" value="supprimer"/>
-            <a href="${pageContext.request.contextPath}/PageModifierProfil">
-                <button type="submit" name="button" class="btn btn-outline-dark" value="supprimer">Supprimer mon compte</button>
-            </a>
+<%--            <input type="hidden" name="action" value="supprimer"/>--%>
+<%--            <a href="${pageContext.request.contextPath}/PageModifierProfil">--%>
+                <button name="button" class="btn btn-outline-dark" value="supprimer">Supprimer mon compte</button>
+<%--            </a>--%>
         </div>
         </form>
     </div>

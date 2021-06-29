@@ -2,6 +2,7 @@ package fr.eni.dal;
 
 import fr.eni.BusinessException;
 import fr.eni.bo.Article;
+import fr.eni.bo.InfoArticle;
 import fr.eni.bo.Utilisateur;
 
 import java.util.List;
@@ -31,4 +32,14 @@ public interface DAO<T>{
         return null;
     }
 
+
+
+
+    default List<InfoArticle> selectByIdAndDatesEnchere(int idUtilisateur, String filtre, int noCategorie) throws BusinessException{return null;}
+    default List<InfoArticle> selectByIdDateInfDebEnchere(int idUtilisateur, String filtre, int noCategorie) throws BusinessException{return null;}
+    default List<InfoArticle> selectByIdAndDateSupFinEnchere(int idUtilisateur, String filtre, int noCategorie) throws BusinessException{return null;}
+
+    default List<InfoArticle> selectByDateSupDebEnchereAndInfFinEnchere(int idUtilisateur, String filtre, int noCategorie) throws BusinessException{return null;}
+    default List<InfoArticle> selectByIdAndEtatEnchere(int idUtilisateur, String filtre, int noCategorie) throws BusinessException{return null;}
+    default List<InfoArticle> selectByIdDateDerEnchere(int idUtilisateur, String filtre, int noCategorie) throws BusinessException{return null;}
 }

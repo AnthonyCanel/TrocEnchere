@@ -24,6 +24,8 @@
         </c:choose>
     </div>
 </header>
+
+<%-- Attention enlever les expressions réguliere des inputs--%>
 <div class="container shadow p-4">
     <h1 class="row d-flex justify-content-center mb-5 p-2">Mon Profil</h1>
     <form action="PageCreerCompte" method="post">
@@ -35,7 +37,7 @@
                             <label for="pseudo">Pseudo :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="pseudo" id="pseudo">
+                            <input type="text" name="pseudo" id="pseudo" value="${pseudo}">
                         </div>
                     </div>
                 </div>
@@ -45,7 +47,7 @@
                             <label for="nom">Nom : </label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="nom" id="nom">
+                            <input type="text" name="nom" id="nom" value="${nom}">
                         </div>
                     </div>
                 </div>
@@ -58,7 +60,7 @@
                             <label for="prenom">Prenom :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="prenom" id="prenom">
+                            <input type="text" name="prenom" id="prenom" value="${prenom}">
                         </div>
                     </div>
                 </div>
@@ -68,7 +70,7 @@
                             <label for="email">Email :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="email" id="email">
+                            <input type="text" name="email" id="email" value="${email}">
                         </div>
                     </div>
                 </div>
@@ -81,7 +83,7 @@
                             <label for="tel">Téléhone :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="tel" id="tel">
+                            <input type="text" name="tel" id="tel" value="${tel}">
                         </div>
                     </div>
                 </div>
@@ -91,7 +93,7 @@
                             <label for="rue">Rue :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="rue" id="rue">
+                            <input type="text" name="rue" id="rue" value="${rue}">
                         </div>
                     </div>
                 </div>
@@ -104,7 +106,7 @@
                             <label for="CP">Code postal :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="CP" id="CP">
+                            <input type="text" name="CP" id="CP" value="${CP}">
                         </div>
                     </div>
                 </div>
@@ -114,7 +116,7 @@
                             <label for="ville">Ville :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="ville" id="ville">
+                            <input type="text" name="ville" id="ville" value="${ville}">
                         </div>
                     </div>
                 </div>
@@ -144,21 +146,20 @@
             </div>
             <div class="row mt-5">
                 <h4 class="text-align-center mb-5 text-uppercase text-danger fw-bold d-flex justify-content-center"
-                    id="msg" name="msgError">Coucou</h4>
+                    id="msg" name="msgError">${message}</h4>
                 <div class="col mr-5 d-flex flex-row-reverse">
-                    <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
-                        <button class="btn btn-outline-secondary" name="Creer?Creer=creer" >Créer</button>
-                    </a>
+
+                        <button class="btn btn-outline-dark" name="boutonAction" value="Creer" >Créer</button>
+
                 </div>
                 <div class="col ml-5 ">
-                    <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
-                        <button class="btn btn-outline-secondary" name="Annuler?Annuler=annuler">Annuler</button>
-                    </a>
+
+                        <button  class="btn btn-outline-dark" name="boutonAction" value="annuler">Annuler</button>
+
                 </div>
             </div>
         </div>
     </form>
-    <label>${message}</label>
 </div>
 </body>
 </html>
