@@ -33,7 +33,6 @@ public class PageVendreUnArticle extends HttpServlet {
         req.setAttribute("rue", util.getRue());
         req.setAttribute("CP", util.getCodePostal());
         req.setAttribute("ville", util.getVille());
-
         req.getRequestDispatcher("WEB-INF/html/PageVendreUnArticle.jsp").forward(req, resp);
     }
 
