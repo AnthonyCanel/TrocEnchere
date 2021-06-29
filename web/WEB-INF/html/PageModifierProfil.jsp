@@ -3,7 +3,8 @@
 <html>
 <head>
     <!--BOOTSTRAP CSS-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Modifier Profil</title>
 </head>
@@ -217,13 +218,12 @@
                 <button type="submit" name="button" class="btn btn-outline-dark" value="valider">Enregistrer</button>
             </a>
         </div>
-<%--        <form method="post" action="<%=request.getContextPath()%>/PageModifierProfil">--%>
-        <form method="post" action="${pageContext.request.contextPath}/PageModifierProfil">
+        <form method="post" action="<%=request.getContextPath()%>/PageModifierProfil">
         <div class="col  d-flex justify-content-center">
-<%--            <input type="hidden" name="action" value="supprimer"/>--%>
-<%--            <a href="${pageContext.request.contextPath}/PageModifierProfil">--%>
-                <button name="button" class="btn btn-outline-dark" value="supprimer">Supprimer mon compte</button>
-<%--            </a>--%>
+            <input type="hidden" name="action" value="supprimer"/>
+            <a href="${pageContext.request.contextPath}/PageModifierProfil">
+                <button type="submit" name="button" class="btn btn-outline-dark" value="supprimer">Supprimer mon compte</button>
+            </a>
         </div>
         </form>
     </div>

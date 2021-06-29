@@ -7,8 +7,8 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body class="container-fluid">
-<header>
-    <div class="col-6">
+<header class="row">
+    <div class="col">
         <a class="btn btn-white m-5 mt-3" href="${pageContext.request.contextPath}/PageAccueilEnchere">
             <h1>ENI Enchère</h1>
         </a>
@@ -22,7 +22,6 @@
                 <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
             </c:otherwise>
         </c:choose>
-    </div>
 </header>
 
 <%-- Attention enlever les expressions réguliere des inputs--%>
@@ -148,18 +147,20 @@
                 <h4 class="text-align-center mb-5 text-uppercase text-danger fw-bold d-flex justify-content-center"
                     id="msg" name="msgError">${message}</h4>
                 <div class="col mr-5 d-flex flex-row-reverse">
-
-                        <button class="btn btn-outline-dark" name="boutonAction" value="Creer" >Créer</button>
-
+                    <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
+                        <button class="btn btn-outline-dark" name="boutonAction" >Créer</button>
+                    </a>
                 </div>
                 <div class="col ml-5 ">
-
-                        <button  class="btn btn-outline-dark" name="boutonAction" value="annuler">Annuler</button>
-
+                    <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
+                        <button class="btn btn-outline-dark" name="boutonAction">Annuler</button>
+                    </a>
                 </div>
             </div>
         </div>
     </form>
+    <label>${message}</label>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -57,7 +57,7 @@
 
             <div class="row">
                 <div class="col-5 mb-3">
-                    <button type="submit" name="Connexion?Connexion=true" class="btn btn-outline-dark mb-3 mb-5">
+                    <button  name="Connexion" class="btn btn-outline-dark mb-3 mb-5">
                         Connexion
                     </button>
                 </div>
@@ -88,8 +88,7 @@
         </form>
 
     </div>
-
-
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

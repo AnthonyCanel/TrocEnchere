@@ -12,8 +12,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class PageModifierProfil extends HttpServlet {
-    private static UtilisateurManager um = new UtilisateurManager();
-    private static BusinessException businessException = new BusinessException();
+    private UtilisateurManager um = new UtilisateurManager();
+    private BusinessException businessException = new BusinessException();
     Utilisateur util = null;
 
     /**
@@ -61,7 +61,7 @@ public class PageModifierProfil extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             //Récupère la session
             HttpSession session = req.getSession();
-            if(req.getParameter("button") != "supprimer") {
+            if(!req.getParameter("button").equals("supprimer") ) {
                 util = (Utilisateur) session.getAttribute("utilisateur");
                 //Si utilisateur est connecté
                 if (session.getAttribute("utilisateur") != null) {
@@ -84,9 +84,10 @@ public class PageModifierProfil extends HttpServlet {
                             businessException.ajouterErreur(CodesResultatServlet.REGLE_UTILISATEUR_NOUVEAUMOTDEPASSE_ERREUR);
                         }
                     }
-                    if (req.getParameter("nmdp") == "") {
+                    if (req.getParameter("nmdp") == null) {
                         motPasse = req.getParameter("mdpa");
                     }
+                    System.out.println(req.getParameter("nmdp"));
                     Boolean admin = false;
                     //Création de l'objet utilisateur
                     Utilisateur utilUpdate = new Utilisateur(idUtilisateur, pseudo, nom, prenom, email, tel, rue, cP, ville, motPasse, admin);
@@ -99,10 +100,14 @@ public class PageModifierProfil extends HttpServlet {
                 }
                 req.getRequestDispatcher("WEB-INF/html/PageMonProfil.jsp").forward(req, resp);
             }else{
-
-                //efface la session
-                session.invalidate();
-                req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
+                try {
+                    um.supprimer(util.getNoUtilisateur());
+                    //efface la session
+                    session.invalidate();
+                    req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
+                } catch (BusinessException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+    }
 }

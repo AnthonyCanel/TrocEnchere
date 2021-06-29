@@ -88,16 +88,21 @@ public class CodesResultatDAL {
      */
     public static final int LECTURE_CATEGORIE_ECHEC=10104;
     /**
+     * Echec de la lecture de la table Catégories select by id
+     */
+    public static final int LECTURE_ID_CATEGORIE_ECHEC=10105;
+    /**
      * Echec lors de l'insertion de la table Catégories
      */
-    public static final int INSERT_CATEGORIE_ECHEC=10105;
+    public static final int INSERT_CATEGORIE_ECHEC=10106;
     /**
      * Echec lors de la mise à jour d'une catégorie
      */
-    public static final int UPDATE_CATEGORIE_ECHEC=10106;
+    public static final int UPDATE_CATEGORIE_ECHEC=10107;
     /**
      * Echec lors de la suppression d'un catégorie
      */
-    public static final int DELETE_CATEGORIE_ERREUR=10107;
+    public static final int DELETE_CATEGORIE_ERREUR=10108;
+
 
 }

@@ -12,6 +12,7 @@ public class UtilisateurManager {
     private DAO<Utilisateur> utilisateurDao;
     private BusinessException businessException = new BusinessException();
 
+
     public UtilisateurManager() {
         utilisateurDao = DAOFactory.getUtilisateurDAO();
     }
@@ -34,10 +35,7 @@ public class UtilisateurManager {
      * @throws BusinessException
      */
     public Utilisateur choisirUtilisateur(int id) throws BusinessException {
-        utilisateurDao = DAOFactory.getUtilisateurDAO();
-        Utilisateur util = utilisateurDao.selectById(id);
-
-        return util;
+        return utilisateurDao.selectById(id);
     }
 
     /**
@@ -61,7 +59,6 @@ public class UtilisateurManager {
         //verif util existe déjà
         verifUtilisateur(util.getPseudo(),businessException);
         verifEmail(util.getEmail(),businessException);
-
         if(!businessException.hasErreurs()){
             utilisateurDao.insert(util);
         }
