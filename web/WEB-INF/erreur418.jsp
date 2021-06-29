@@ -1,18 +1,14 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ajouhanneau2021
-  Date: 24/06/2021
-  Time: 12:24
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>Erreur 418</title>
-</head>
-<body>
-    <h1>Erreur 418</h1>
-    <h2>I'm a teapot</h2>
-    <img width="80" height="80" src="${pageContext.request.contextPath}/img/Error_418.png" alt="I am a teapot">
-</body>
+    <head>
+        <title>Erreur 418</title>
+    </head>
+    <body class="d-flex justify-content-center">
+        <div class="w-50">
+            <h1 class="row">Erreur 418</h1>
+            <h2 class="row">I'm a teapot</h2>
+            <img class="row" width="500" height="300" src="${pageContext.request.contextPath}/img/Error_418.png" alt="I am a teapot">
+            <p class="row"><a href="${pageContext.request.contextPath}/PageAccueilEnchere">Retour</a></p>
+        </div>
+    </body>
 </html>

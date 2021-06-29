@@ -17,10 +17,12 @@ public abstract class DAOFactory {
     }
 
     public static DAO getRetraitDAO(){
+
         return new RetraitDAOJdbcImpl();
     }
 
     public static DAO getUtilisateurDAO(){
+
         return new UtilisateurDAOJdbcImpl();
     }
 }

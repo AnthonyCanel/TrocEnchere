@@ -55,7 +55,7 @@ public class PageConnexion extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("utilisateur", util);
             System.out.println("je suis connecté");
-            req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/PageAccueilEnchere");
         }else{
             System.out.println("je ne suis pas connecté");
             doGet(req,resp);

@@ -2,6 +2,7 @@ package fr.eni.servlet;
 
 import fr.eni.BusinessException;
 import fr.eni.bll.UtilisateurManager;
+import fr.eni.bo.Utilisateur;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,24 +17,20 @@ public class SupprimerCompte extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Récupére la session
         HttpSession session = req.getSession();
-        //Si l'utilisateur n'est pas connecté, on le renvoie vers la page
-        if (session.getAttribute("idUtilisateur") == null) {
-            //Vérification si le paramètre id est renseigné
-            if (req.getParameter("id") != null) {
-                try {
-                    //Suppression utilisateur
-                    um.supprimer(Integer.valueOf(req.getParameter("id")));
-                    //Invalide la session
-                    session.invalidate();
-                    //Redirection vers la page d'accueil
-                    req.getRequestDispatcher("WEB-INF/html/PageAccueilNonConnecte.jsp").forward(req, resp);
 
-                } catch (BusinessException e) {
-                    e.printStackTrace();
-                }
-            }else {
-                //Affichage page d'erreur
-                this.getServletContext().getRequestDispatcher("/WEB-INF/erreur418.jsp").forward(req, resp);
+        //Si l'utilisateur n'est pas connecté, on le renvoie vers la page
+        if (session.getAttribute("utilisateur") != null) {
+            Utilisateur util = (Utilisateur) session.getAttribute("utilisateur");
+            try {
+                //Suppression utilisateur
+                um.supprimer(util.getNoUtilisateur());
+                //Invalide la session
+                session.invalidate();
+                //Redirection vers la page d'accueil
+                req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
+
+            } catch (BusinessException e) {
+                e.printStackTrace();
             }
         }else{
             //Affichage page d'erreur
@@ -43,6 +40,6 @@ public class SupprimerCompte extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        doGet(req, resp);
     }
 }

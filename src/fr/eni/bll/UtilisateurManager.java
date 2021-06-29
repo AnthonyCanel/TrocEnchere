@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtilisateurManager {
-    private DAO utilisateurDao;
-    private static BusinessException businessException = new BusinessException();
+    private DAO<Utilisateur> utilisateurDao;
+    private BusinessException businessException = new BusinessException();
+
+
 
     public UtilisateurManager() {
         utilisateurDao = DAOFactory.getUtilisateurDAO();
@@ -34,7 +36,7 @@ public class UtilisateurManager {
      * @throws BusinessException
      */
     public Utilisateur choisirUtilisateur(int id) throws BusinessException {
-        return (Utilisateur) utilisateurDao.selectById(id);
+        return utilisateurDao.selectById(id);
     }
 
     /**

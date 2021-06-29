@@ -57,7 +57,7 @@
 
             <div class="row">
                 <div class="col-5 mb-3">
-                    <button type="submit" name="Connexion?Connexion=true" class="btn btn-outline-dark mb-3 mb-5">
+                    <button  name="Connexion" class="btn btn-outline-dark mb-3 mb-5">
                         Connexion
                     </button>
                 </div>
