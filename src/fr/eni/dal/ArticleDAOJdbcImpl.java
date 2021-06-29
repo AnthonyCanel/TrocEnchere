@@ -25,9 +25,9 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
 
     private static String selectByIdUtilisateurAndDateFinEnchere ="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente,etat_article, photo, vues, no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM V_ARTICLES_CATEGORIES_UTILISATEURS where no_utilisateur=? and date_fin_encheres>?";
 
-    private static String SELECT_BY_DATE_INF_DEB_ENCHERE ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_date_debut_encheres, encs_montant_enchere,utils_nom, utils_no_utilisateur, cats_no_categorie, cats_libelle from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres ORDER BY arts_date_debut_encheres DESC";
+    private static final String SELECT_BY_DATE_INF_DEB_ENCHERE ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_date_debut_encheres, encs_montant_enchere,utils_nom, utils_no_utilisateur, cats_no_categorie, cats_libelle from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres ORDER BY arts_date_debut_encheres DESC";
 
-    private static String SELECT_BY_ID_AND_DATE_FIN_ENCHERE="SELECT no_utilisateur, nom, pseudo, nom_article, montant_enchere, date_fin_encheres FROM V_UTILISATEURS_ENCHERES_ARTICLES_RETRAITS_CATEGORIES WHERE ?>date_fin_encheres and no_utilisateur=? and etat_enchere='Vendu' ORDER BY date_fin_encheres DESC";
+    private static final String SELECT_BY_ID_AND_DATE_FIN_ENCHERE="SELECT no_utilisateur, nom, pseudo, nom_article, montant_enchere, date_fin_encheres FROM V_UTILISATEURS_ENCHERES_ARTICLES_RETRAITS_CATEGORIES WHERE ?>date_fin_encheres and no_utilisateur=? and etat_enchere='Vendu' ORDER BY date_fin_encheres DESC";
 
     /**
      * (ventes terminées consulté par l'utilisateur)
@@ -39,8 +39,8 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
         Article article = new Article();
         try (
                 Connection cxn = ConnectionProvider.getConnection();
-                PreparedStatement ptt = cxn.prepareStatement(SELECT_BY_ID_AND_DATE_FIN_ENCHERE);
-                ){
+                PreparedStatement ptt = cxn.prepareStatement(SELECT_BY_ID_AND_DATE_FIN_ENCHERE)
+        ){
             ptt.setDate(1,java.sql.Date.valueOf(LocalDate.now()));
             ptt.setInt(2,idUtilisateur);
 
@@ -52,7 +52,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                 article.getEnchere().setMontantEnchere(rs.getInt("montant_enchere"));
                 article.getCategorie().setNoCategorie(rs.getInt("no_categorie"));
                 article.getCategorie().setLibelle(rs.getString("libelle"));
-                article.setDateFinEncheres(rs.getDate("date_fin_encheres"));
+                article.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
                 article.getUtilisateur().setNoUtilisateur(rs.getInt("no_utilisateur"));
                 article.getUtilisateur().setNom(rs.getString("nom"));
                 article.getEnchere().setNoAcquereur(rs.getInt("no_acquereur"));
@@ -78,8 +78,8 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
 
         try (
             Connection cxn = ConnectionProvider.getConnection();
-            PreparedStatement ptt = cxn.prepareStatement(SELECT_BY_DATE_INF_DEB_ENCHERE);
-            ){
+            PreparedStatement ptt = cxn.prepareStatement(SELECT_BY_DATE_INF_DEB_ENCHERE)
+        ){
             ptt.setDate(1,java.sql.Date.valueOf(LocalDate.now()));
             ResultSet rs = ptt.executeQuery();
 
@@ -88,7 +88,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                         rs.getInt("arts_no_article"),
                         rs.getString("arts_nom_article"),
                         rs.getInt("arts_prix_initial"),
-                        rs.getDate("arts_date_debut_enchere"),
+                        rs.getDate("arts_date_debut_enchere").toLocalDate(),
                         rs.getInt("encs_montant_enchere"),
                         rs.getString("utils_nom"),
                         rs.getInt("utils_no_utilisateur"),
@@ -109,8 +109,8 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
         Categorie  cat = new Categorie();
         Utilisateur util = new Utilisateur();
         try (
-                Connection cxn = ConnectionProvider.getConnection();
-                )
+                Connection cxn = ConnectionProvider.getConnection()
+        )
         {
             //TOdo tester avec la valeur par défaut de la combobox
             String restrictionComplementaire = " no_categorie=?";
@@ -149,8 +149,8 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                     rs.getInt("no_article"),
                     rs.getString("nom_article"),
                     rs.getString("description"),
-                    rs.getDate("date_debut_enchere"),
-                    rs.getDate("date_fin_enchere"),
+                    rs.getDate("date_debut_enchere").toLocalDate(),
+                    rs.getDate("date_fin_enchere").toLocalDate(),
                     rs.getInt("prix_initial"),
                     rs.getInt("prix_vente"),
                     rs.getString("etat_article"),
@@ -189,35 +189,32 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                 if(rs.getInt(1) != utilisateurEnCours.getNoUtilisateur()){
                     utilisateurEnCours = new Utilisateur();
                     utilisateurEnCours.setNoUtilisateur(rs.getInt(13));
-                    utilisateurEnCours.setPseudo(rs.getString(14).toString());
-                    utilisateurEnCours.setNom(rs.getString(15).toString());
-                    utilisateurEnCours.setPrenom(rs.getString(16).toString());
-                    utilisateurEnCours.setEmail(rs.getString(17).toString());
-                    utilisateurEnCours.setTelephone(rs.getString(18).toString());
-                    utilisateurEnCours.setRue(rs.getString(19).toString());
-                    utilisateurEnCours.setCodePostal(rs.getString(20).toString());
-                    utilisateurEnCours.setVille(rs.getString(21).toString());
-                    utilisateurEnCours.setMotDePasse(rs.getString(22).toString());
+                    utilisateurEnCours.setPseudo(rs.getString(14));
+                    utilisateurEnCours.setNom(rs.getString(15));
+                    utilisateurEnCours.setPrenom(rs.getString(16));
+                    utilisateurEnCours.setEmail(rs.getString(17));
+                    utilisateurEnCours.setTelephone(rs.getString(18));
+                    utilisateurEnCours.setRue(rs.getString(19));
+                    utilisateurEnCours.setCodePostal(rs.getString(20));
+                    utilisateurEnCours.setVille(rs.getString(21));
+                    utilisateurEnCours.setMotDePasse(rs.getString(22));
                     utilisateurEnCours.setCredit(rs.getInt(23));
-                    boolean admin = true;
-                    if (rs.getByte(24) == 0){
-                        admin = false;
-                    }
+                    boolean admin = rs.getByte(24) != 0;
                     utilisateurEnCours.setAdmin(admin);
                     listeUtilisateur.add(utilisateurEnCours);
                 }
                 Categorie categorieEnCours = new Categorie();
                 if (rs.getInt(1) != categorieEnCours.getNoCategorie()){
                     categorieEnCours.setNoCategorie(rs.getInt(1));
-                    categorieEnCours.setLibelle(rs.getString(2).toString());
+                    categorieEnCours.setLibelle(rs.getString(2));
                     listeCategorie.add(categorieEnCours);
                 }
                 Article articleEnCours = new Article();
                 articleEnCours.setNoArticle(rs.getInt("no_article"));
                 articleEnCours.setNomArticle(rs.getString("nom_article"));
                 articleEnCours.setDescription(rs.getString("description"));
-                articleEnCours.setDateDebutEncheres(rs.getDate("date_debut_encheres"));
-                articleEnCours.setDateFinEncheres(rs.getDate("date_fin_encheres"));
+                articleEnCours.setDateDebutEncheres(rs.getDate("date_debut_encheres").toLocalDate());
+                articleEnCours.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
                 articleEnCours.setPrixInitial(rs.getInt("prix_initial"));
                 articleEnCours.setPrixVente(rs.getInt("prix_vente"));
                 articleEnCours.setEtat_Article(rs.getString("etat_article"));
@@ -262,8 +259,8 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                     pstmt = cnx.prepareStatement(INSERT_ARTICLE, PreparedStatement.RETURN_GENERATED_KEYS);
                     pstmt.setString(1, article.getNomArticle());
                     pstmt.setString(2, article.getDescription());
-                    pstmt.setDate(3, (Date) article.getDateDebutEncheres());
-                    pstmt.setDate(4, (Date) article.getDateFinEncheres());
+                    pstmt.setDate(3, java.sql.Date.valueOf(article.getDateDebutEncheres()));
+                    pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
                     pstmt.setInt(5, article.getPrixInitial());
                     pstmt.setInt(6, article.getPrixVente());
                     pstmt.setString(7, article.getEtat_Article());
@@ -302,8 +299,8 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
             PreparedStatement pstmt = cnx.prepareStatement(UPDATE_ARTICLE);
             pstmt.setString(1, article.getNomArticle());
             pstmt.setString(2, article.getDescription());
-            pstmt.setDate(3, (Date) article.getDateDebutEncheres());
-            pstmt.setDate(4, (Date) article.getDateFinEncheres());
+            pstmt.setDate(3, java.sql.Date.valueOf(article.getDateDebutEncheres()));
+            pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
             pstmt.setInt(5, article.getPrixInitial());
             pstmt.setInt(6, article.getPrixVente());
             pstmt.setString(7, article.getEtat_Article());

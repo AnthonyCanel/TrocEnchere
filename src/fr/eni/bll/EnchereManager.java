@@ -10,8 +10,8 @@ import fr.eni.dal.EnchereDAOJdbcImpl;
 import java.util.List;
 
 public class EnchereManager {
-    private DAO generiqueDao;
-    private static BusinessException businessException = new BusinessException();
+    private final DAO generiqueDao;
+    private static final BusinessException businessException = new BusinessException();
 
     /**
      * return List of enchere 's table

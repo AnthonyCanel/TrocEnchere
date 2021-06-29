@@ -12,8 +12,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class PageEncherir  extends HttpServlet {
-    private static UtilisateurManager um = new UtilisateurManager();
-    private static BusinessException businessException = new BusinessException();
+    private static final UtilisateurManager um = new UtilisateurManager();
+    private static final BusinessException businessException = new BusinessException();
     Utilisateur util = null;
 
     @Override

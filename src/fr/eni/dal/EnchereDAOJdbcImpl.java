@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnchereDAOJdbcImpl implements DAO<Enchere> {
-    private static BusinessException businessException = new BusinessException();
+    private static final BusinessException businessException = new BusinessException();
 
     private static final String SELECTALL = "SELECT * FROM ENCHERES";
     private static final String SELECT_BY_ACQ_ET_ART_VENDU ="SELECT * FROM ENCHERES WHERE (no_acquereur=? and etat_enchere='Vendu')";
