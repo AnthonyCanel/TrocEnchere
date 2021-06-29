@@ -32,4 +32,14 @@ public interface DAO<T>{
         return null;
     }
 
+    /**
+     * Selection d'un article avec les informations pour PageEncherir
+     * @param id
+     * @return
+     * @throws BusinessException
+     */
+    default List<Article> selectByEnchere(int id) throws BusinessException{
+        return null;
+    }
+
 }

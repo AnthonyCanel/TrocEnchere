@@ -15,6 +15,7 @@ public class EnchereDAOJdbcImpl implements DAO<Enchere> {
 
     private static final String SELECTALL = "SELECT * FROM ENCHERES";
     private static final String SELECT_BY_ACQ_ET_ART_VENDU ="SELECT * FROM ENCHERES WHERE (no_acquereur=? and etat_enchere='Vendu')";
+    private static final String SELECT_BY_ID_UTIL_AND_ID_ART = "SELECT date_enchere, montant_enchere, etat_enchere, no_acquereur FROM ENCHERES WHERE no_article = ? AND no_utilisateur = ?";
 
 
     @Override
@@ -88,7 +89,6 @@ public class EnchereDAOJdbcImpl implements DAO<Enchere> {
             throw new BusinessException();
 
         }
-
         return listEnchere;
     }
 

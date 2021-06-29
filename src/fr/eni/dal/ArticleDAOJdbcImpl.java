@@ -1,10 +1,7 @@
 package fr.eni.dal;
 
 import fr.eni.BusinessException;
-import fr.eni.bo.Article;
-import fr.eni.bo.Categorie;
-import fr.eni.bo.Utilisateur;
-import sun.invoke.empty.Empty;
+import fr.eni.bo.*;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -28,6 +25,8 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
     private static String SELECT_BY_DATE_INF_DEB_ENCHERE ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_date_debut_encheres, encs_montant_enchere,utils_nom, utils_no_utilisateur, cats_no_categorie, cats_libelle from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres ORDER BY arts_date_debut_encheres DESC";
 
     private static String SELECT_BY_ID_AND_DATE_FIN_ENCHERE="SELECT no_utilisateur, nom, pseudo, nom_article, montant_enchere, date_fin_encheres FROM V_UTILISATEURS_ENCHERES_ARTICLES_RETRAITS_CATEGORIES WHERE ?>date_fin_encheres and no_utilisateur=? and etat_enchere='Vendu' ORDER BY date_fin_encheres DESC";
+
+    private static String SELECT_BY_ID_VIEW = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, credit, date_enchere, montant_enchere, etat_enchere, no_acquereur, no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, rueRetrait, codePostalRetrait, villeRetrait, no_categorie, libelle FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS WHERE no_article = ?";
 
     /**
      * (ventes terminées consulté par l'utilisateur)
@@ -236,9 +235,17 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
         return listeArticle;
     }
 
+    /**
+     * Sélectionne un article selon son identifiant
+     * Se base sur une vue qui ramène toutes les tables ( à noter que la jointure
+     * entre la table Retraits et Articles est LEFT JOIN)
+     * @param id
+     * @return
+     */
     @Override
-    public Article selectById(int id) {
-        return null;
+    public Article selectById(int id) throws BusinessException {
+        Article art = null;
+        return art;
     }
 
     /**
@@ -334,5 +341,95 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
          businessException.ajouterErreur(CodesResultatDAL.DELETE_ARTICLE_ERREUR);
          throw businessException;
      }
+    }
+
+    /**
+     * Méthode pour récupérer les différentes données pour la page enchère
+     * @param id no_article
+     * @return
+     */
+    @Override
+    public List<Article> selectByEnchere(int id) throws BusinessException {
+        DAO<Retrait> retraitDAO = DAOFactory.getRetraitDAO();
+        List<Article> listeArticles = new ArrayList<>();
+        List<Utilisateur> listeUtilisateurs = new ArrayList<>();
+        List<Categorie> listeCategories = new ArrayList<>();
+        List<Enchere> listeEncheres = new ArrayList<>();
+        List<Retrait> listeRetraits = new ArrayList<>();
+        if(id == 0){
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_ID_ARTICLE_ECHEC);
+            throw businessException;
+        }else{
+            try (Connection cnx = ConnectionProvider.getConnection();
+                 PreparedStatement pstt = cnx.prepareStatement(SELECT_BY_ID_VIEW)){
+                pstt.setInt(1,id);
+                ResultSet rs = pstt.executeQuery();
+                Utilisateur utilisateurEnCours = new Utilisateur();
+                while(rs.next()){
+                    //Si l'identifiant de la requête est différent de l'identifiant de l'objet
+                    if(rs.getInt("no_utilisateur") != utilisateurEnCours.getNoUtilisateur()){
+//                        utilisateurEnCours = new Utilisateur();
+                        utilisateurEnCours.setNoUtilisateur(rs.getInt("no_utilisateur"));
+                        utilisateurEnCours.setPseudo(rs.getString("pseudo"));
+                        utilisateurEnCours.setNom(rs.getString("nom"));
+                        utilisateurEnCours.setPrenom(rs.getString("prenom"));
+                        utilisateurEnCours.setEmail(rs.getString("email"));
+                        utilisateurEnCours.setTelephone(rs.getString("telephone"));
+                        utilisateurEnCours.setRue(rs.getString("rueUtilisateur"));
+                        utilisateurEnCours.setCodePostal(rs.getString("codePostalUtilisateur"));
+                        utilisateurEnCours.setVille(rs.getString("villeUtilisateur"));
+                        utilisateurEnCours.setCredit(rs.getInt("credit"));
+                        listeUtilisateurs.add(utilisateurEnCours);
+                    }
+                    //Catégorie
+                    Categorie categorieEnCours = new Categorie();
+                    if (rs.getInt("no_categorie") != categorieEnCours.getNoCategorie()){
+                        categorieEnCours.setNoCategorie(rs.getInt("no_categorie"));
+                        categorieEnCours.setLibelle(rs.getString("libelle"));
+                        listeCategories.add(categorieEnCours);
+                    }
+
+                    //Retrait
+                    Retrait retraitEnCours = null;
+                    if(rs.getInt("no_article") != retraitEnCours.getId()){
+                        retraitEnCours = retraitDAO.selectById(rs.getInt("no_article")); //SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, credit, date_enchere, montant_enchere, etat_enchere, no_acquereur, no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, rueRetrait, codePostalRetrait, villeRetrait, no_categorie, libelle FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS WHERE no_article = ?"
+                        if(!retraitEnCours.equals(null)) {
+                            listeRetraits.add(retraitEnCours);
+                        }
+                    }
+                    //Enchere
+                    Enchere enchereEnCours = new Enchere();
+                    if(rs.getInt("no_article")!= enchereEnCours.getNoArticle() && rs.getInt("no_utilisateur") != enchereEnCours.getNoUtilisateur()){ //date_enchere, montant_enchere, etat_enchere, no_acquereur
+                        enchereEnCours.setNoArticle(rs.getInt("no_article"));
+                        enchereEnCours.setNoUtilisateur(rs.getInt("no_utilisateur"));
+                        enchereEnCours.setDateEnchere(rs.getTimestamp("date_enchere"));
+                        enchereEnCours.setMontantEnchere(rs.getInt("montant_enchere"));
+                        enchereEnCours.setEtatEnchere(rs.getString("etat_enchere"));
+                        enchereEnCours.setNoAcquereur(rs.getInt("no_acquereur"));
+                        listeEncheres.add(enchereEnCours);
+                    }
+                    //Article
+                    Article articleEnCours = new Article();
+                    if(rs.getInt("no_article") != articleEnCours.getNoArticle()) {
+                        articleEnCours.setNoArticle(rs.getInt("no_article"));
+                        articleEnCours.setNomArticle(rs.getString("nom_article"));
+                        articleEnCours.setDescription(rs.getString("description"));
+                        articleEnCours.setDateDebutEncheres(rs.getDate("date_debut_encheres"));
+                        articleEnCours.setDateFinEncheres(rs.getDate("date_fin_encheres"));
+                        articleEnCours.setPrixInitial(rs.getInt("prix_initial"));
+                        articleEnCours.setPrixVente(rs.getInt("prix_vente"));
+                        articleEnCours.setEtat_Article(rs.getString("etat_article"));
+                        articleEnCours.setUtilisateur(utilisateurEnCours);
+                        articleEnCours.setCategorie(categorieEnCours);
+                        articleEnCours.setRetrait(retraitEnCours);
+                        articleEnCours.setEnchere(enchereEnCours);
+                        listeArticles.add(articleEnCours);
+                    }
+                } //Fin de la boucle while
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return listeArticles;
     }
 }

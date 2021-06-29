@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleManager {
-    private DAO articleDao;
+    private DAO<Article> articleDao;
 
 
 
@@ -94,6 +94,19 @@ public class ArticleManager {
 
         listArticle = articleDAOJdbc.selectByIdDateFinEnchere(idUtilisateur, idCategorie);
         return listArticle;
+    }
+
+    /**
+     * Choisir un Article selon les enchères pour PageEncherir
+     */
+    public List<Article> ChoisirArticlesEncherir(int idArticle){
+        List<Article> listeArticles = null;
+        try {
+            listeArticles = articleDao.selectByEnchere(idArticle);
+        } catch (BusinessException e) {
+            e.printStackTrace();
+        }
+        return listeArticles;
     }
 
 }

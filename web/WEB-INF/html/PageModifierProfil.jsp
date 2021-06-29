@@ -80,10 +80,6 @@
 
                             </div>
                             <div class="input-group input-group-md mb-3">
-                                <!--Vérification Mail abc@example.com # Minimum three characters
-                                    ABC.xyz@example.com # Accepts Caps as well.
-                                    abce.xyz@example.co.in # Accepts . before @
-                                    pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"-->
                                 <input class="w-100" type="email" name="email" id="email" value="${email}" required>
                             </div>
                         </div>
@@ -100,7 +96,7 @@
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
                                 <input class="w-100" type="text" name="telephone" id="telephone" value="${telephone}"
-                                       required pattern="^[0-9-.// |]{1,15}">
+                                       pattern="^[0-9-.// |]{1,15}">
                             </div>
                         </div>
                     </div>
@@ -128,7 +124,7 @@
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
                                 <input class="w-100" type="text" name="CP" id="codePostal" value="${CP}" required
-                                       pattern="[0-9]{1,5}">
+                                       pattern="[0-9]{5}">
                             </div>
                         </div>
                     </div>

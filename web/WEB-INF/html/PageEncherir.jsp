@@ -14,7 +14,7 @@
         </a>
     </div>
     <div class="col-4">
-        <h3 class="m-5 ml-1">Détail vente</h3>
+        <h3 class="m-5 ml-1">Enchère</h3>
     </div>
     <div class="col-4">
         <c:choose>
@@ -34,7 +34,7 @@
     <div class="col-8 shadow p-3">
 
         <div class="row m-2">
-            <h5>PC Gamer pour travailler</h5>
+            <h5>${nom_art}</h5>
         </div>
 
         <div class=" row m-2">
@@ -42,7 +42,7 @@
                 <p>Description</p>
             </div>
             <div class="col-8">
-                <p>zvoequqvvrvrizvhiuzrhihzruzrrhirruerr</p>
+                <p>${description}</p>
             </div>
         </div>
 
