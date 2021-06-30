@@ -62,6 +62,16 @@ public class ArticleManager {
         DAO<Article> articleDAO = DAOFactory.getArticleDAO();
 
         listInfoArticles = articleDAO.selectByDateSupDebEnchereAndInfFinEnchere(idUtilisateur, filtre, noCategorie );
+//        for ( InfoArticle i: listInfoArticles
+//             ) {
+//            System.out.println(
+//                    i.getIdArticle()+"\n"+
+//                    i.getPrixArticle()+"\n"+
+//                    i.getFinEnchere()+"\n"+
+//                    i.getNomArticle()+"\n"
+//                    );
+//        }
+
         return listInfoArticles;
 
     }
