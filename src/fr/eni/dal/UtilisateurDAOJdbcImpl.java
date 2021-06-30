@@ -228,6 +228,7 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             pstt.setString(1,pseudo);
             ResultSet rs = pstt.executeQuery();
             if(rs.next()){
+                //todo ???
                 unique = true;
             }
         } catch (Exception e) {

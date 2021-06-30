@@ -12,8 +12,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class PageMonProfil extends HttpServlet {
-    private static final UtilisateurManager um = new UtilisateurManager();
-    private static final BusinessException businessException = new BusinessException();
+    private UtilisateurManager um = new UtilisateurManager();
+    private BusinessException businessException = new BusinessException();
     Utilisateur util = null;
 
     @Override

@@ -13,6 +13,7 @@
             <h1>ENI Enchère</h1>
         </a>
     </div>
+    <div class="col-6">
         <c:choose>
             <c:when test="${sessionScope.utilisateur != null}">
                 <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
@@ -22,6 +23,8 @@
             </c:otherwise>
         </c:choose>
 </header>
+
+<%-- Attention enlever les expressions réguliere des inputs--%>
 <div class="container shadow p-4">
     <h1 class="row d-flex justify-content-center mb-5 p-2">Mon Profil</h1>
     <form action="PageCreerCompte" method="post">
@@ -33,7 +36,7 @@
                             <label for="pseudo">Pseudo :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="pseudo" id="pseudo">
+                            <input type="text" name="pseudo" id="pseudo" value="${pseudo}">
                         </div>
                     </div>
                 </div>
@@ -43,7 +46,7 @@
                             <label for="nom">Nom : </label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="nom" id="nom">
+                            <input type="text" name="nom" id="nom" value="${nom}">
                         </div>
                     </div>
                 </div>
@@ -56,7 +59,7 @@
                             <label for="prenom">Prenom :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="prenom" id="prenom">
+                            <input type="text" name="prenom" id="prenom" value="${prenom}">
                         </div>
                     </div>
                 </div>
@@ -66,7 +69,7 @@
                             <label for="email">Email :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="email" id="email">
+                            <input type="text" name="email" id="email" value="${email}">
                         </div>
                     </div>
                 </div>
@@ -79,7 +82,7 @@
                             <label for="tel">Téléhone :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="tel" id="tel">
+                            <input type="text" name="tel" id="tel" value="${tel}">
                         </div>
                     </div>
                 </div>
@@ -89,7 +92,7 @@
                             <label for="rue">Rue :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="rue" id="rue">
+                            <input type="text" name="rue" id="rue" value="${rue}">
                         </div>
                     </div>
                 </div>
@@ -102,7 +105,7 @@
                             <label for="CP">Code postal :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="CP" id="CP">
+                            <input type="text" name="CP" id="CP" value="${CP}">
                         </div>
                     </div>
                 </div>
@@ -112,7 +115,7 @@
                             <label for="ville">Ville :</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="ville" id="ville">
+                            <input type="text" name="ville" id="ville" value="${ville}">
                         </div>
                     </div>
                 </div>
@@ -145,17 +148,18 @@
                     id="msg" name="msgError">${message}</h4>
                 <div class="col mr-5 d-flex flex-row-reverse">
                     <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
-                        <button class="btn btn-outline-dark" name="Creer?Creer=creer">Créer</button>
+                        <button class="btn btn-outline-dark" name="boutonAction" >Créer</button>
                     </a>
                 </div>
                 <div class="col ml-5 ">
                     <a href="${pageContext.request.contextPath}/PageAccueilEnchere">
-                        <button class="btn btn-outline-dark" name="Annuler?Annuler=annuler">Annuler</button>
+                        <button class="btn btn-outline-dark" name="boutonAction">Annuler</button>
                     </a>
                 </div>
             </div>
         </div>
     </form>
+    <label>${message}</label>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

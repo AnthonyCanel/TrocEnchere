@@ -13,7 +13,6 @@ public class UtilisateurManager {
     private final BusinessException businessException = new BusinessException();
 
 
-
     public UtilisateurManager() {
         utilisateurDao = DAOFactory.getUtilisateurDAO();
     }
