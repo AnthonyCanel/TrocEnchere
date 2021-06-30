@@ -3,6 +3,8 @@ package fr.eni.dal;
 import fr.eni.BusinessException;
 import fr.eni.bo.Article;
 import fr.eni.bo.Categorie;
+import fr.eni.bo.Retrait;
+import fr.eni.bo.Enchere;
 import fr.eni.bo.InfoArticle;
 import fr.eni.bo.Utilisateur;
 import sun.invoke.empty.Empty;
@@ -19,7 +21,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
 
     private static final String SELECT_ALL = "SELECT TOP(6) no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, photo, vues,no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM V_ARTICLES_CATEGORIES_UTILISATEURS";
 
-    private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, no_utilisateur, no_categorie) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, photo, prix_vente, etat_article, no_utilisateur, no_categorie) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String UPDATE_ARTICLE = "UPDATE ARTICLES SET no_article = ?, nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, etat_article = ?, photo = ?, no_utilisateur = ?, no_categorie = ?, vues = ? where id=?";
 
@@ -841,8 +843,8 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                         articleEnCours.setNoArticle(rs.getInt("no_article"));
                         articleEnCours.setNomArticle(rs.getString("nom_article"));
                         articleEnCours.setDescription(rs.getString("description"));
-                        articleEnCours.setDateDebutEncheres(rs.getDate("date_debut_encheres"));
-                        articleEnCours.setDateFinEncheres(rs.getDate("date_fin_encheres"));
+                        articleEnCours.setDateDebutEncheres(rs.getDate("date_debut_encheres").toLocalDate());
+                        articleEnCours.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
                         articleEnCours.setPrixInitial(rs.getInt("prix_initial"));
                         articleEnCours.setPrixVente(rs.getInt("prix_vente"));
                         articleEnCours.setEtat_Article(rs.getString("etat_article"));

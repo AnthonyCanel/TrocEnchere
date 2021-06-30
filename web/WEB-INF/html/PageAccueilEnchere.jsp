@@ -78,7 +78,7 @@
         <form action="/PageAccueilEnchere" method="post">
             <div class="row">
                 <c:if test="${sessionScope.utilisateur != null}">
-                    <jsp:include page="inclusion/CheckBoxAchats.jsp"></jsp:include>
+                    <jsp:include page="inclusion/CheckBoxAchatsVentes.jsp"></jsp:include>
                 </c:if>
                 <div class="col-4"></div>
                 <div class="col-4"></div>
@@ -86,8 +86,6 @@
         </form>
         <div class="row ">
             <!-- la boucle est a mettre ici-->
-
-
                 <div class="col bg-light shadow-sm p-3 m-3 d-flex align-items-center">
                     <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir">
                     <div class="w-100 row">
@@ -112,8 +110,6 @@
                     </div>
                     </a>
                 </div>
-
-
             <!-- fin de la boucle-->
             <!-- article complementaire a enlever une fois la boucle faite-->
             <div class="col bg-light shadow-sm p-3 m-3 d-flex align-items-center">

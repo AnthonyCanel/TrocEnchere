@@ -2,6 +2,7 @@ package fr.eni.bll;
 
 import fr.eni.BusinessException;
 import fr.eni.bo.Article;
+import fr.eni.bo.InfoArticle;
 import fr.eni.dal.ArticleDAOJdbcImpl;
 import fr.eni.dal.DAO;
 import fr.eni.dal.DAOFactory;
@@ -60,24 +61,24 @@ public class ArticleManager {
      * @param idUtilisateur
      * @return
      */
-    public List<Article> ventesTerminées(int idUtilisateur){
-        ArticleDAOJdbcImpl adao = new ArticleDAOJdbcImpl();
-        List<Article> listArticles = adao.selectByIdDateEnchereEtatEnchere(idUtilisateur);
-        return listArticles;
-
-    }
+//    public List<Article> ventesTerminées(int idUtilisateur){
+//        ArticleDAOJdbcImpl adao = new ArticleDAOJdbcImpl();
+//       List<Article> listArticles = adao.selectByIdDateEnchereEtatEnchere(idUtilisateur);
+//        return listArticles;
+//
+//    }
 
     /**
      * retourne les ventes non débutées
      * @return une liste d'article
      */
-    public List<Article> ventesNonDebutees(){
-
-        ArticleDAOJdbcImpl adao = new ArticleDAOJdbcImpl();
-        List<Article> listArticle =  adao.selectByDateInfDebEnchere();
-
-        return listArticle;
-    }
+//    public List<Article> ventesNonDebutees(){
+//
+//        ArticleDAOJdbcImpl adao = new ArticleDAOJdbcImpl();
+//        List<Article> listArticle =  adao.selectByDateInfDebEnchere();
+//
+//        return listArticle;
+//    }
     /**
      * Recherche en étant connecté
      *
@@ -94,7 +95,7 @@ public class ArticleManager {
     public List<Article> affichageArticles(String categorie, String motCle) {
         List<Article> listeArticle = new ArrayList<>();
         try {
-            listeArticle = articleDao.selectAll();
+            listeArticle = articleDAO.selectAll();
         } catch (BusinessException e) {
             e.printStackTrace();
         }
@@ -121,7 +122,7 @@ public class ArticleManager {
      * @return
      * @throws BusinessException
      */
-    public List<InfoArticle> MesVentesEnCours(int idUtilisateur,String filtre, int idCategorie) throws BusinessException {
+    public List<InfoArticle> MesVentesEnCours(int idUtilisateur, String filtre, int idCategorie) throws BusinessException {
         List<InfoArticle> listInfoArticle = null;
 
        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
@@ -173,7 +174,7 @@ public class ArticleManager {
     public List<Article> ChoisirArticlesEncherir(int idArticle){
         List<Article> listeArticles = null;
         try {
-            listeArticles = articleDao.selectByEnchere(idArticle);
+            listeArticles = articleDAO.selectByEnchere(idArticle);
         } catch (BusinessException e) {
             e.printStackTrace();
         }

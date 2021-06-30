@@ -2,21 +2,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="col-4">
     <div>
-        <input class="form-check-input" onclick="GestionCheckBoxAchats(achats,'EncheresOuvertes','EncheresEnCours','EncheresRemportes','VentesEnCours','VentesNonDebutes','VentesTerminees')" type="radio" name="AchatsVentes" id="achats" value="a" checked >
+        <input class="form-check-input" onclick="GestionCheckBoxAchats(achats,'EncheresOuvertes','EncheresEnCours','EncheresRemportes','VentesEnCours','VentesNonDebutes','VentesTerminees')" type="radio" name="AchatsVentes" id="achats" value="a" checked checked>
         <label class="form-check-label" for="achats">Achats</label>
     </div>
     <div class="btn-group-vertical mt-2 mb-3" id="groupAchats" name="AchatsVentes" role="group"
          aria-label="Basic radio toggle button group">
         <div class="form-check form-switch">
-            <input class="form-check-input" name="achats" value ="encheresOuvertes" type="checkbox" id="EncheresOuvertes" checked>
+            <input name="achatsH" type="hidden" value ="encheresOuvertes">
+            <input class="form-check-input" name="achat" type="checkbox" id="EncheresOuvertes" checked>
             <label class="form-check-label" for="EncheresOuvertes">Enchères ouvertes</label>
         </div>
         <div class="form-check form-switch">
-            <input class="form-check-input" name="achats"  value ="mesEncheresEnCours" type="checkbox" id="EncheresEnCours">
+            <input name="achatsH" type="hidden" value ="mesEncheresEnCours">
+            <input class="form-check-input" name="achat" type="checkbox" id="EncheresEnCours">
             <label class="form-check-label" for="EncheresEnCours">Mes enchères en cours</label>
         </div>
         <div class="form-check form-switch">
-            <input class="form-check-input" name="achats"  value ="mesEncheresRemportees" type="checkbox" id="EncheresRemportes">
+            <input name="achatsH" type="hidden" value ="mesEncheresRemportees">
+            <input class="form-check-input" name="achat" type="checkbox" id="EncheresRemportes">
             <label class="form-check-label" for="EncheresRemportes">Mes enchères remportées</label>
         </div>
     </div>
@@ -29,15 +32,18 @@
     <div class="btn-group-vertical mt-2 mb-3" id="groupVentes" name="AchatsVentes" role="group"
          aria-label="Basic radio toggle button group">
         <div class="form-check form-switch">
-            <input class="form-check-input" name="ventes"  value ="mesVentesEnCours" type="checkbox" id="VentesEnCours" disabled>
+            <input name="ventesH" type="hidden" value ="mesVentesEnCours">
+            <input class="form-check-input" name="ventes" type="checkbox" id="VentesEnCours" disabled>
             <label class="form-check-label" for="VentesEnCours">Mes ventes en cours</label>
         </div>
         <div class="form-check form-switch">
-            <input class="form-check-input" name="ventes"  value ="ventesNonDebutees" type="checkbox" id="VentesNonDebutes" disabled>
+            <input name="ventesH" type="hidden" value ="ventesNonDebutees">
+            <input class="form-check-input" name="ventes" type="checkbox" id="VentesNonDebutes" disabled>
             <label class="form-check-label" for="VentesNonDebutes">Ventes non débutées</label>
         </div>
         <div class="form-check form-switch">
-            <input class="form-check-input" name="ventes"  value ="ventesTerminees" type="checkbox" id="VentesTerminees" disabled>
+            <input name="ventesH" type="hidden" value ="ventesTerminees">
+            <input class="form-check-input" name="ventes" type="checkbox" id="VentesTerminees" disabled>
             <label class="form-check-label" for="VentesTerminees">Ventes terminées</label>
         </div>
     </div>

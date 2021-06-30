@@ -66,7 +66,7 @@ public class PageVendreUnArticle extends HttpServlet {
 
 
             newArticle.setPrixVente(Integer.parseInt(req.getParameter("prix")));
-
+            //Formatage de Date
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String dateD = req.getParameter("dateDebut");
             String dateF = req.getParameter("dateFin");
