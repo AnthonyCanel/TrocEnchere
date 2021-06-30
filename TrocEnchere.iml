@@ -48,6 +48,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="catalina" level="project" />
-    <orderEntry type="library" name="jstl-1.2 (3)" level="project" />
+    <orderEntry type="library" name="lib1" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

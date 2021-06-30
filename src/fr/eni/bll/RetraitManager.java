@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RetraitManager {
-    private DAO retraitDao;
-    private static BusinessException businessException = new BusinessException();
+    private final DAO retraitDao;
+    private static final BusinessException businessException = new BusinessException();
 
     public RetraitManager() {
         retraitDao = DAOFactory.getRetraitDAO();

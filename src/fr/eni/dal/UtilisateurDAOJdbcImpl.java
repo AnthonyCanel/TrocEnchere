@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
-    private static BusinessException businessException = new BusinessException();
-    private String SELECTALL="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
-    private String SELECTBYID = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
-    private String UPDATE_UTILISATEURS= "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, administrateur = ? WHERE no_utilisateur = ?";
-    private String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
-    private String INSERT= "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-    private String UPDATE_DELETE= "UPDATE UTILISATEURS SET pseudo = 'compte supprimé', nom = 'compte supprimé', prenom = 'compte supprimé', email = 'compte supprimé', telephone = 'compte supprimé', rue = 'compte supprimé',code_postal = 'supp.', mot_de_passe='compte supprimé', credit = 0 WHERE no_utilisateur = ?";
-    private String UPDATE_DELETE_ENCHERES = "UPDATE ENCHERES SET etat_enchere = 'annulé' WHERE no_utilisateur = ?";
-    private String UPDATE_DELETE_ARTICLES = "UPDATE ARTICLES SET etat_article = 'nondisponible' WHERE no_utilisateur = ?";
-    private String SELECTBYMAIL= "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email = ?";
-    private String SELECTBYPSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ?";
-    private String SELECTBYPSEUDOANDPWD = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, " +
+    private static final BusinessException businessException = new BusinessException();
+    private final String SELECTALL="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
+    private final String SELECTBYID = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
+    private final String UPDATE_UTILISATEURS= "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, administrateur = ? WHERE no_utilisateur = ?";
+    private final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
+    private final String INSERT= "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+    private final String UPDATE_DELETE= "UPDATE UTILISATEURS SET pseudo = 'compte supprimé', nom = 'compte supprimé', prenom = 'compte supprimé', email = 'compte supprimé', telephone = 'compte supprimé', rue = 'compte supprimé',code_postal = 'supp.', mot_de_passe='compte supprimé', credit = 0 WHERE no_utilisateur = ?";
+    private final String UPDATE_DELETE_ENCHERES = "UPDATE ENCHERES SET etat_enchere = 'annulé' WHERE no_utilisateur = ?";
+    private final String UPDATE_DELETE_ARTICLES = "UPDATE ARTICLES SET etat_article = 'nondisponible' WHERE no_utilisateur = ?";
+    private final String SELECTBYMAIL= "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email = ?";
+    private final String SELECTBYPSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ?";
+    private final String SELECTBYPSEUDOANDPWD = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, " +
             "code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ? and  mot_de_passe=?";
 
     @Override
@@ -40,10 +40,7 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
                 String villeUti = rs.getString("ville");
                 String pwdUti = rs.getString("mot_de_passe");
                 int creditUti = rs.getInt("credit");
-                boolean adminUti = true;
-                if(rs.getByte("administrateur")==0){
-                    adminUti = false;
-                }
+                boolean adminUti = rs.getByte("administrateur") != 0;
                 //Création de l'objet
                 Utilisateur util = new Utilisateur(idUti,pseudoUti,nomUti, prenomUti,emailUti, telUti, rueUti, codePostalUti, villeUti, pwdUti, creditUti, adminUti);
                 listUtilisateurs.add(util);

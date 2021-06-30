@@ -30,13 +30,13 @@
         <div class="w-100 bg-secondary shadow"><img src="" alt=""></div>
     </div>
     <div class="col-8 shadow p-3">
-
+        <form class="row" action="PageVendreUnArticle" method="post">
         <div class=" row m-2">
             <div class="col-4">
                 <p>Article :</p>
             </div>
             <div class="col-8">
-                <input type="text" name="nomArticle">
+                <input type="text" name="nomArticle" required pattern="[0-9A-Za-zÀ-ÖØ-öø-ÿ-' ]{1,30}">
             </div>
         </div>
 
@@ -45,7 +45,7 @@
                 <p>Description :</p>
             </div>
             <div class="col-8">
-                <input type="area" name="description" row="5" cols="33">
+                <input type="area" name="description" row="5" cols="33" required pattern="[0-9A-Za-zÀ-ÖØ-öø-ÿ-' ]{1,200}">
             </div>
         </div>
 
@@ -54,12 +54,12 @@
                 <p>Catégorie</p>
             </div>
             <div class="col-8">
-                <select name="combo" id="catégorie">
-                    <option value=""> -- Choisir une catégorie --</option>
-                    <c:forEach items="${listeCategories}" var="categorie">
-                        out.print("<option name="categories" value="${categorie.noCategorie}">${categorie.libelle}</option>");
-                    </c:forEach>
-                </select>
+               <select name="combo" id="catégorie" required>
+                   <option value=""> -- Choisir une catégorie --</option>
+                   <c:forEach items="${listeCategories}" var="categorie">
+                       <option value="${categorie.noCategorie}">${categorie.libelle}</option>
+                   </c:forEach>
+               </select>
             </div>
         </div>
 
@@ -77,7 +77,7 @@
                 <p>Mise à prix :</p>
             </div>
             <div class="col-8">
-                <input type="number" min="0" name="prix">
+                <input type="number" min="0" name="prix" required pattern="[0-9]">
             </div>
         </div>
 
@@ -86,7 +86,7 @@
                 <p>Début de l'enchère</p>
             </div>
             <div class="col-8">
-                <input type="date" name="dateDebut">
+                <input type="date" name="dateDebut" required>
             </div>
         </div>
 
@@ -95,7 +95,7 @@
                 <p>Fin de l'enchère</p>
             </div>
             <div class="col-8">
-                <input type="date" name="dateFin">
+                <input type="date" name="dateFin" required>
             </div>
         </div>
 
@@ -107,7 +107,7 @@
                         <p>Rue :</p>
                     </div>
                     <div class="col-8">
-                        <input type="text" name="rue" value="${rue}">
+                        <input type="text" name="rue" value="${rue}" required>
                     </div>
                 </div>
 
@@ -116,7 +116,7 @@
                         <p>Code postal :</p>
                     </div>
                     <div class="col-8">
-                        <input type="text" name="CP" value="${CP}">
+                        <input type="text" name="CP" value="${CP}" required pattern="[0-9]{5}">
                     </div>
                 </div>
 
@@ -125,14 +125,13 @@
                         <p>Ville</p>
                     </div>
                     <div class="col-8">
-                        <input type="text" name="ville" value="${ville}">
+                        <input type="text" name="ville" value="${ville}" required pattern="[0-9A-Za-zÀ-ÖØ-öø-ÿ-' ]{1,30}">
                     </div>
                 </div>
             </div>
         </div>
 
-        <div>
-            <form class="row" action="PageVendreUnArticle" method="post">
+        <div class="row">
                 <div class="col">
                     <input class="btn btn-outline-dark" type="submit" name="btn" value="enregistrer">
                 </div>
@@ -142,8 +141,8 @@
                 <div class="col">
                     <input class="btn btn-outline-dark" type="submit" name="btn" value="annulerVente">
                 </div>
-            </form>
         </div>
+        </form>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

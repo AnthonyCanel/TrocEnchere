@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UtilisateurManager {
     private DAO<Utilisateur> utilisateurDao;
-    private BusinessException businessException = new BusinessException();
+    private final BusinessException businessException = new BusinessException();
 
 
     public UtilisateurManager() {

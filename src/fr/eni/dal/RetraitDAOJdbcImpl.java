@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RetraitDAOJdbcImpl implements DAO<Retrait>{
 
-    private static BusinessException businessException = new BusinessException();
+    private static final BusinessException businessException = new BusinessException();
     private static final String INSERT = "INSERT INTO RETRAITS (rue, code_postal, ville) values (?,?,?)";
     private static final String SELECTBYID = "SELECT no_article, rue, code_postal, ville FROM RETRAITS WHERE no_article = ?";
     private static final String SELECTALL = "SELECT no_article, rue, code_postal, ville FROM RETRAITS";
@@ -73,7 +73,7 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
             throw businessException;
         }
         try (Connection cnx = ConnectionProvider.getConnection();
-             PreparedStatement pstt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);) {
+             PreparedStatement pstt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)) {
             pstt.setString(1, retrait.getRue());
             pstt.setString(2, retrait.getCodePostal());
             pstt.setString(3, retrait.getVille());
