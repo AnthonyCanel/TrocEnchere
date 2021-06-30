@@ -1,28 +1,46 @@
-function GestionCheckBoxAchats(IdRadioButton,ChecBox1,ChecBox2,ChecBox3,ChecBox4,ChecBox5,ChecBox6){
-    if (IdRadioButton.checked){
-        document.getElementById(ChecBox1).disabled = false;
-        document.getElementById(ChecBox1).checked = true;
-        document.getElementById(ChecBox2).disabled = false;
-        document.getElementById(ChecBox3).disabled = false;
-        document.getElementById(ChecBox4).disabled = true;
-        document.getElementById(ChecBox5).disabled = true;
-        document.getElementById(ChecBox6).disabled = true;
-        document.getElementById(ChecBox4).checked = false;
-        document.getElementById(ChecBox5).checked = false;
-        document.getElementById(ChecBox6).checked = false;
-    }
+//Initialisation des radio boutons
+let rdAchats = document.getElementById('achats');
+let rdMesVentes = document.getElementById('mesVentes');
+
+//Initialisation des checkBox
+let cbEncheresOuvertes = document.getElementById('EncheresOuvertes');
+let cbEncheresEnCours = document.getElementById('EncheresEnCours');
+let cbEncheresRemportes = document.getElementById('EncheresRemportes');
+let cbVentesEnCours = document.getElementById('VentesEnCours');
+let cbVentesNonDebutes = document.getElementById('VentesNonDebutes');
+let cbVentesTerminees = document.getElementById('VentesTerminees');
+
+//Appelle des function au moment du click des radio boutons
+rdAchats.onclick = DesactiveVentes;
+rdMesVentes.onclick = DesactiveAchats;
+
+//Etat des checkBox à l'activation du radio bouton Achats
+function DesactiveVentes(){
+    cbEncheresOuvertes.disabled = false;
+    cbEncheresEnCours.disabled = false;
+    cbEncheresRemportes.disabled = false;
+    cbEncheresOuvertes.checked = true;
+    cbVentesEnCours.disabled = true;
+    cbVentesNonDebutes.disabled = true;
+    cbVentesTerminees.disabled = true;
+    cbVentesEnCours.checked = false;
+    cbVentesNonDebutes.checked = false;
+    cbVentesTerminees.checked = false;
 }
-function GestionCheckBoxVentes(IdRadioButton,ChecBox1,ChecBox2,ChecBox3,ChecBox4,ChecBox5,ChecBox6){
-    if (IdRadioButton.checked){
-        document.getElementById(ChecBox1).disabled = true;
-        document.getElementById(ChecBox2).disabled = true;
-        document.getElementById(ChecBox3).disabled = true;
-        document.getElementById(ChecBox1).checked = false;
-        document.getElementById(ChecBox2).checked = false;
-        document.getElementById(ChecBox3).checked = false;
-        document.getElementById(ChecBox4).disabled = false;
-        document.getElementById(ChecBox4).checked = true;
-        document.getElementById(ChecBox5).disabled = false;
-        document.getElementById(ChecBox6).disabled = false;
-    }
+
+//Etat des checkBox à l'activation du radio bouton Mes Ventes
+function DesactiveAchats(){
+    cbEncheresOuvertes.disabled = true;
+    cbEncheresEnCours.disabled = true;
+    cbEncheresRemportes.disabled = true;
+
+    cbEncheresOuvertes.checked = false;
+    cbEncheresEnCours.checked = false;
+    cbEncheresRemportes.checked = false;
+
+    cbVentesEnCours.checked = true;
+
+    cbVentesEnCours.disabled = false;
+    cbVentesNonDebutes.disabled = false;
+    cbVentesTerminees.disabled = false;
 }
