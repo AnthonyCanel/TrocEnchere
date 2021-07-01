@@ -3,6 +3,7 @@ package fr.eni.bll;
 
 import fr.eni.BusinessException;
 import fr.eni.bo.Enchere;
+import fr.eni.bo.Utilisateur;
 import fr.eni.dal.DAO;
 import fr.eni.dal.DAOFactory;
 import fr.eni.dal.EnchereDAOJdbcImpl;
@@ -10,14 +11,15 @@ import fr.eni.dal.EnchereDAOJdbcImpl;
 import java.util.List;
 
 public class EnchereManager {
-    private final DAO generiqueDao;
-    private static final BusinessException businessException = new BusinessException();
+    private DAO<Enchere> generiqueDao;
+    private BusinessException businessException = new BusinessException();
+    private DAO<Utilisateur> utilisateurDAO;
 
     /**
      * return List of enchere 's table
      * @throws BusinessException
      */
-    public EnchereManager() throws BusinessException {
+    public void EnchereManager() throws BusinessException {
 
         this.generiqueDao = DAOFactory.getEnchereDAO();
     }

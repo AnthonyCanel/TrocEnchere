@@ -15,6 +15,8 @@ public class Enchere {
     private String etatEnchere;
     private int noAcquereur;
 
+    private String nomAcquereur;
+
 
     public Enchere() {
 

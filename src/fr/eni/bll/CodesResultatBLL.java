@@ -1,5 +1,4 @@
 package fr.eni.bll;
-
 public class CodesResultatBLL {
     /**
      * Echec la rue du lieu de retrait ne respecte pas les règles définies
@@ -57,15 +56,13 @@ public class CodesResultatBLL {
      * Echec l'email de l'Utilisateur ne respecte pas les règles définies
      */
     public static final int UTILISATEURS_EMAIL_ERREUR = 20013;
-
     /**
      * Echec suite à import des données à la bll
      */
     public static final int IMPORT_BLL_ENCHERE = 20050;
-
     public static final int IMPORT_BLL_ENCHERES_GAGNEES=20051;
-
     public static final int UTILISATEUR_CONNECTION_IMPOSSIBLE = 20052;
+    public static final int UPDATE_BLL_ENCHERES = 20053;
     /**
      * Echec de la sélection par Id de catégorie
      */
@@ -86,5 +83,4 @@ public class CodesResultatBLL {
      * Echec de la sélection par Id de catégorie
      */
     public static final int REGLE_ARTICLE_NOM_SAISIE_ERREUR = 20104;
-
 }
