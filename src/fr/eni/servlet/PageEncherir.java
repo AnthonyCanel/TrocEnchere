@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
-public class PageEncherir extends HttpServlet {
+public class PageEncherir  extends HttpServlet {
     private ArticleManager am = new ArticleManager();
     private EnchereManager em = new EnchereManager();
     private BusinessException businessException = new BusinessException();
@@ -38,6 +38,7 @@ public class PageEncherir extends HttpServlet {
             int id = Integer.parseInt(req.getParameter("nomArticle"));
             //Si utilisateur est connecté
             if (session.getAttribute("utilisateur") != null) {
+                //Récupération de l'article en fonction de l'id
                 List<Article> listeArticles = am.ChoisirArticlesEncherir(id);
                 //Affichage des données dans la jsp
                 for (Article art : listeArticles) {

@@ -25,7 +25,7 @@
     <div class="col-8 shadow p-3">
 
         <div class="row m-2">
-            <h5>PC Gamer pour travailler</h5>
+            <h5>${nom_art}</h5>
         </div>
 
         <div class=" row m-2">
@@ -33,7 +33,7 @@
                 <p>Description</p>
             </div>
             <div class="col-8">
-                <p>C'est un PC qui fonctionne comme un malade vous serrez pas déçu</p>
+                <p>${description}</p>
             </div>
         </div>
 
@@ -42,7 +42,7 @@
                 <p>Meilleur offre :</p>
             </div>
             <div class="col-8">
-                <p>210 pts par Bob</p>
+                <p>${prix_vente} pts</p>
             </div>
         </div>
 
@@ -51,7 +51,7 @@
                 <p>Mise à prix :</p>
             </div>
             <div class="col-8">
-                <p>185 points</p>
+                <p>${prix_initial} points</p>
             </div>
         </div>
 
@@ -60,8 +60,8 @@
                 <p>Retrait</p>
             </div>
             <div class="col-8">
-                <p>10 allée des Alouettes</p>
-                <p>44800 Saint Herblain</p>
+                <p>${rue}</p>
+                <p>${CP} ${ville}</p>
             </div>
         </div>
 
@@ -70,16 +70,16 @@
                 <p>Vendeur : </p>
             </div>
             <div class="col-8">
-                <p>jojo44</p>
+                <p>${pseudo}</p>
             </div>
         </div>
 
         <div class=" row m-2">
             <div class="col-4">
-                <p>Mail : </p>
+                <p>Tel : </p>
             </div>
             <div class="col-8">
-                <p>(Mon mail)</p>
+                <p>${telephone}</p>
             </div>
         </div>
 
@@ -89,9 +89,7 @@
         </div>
     </div>
 </div>
-</div>
-</div>
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

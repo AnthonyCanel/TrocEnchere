@@ -78,6 +78,14 @@
         <servlet-name>PageEncherir</servlet-name>
         <url-pattern>/PageEncherir</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>PageAcquisition</servlet-name>
+        <servlet-class>fr.eni.servlet.PageAcquisition</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PageAcquisition</servlet-name>
+        <url-pattern>/PageAcquisition</url-pattern>
+    </servlet-mapping>
     <!-- PARAMETRE GLOBAL-->
     <context-param>
         <param-name>MAX_AGE_COOKIE</param-name>
