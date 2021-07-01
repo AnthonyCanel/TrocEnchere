@@ -2,46 +2,142 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="col-4">
     <div>
-        <input class="form-check-input" type="radio" name="AchatsVentes" id="achats" value="a" >
+<%--        a supprimer--%>
+<%--        ${check}--%>
+
+
+        <input class="form-check-input" type="radio" name="AchatsVentes" id="achats" value="a"
+                <c:if test="${empty check}">
+                    checked
+                </c:if>
+                <c:if test="${check == 'a'}">
+                    checked
+                </c:if>
+
+        />
         <label class="form-check-label" for="achats">Achats</label>
     </div>
-    <div class="btn-group-vertical mt-2 mb-3" id="groupAchats" name="AchatsVentes" role="group" aria-label="Basic radio toggle button group">
+    <div class="btn-group-vertical mt-2 mb-3" id="groupAchats" name="AchatsVentes" role="group"
+         aria-label="Basic radio toggle button group">
         <div class="form-check form-switch">
-            <input name="achatsH" type="hidden" value ="encheresOuvertes">
-            <input class="form-check-input" name="achats" type="checkbox" id="EncheresOuvertes">
+            <%--        a supprimer--%>
+<%--            ${btnEnchereOuverte}--%>
+
+            <input class="form-check-input" name="btnEnchereOuverte" type="checkbox" id="EncheresOuvertes"
+                    <c:if test="${btnEnchereOuverte == 'on'}">
+                        checked
+                    </c:if>
+                    <c:if test="${check == 'v'}">
+                        disabled
+                    </c:if>
+                    <c:if test="${empty check}">
+                        checked
+                    </c:if>
+            />
             <label class="form-check-label" for="EncheresOuvertes">Enchères ouvertes</label>
         </div>
         <div class="form-check form-switch">
-            <input name="achatsH" type="hidden" value ="mesEncheresEnCours">
-            <input class="form-check-input" name="achats" type="checkbox" id="EncheresEnCours">
+            <%--        a supprimer--%>
+<%--            ${btnEnchereEnCour}--%>
+
+            <input class="form-check-input" name="btnEnchereEnCour" type="checkbox" id="EncheresEnCours"
+                    <c:if test="${btnEnchereEnCour == 'on'}">
+                        checked
+                    </c:if>
+                    <c:if test="${check == 'v'}">
+                        disabled
+                    </c:if>
+            />
             <label class="form-check-label" for="EncheresEnCours">Mes enchères en cours</label>
         </div>
         <div class="form-check form-switch">
-            <input name="achatsH" type="hidden" value ="mesEncheresRemportees">
-            <input class="form-check-input" name="achats" type="checkbox" id="EncheresRemportes">
+            <%--        a supprimer--%>
+<%--            ${btnEnchereRemporte}--%>
+
+
+            <input class="form-check-input" name="btnEnchereRemporte" type="checkbox" id="EncheresRemportes"
+                    <c:if test="${btnEnchereRemporte == 'on'}">
+                        checked
+                    </c:if>
+                    <c:if test="${check == 'v'}">
+                        disabled
+                    </c:if>
+            />
             <label class="form-check-label" for="EncheresRemportes">Mes enchères remportées</label>
         </div>
     </div>
 </div>
 <div class="col-4">
     <div class="form-check">
-        <input class="form-check-input" type="radio" name="AchatsVentes" id="mesVentes" value="v">
+        <%--        a supprimer--%>
+<%--        ${check}--%>
+
+        <input class="form-check-input" type="radio" name="AchatsVentes" id="mesVentes" value="v"
+<%--        <c:if test="${empty check}">--%>
+
+<%--        </c:if>--%>
+<%--        <c:if test="${check == 'a'}">--%>
+<%--        </c:if>--%>
+        <c:if test="${check == 'v'}">
+            checked
+        </c:if>
+
+        />
         <label class="form-check-label" for="mesVentes">Mes ventes</label>
     </div>
-    <div class="btn-group-vertical mt-2 mb-3" id="groupVentes" name="AchatsVentes" role="group" aria-label="Basic radio toggle button group">
+    <div class="btn-group-vertical mt-2 mb-3" id="groupVentes" name="AchatsVentes" role="group"
+         aria-label="Basic radio toggle button group">
         <div class="form-check form-switch">
-            <input name="ventesH" type="hidden" value ="mesVentesEnCours">
-            <input class="form-check-input" name="ventes" type="checkbox" id="VentesEnCours">
+            <%--        a supprimer--%>
+<%--            ${btnVenteEnCour}--%>
+
+            <input class="form-check-input" name="btnVenteEnCour" type="checkbox" id="VentesEnCours"
+                    <c:if test="${btnVenteEnCour == 'on'}">
+                        checked
+                    </c:if>
+                    <c:if test="${check == 'a'}">
+                        disabled
+                    </c:if>
+                    <c:if test="${empty check}">
+                        disabled
+                    </c:if>
+            />
             <label class="form-check-label" for="VentesEnCours">Mes ventes en cours</label>
         </div>
         <div class="form-check form-switch">
-            <input name="ventesH" type="hidden" value ="ventesNonDebutees">
-            <input class="form-check-input" name="ventes" type="checkbox" id="VentesNonDebutes">
+            <%--        a supprimer--%>
+<%--            ${btnVenteNonDebute}--%>
+
+
+            <input class="form-check-input" name="btnVenteNonDebute" type="checkbox" id="VentesNonDebutes"
+                    <c:if test="${btnVenteNonDebute == 'on'}">
+                        checked
+                    </c:if>
+                    <c:if test="${check == 'a'}">
+                        disabled
+                    </c:if>
+                    <c:if test="${empty check}">
+                        disabled
+                    </c:if>
+            />
             <label class="form-check-label" for="VentesNonDebutes">Ventes non débutées</label>
         </div>
         <div class="form-check form-switch">
-            <input name="ventesH" type="hidden" value ="ventesTerminees">
-            <input class="form-check-input" name="ventes" type="checkbox" id="VentesTerminees">
+
+            <%--        a supprimer--%>
+<%--            ${btnVenteTerminee}--%>
+
+            <input class="form-check-input" name="btnVenteTerminee" type="checkbox" id="VentesTerminees"
+                    <c:if test="${btnVenteTerminee == 'on'}">
+                        checked
+                    </c:if>
+                    <c:if test="${check == 'a'}">
+                        disabled
+                    </c:if>
+                    <c:if test="${empty check}">
+                        disabled
+                    </c:if>
+            />
             <label class="form-check-label" for="VentesTerminees">Ventes terminées</label>
         </div>
     </div>

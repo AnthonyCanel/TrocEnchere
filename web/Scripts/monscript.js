@@ -19,10 +19,15 @@ function DesactiveVentes(){
     cbEncheresOuvertes.disabled = false;
     cbEncheresEnCours.disabled = false;
     cbEncheresRemportes.disabled = false;
+
     cbEncheresOuvertes.checked = true;
+    cbEncheresEnCours.checked = false;
+    cbEncheresRemportes.checked = false;
+
     cbVentesEnCours.disabled = true;
     cbVentesNonDebutes.disabled = true;
     cbVentesTerminees.disabled = true;
+
     cbVentesEnCours.checked = false;
     cbVentesNonDebutes.checked = false;
     cbVentesTerminees.checked = false;
@@ -39,6 +44,8 @@ function DesactiveAchats(){
     cbEncheresRemportes.checked = false;
 
     cbVentesEnCours.checked = true;
+    cbVentesNonDebutes.checked = false;
+    cbVentesTerminees.checked = false;
 
     cbVentesEnCours.disabled = false;
     cbVentesNonDebutes.disabled = false;

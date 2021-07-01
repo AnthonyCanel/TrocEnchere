@@ -24,20 +24,18 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
     private static final String UPDATE_ARTICLE = "UPDATE ARTICLES SET no_article = ?, nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, etat_article = ?, photo = ?, no_utilisateur = ?, no_categorie = ?, vues = ? where id=?";
 
     private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES WHERE id=?";
-    //mes ventes en cours
-    private static String SELECT_BY_ID_AND_DATES_ENCHERE                    ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente,encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES where utils_no_utilisateur=? and arts_date_fin_encheres>? and arts_date_debut_encheres<? ";
-    //mes ventes non débutees
-    private static String SELECT_BY_ID_DATE_INF_DEB_ENCHERE                 ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente,encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres and arts_no_utilisateur=? ";
     //encheres ouvertes
-    private static String SELECT_BY_DATE_SUP_DEB_ENCH_AND_INF_FIN_ENCHERE   ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente,encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?>arts_date_debut_encheres and ?< arts_date_fin_encheres AND encs_derniere_enchere=1 ";
+    private static String SELECT_BY_DATE_SUP_DEB_ENCH_AND_INF_FIN_ENCHERE   ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?>=arts_date_debut_encheres and ?<= arts_date_fin_encheres AND encs_derniere_enchere=1 ";
     //Mes encheres en Cours
-    private static String SELECT_BY_ID_DATE_DER_ENCHERE                     ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente,encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE arts_date_debut_encheres < ? AND arts_date_fin_encheres > ? AND encs_no_utilisateur=? AND encs_derniere_enchere=1 ";
+    private static String SELECT_BY_ID_DATE_DER_ENCHERE                     ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE arts_date_debut_encheres <= ? AND  ? <= arts_date_fin_encheres AND  encs_no_utilisateur=? ";
+    //Mes encheres Remportees
+    private static String SELECT_BY_ID_AND_ETATENCHERE                      ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES   WHERE encs_no_acquereur=? AND encs_etat_enchere='Vendu'";
+    //mes ventes en cours
+    private static String SELECT_BY_ID_AND_DATES_ENCHERE                    ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES where arts_no_utilisateur=? and ?<=arts_date_fin_encheres and arts_date_debut_encheres<=? ";
+    //mes ventes non débutees
+    private static String SELECT_BY_ID_DATE_INF_DEB_ENCHERE                 ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres and arts_no_utilisateur=? ";
     //mes ventes terminees
-    private static String SELECT_BY_ID_DATE_SUP_FIN_ENCHERE                 ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente,encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?>arts_date_fin_encheres and utils_no_utilisateur=? ";
-       //Mes encheres Remportees
-    private static String SELECT_BY_ID_AND_ETATENCHERE                      ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente,encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE arts_no_utilisateur=? and encs_etat_enchere='Vendu'";
-
-    private static final String SELECT_BY_ID_AND_DATE_FIN_ENCHERE="SELECT no_utilisateur, nom, pseudo, nom_article, montant_enchere, date_fin_encheres FROM V_UTILISATEURS_ENCHERES_ARTICLES_RETRAITS_CATEGORIES WHERE ?>date_fin_encheres and no_utilisateur=? and etat_enchere='Vendu' ORDER BY date_fin_encheres DESC";
+    private static String SELECT_BY_ID_DATE_SUP_FIN_ENCHERE                 ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?>arts_date_fin_encheres and arts_no_utilisateur=? ";
 
     private static String SELECT_BY_ID_VIEW = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, credit, date_enchere, montant_enchere, etat_enchere, no_acquereur, no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, rueRetrait, codePostalRetrait, villeRetrait, no_categorie, libelle FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS WHERE no_article = ? ";
 
@@ -63,18 +61,19 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
         ){
 
             if(filtre!=""){
-                restrictionsComplementaire = restrictionsComplementaire + "AND arts_nom_article LIKE '%'+?+'%'";
+                restrictionsComplementaire += "AND arts_nom_article LIKE '%'+?+'%'";
                 filtreSaisi = true;
 
             }
             if(noCategorie!=0){
-                restrictionsComplementaire = restrictionsComplementaire + "AND cats_no_categorie=?";
+                restrictionsComplementaire += "AND cats_no_categorie=?";
                 categorieSelect = true;
             }
             //Preparation de la requete
             requestSql = SELECT_BY_ID_DATE_DER_ENCHERE + restrictionsComplementaire;
 
-            PreparedStatement ptt = cxn.prepareStatement(SELECT_BY_ID_DATE_DER_ENCHERE);
+            PreparedStatement ptt = cxn.prepareStatement(requestSql);
+
             ptt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
             ptt.setDate(2, java.sql.Date.valueOf(LocalDate.now()));
             ptt.setInt(3, idUtilisateur);
@@ -93,6 +92,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
             ResultSet rs = ptt.executeQuery();
             while(rs.next()){
                 InfoArticle infoArticle = new InfoArticle();
+
                 infoArticle.setIdArticle(rs.getInt("arts_no_articles"));
                 infoArticle.setPrixArticle(Math.max(rs.getInt("arts_prix_initial"),Math.max(rs.getInt( "arts_prix_vente"),
                         rs.getInt("encs_montant_enchere" ))));
@@ -131,18 +131,18 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
         ){
 
             if(filtre!=""){
-                restrictionsComplementaire = restrictionsComplementaire + "AND arts_nom_article LIKE '%'+?+'%'";
+                restrictionsComplementaire += "AND arts_nom_article LIKE '%'+?+'%'";
                 filtreSaisi = true;
 
             }
             if(noCategorie!=0){
-                restrictionsComplementaire = restrictionsComplementaire + "AND cats_no_categorie=?";
+                restrictionsComplementaire += "AND cats_no_categorie=?";
                 categorieSelect = true;
             }
             //Preparation de la requete
             requestSql = SELECT_BY_ID_AND_ETATENCHERE + restrictionsComplementaire;
 
-            PreparedStatement ptt = cxn.prepareStatement(SELECT_BY_ID_AND_ETATENCHERE);
+            PreparedStatement ptt = cxn.prepareStatement(requestSql);
             ptt.setInt(1, idUtilisateur);
 
             if(filtreSaisi && categorieSelect){
@@ -198,19 +198,17 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                 Connection cxn = ConnectionProvider.getConnection();
         ){
             if(filtre!=""){
-                restrictionsComplementaire = restrictionsComplementaire + "AND arts_nom_article LIKE '%'+?+'%'";
+                restrictionsComplementaire += "AND arts_nom_article LIKE '%'+?+'%'";
                 filtreSaisi = true;
 
             }
             if(noCategorie!=0){
-                restrictionsComplementaire = restrictionsComplementaire + "AND cats_no_categorie=?";
+                restrictionsComplementaire += "AND cats_no_categorie=?";
                 categorieSelect = true;
             }
 
             //Preparation de la requete
             requestSql = SELECT_BY_DATE_SUP_DEB_ENCH_AND_INF_FIN_ENCHERE + restrictionsComplementaire;
-
-
 
             PreparedStatement ptt = cxn.prepareStatement(requestSql);
             ptt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
@@ -248,15 +246,6 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
             businessException.ajouterErreur(CodesResultatDAL.LECTURE_ARTICLE_ECHEC);
         }
 
-//        for ( InfoArticle i: listInfoArticle
-//        ) {
-//            System.out.println(
-//                    i.getIdArticle()+"\n"+
-//                            i.getPrixArticle()+"\n"+
-//                            i.getFinEnchere()+"\n"+
-//                            i.getNomArticle()+"\n"
-//            );
-//        }
         return listInfoArticle;
 
     }
@@ -280,20 +269,19 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
         try (
                 Connection cxn = ConnectionProvider.getConnection();
         ){
-
             if(filtre!=""){
-                restrictionsComplementaire = restrictionsComplementaire + "AND arts_nom_article LIKE '%'+?+'%'";
+                restrictionsComplementaire += "AND arts_nom_article LIKE '%'+?+'%'";
                 filtreSaisi = true;
 
             }
             if(noCategorie!=0){
-                restrictionsComplementaire = restrictionsComplementaire + "AND cats_no_categorie=?";
+                restrictionsComplementaire += "AND cats_no_categorie=?";
                 categorieSelect = true;
             }
             //Preparation de la requete
             requestSql = SELECT_BY_ID_DATE_SUP_FIN_ENCHERE + restrictionsComplementaire;
 
-            PreparedStatement ptt = cxn.prepareStatement(SELECT_BY_ID_DATE_SUP_FIN_ENCHERE);
+            PreparedStatement ptt = cxn.prepareStatement(requestSql);
             ptt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
             ptt.setInt(2, idUtilisateur);
 
@@ -352,18 +340,18 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
         ){
 
             if(filtre!=""){
-                restrictionsComplementaire = restrictionsComplementaire + "AND arts_nom_article LIKE '%'+?+'%'";
+                restrictionsComplementaire += "AND arts_nom_article LIKE '%'+?+'%'";
                 filtreSaisi = true;
 
             }
             if(noCategorie!=0){
-                restrictionsComplementaire = restrictionsComplementaire + "AND cats_no_categorie=?";
+                restrictionsComplementaire += "AND cats_no_categorie=?";
                 categorieSelect = true;
             }
             //Preparation de la requete
             requestSql = SELECT_BY_ID_DATE_INF_DEB_ENCHERE + restrictionsComplementaire;
 
-            PreparedStatement ptt = cxn.prepareStatement(SELECT_BY_ID_DATE_INF_DEB_ENCHERE);
+            PreparedStatement ptt = cxn.prepareStatement(requestSql);
             ptt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
             ptt.setInt(2, idUtilisateur);
 
@@ -421,18 +409,18 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
         ){
 
             if(filtre!=""){
-                restrictionsComplementaire = restrictionsComplementaire + "AND arts_nom_article LIKE '%'+?+'%'";
+                restrictionsComplementaire += "AND arts_nom_article LIKE '%'+?+'%'";
                 filtreSaisi = true;
 
             }
-            if(noCategorie != 0){
-                restrictionsComplementaire = restrictionsComplementaire + "AND cats_no_categorie=?";
+            if(noCategorie!=0){
+                restrictionsComplementaire += "AND cats_no_categorie=?";
                 categorieSelect = true;
             }
             //Preparation de la requete
             requestSql = SELECT_BY_ID_AND_DATES_ENCHERE + restrictionsComplementaire;
 
-            PreparedStatement ptt = cxn.prepareStatement(SELECT_BY_ID_AND_DATES_ENCHERE);
+            PreparedStatement ptt = cxn.prepareStatement(requestSql);
             ptt.setInt(1, idUtilisateur);
             ptt.setDate(2, java.sql.Date.valueOf(LocalDate.now()));
             ptt.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
@@ -713,8 +701,8 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                         articleEnCours.setNoArticle(rs.getInt("no_article"));
                         articleEnCours.setNomArticle(rs.getString("nom_article"));
                         articleEnCours.setDescription(rs.getString("description"));
-                        articleEnCours.setDateDebutEncheres(rs.getDate("date_debut_encheres"));
-                        articleEnCours.setDateFinEncheres(rs.getDate("date_fin_encheres"));
+                        articleEnCours.setDateDebutEncheres(rs.getDate("date_debut_encheres").toLocalDate());
+                        articleEnCours.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
                         articleEnCours.setPrixInitial(rs.getInt("prix_initial"));
                         articleEnCours.setPrixVente(rs.getInt("prix_vente"));
                         articleEnCours.setEtat_Article(rs.getString("etat_article"));

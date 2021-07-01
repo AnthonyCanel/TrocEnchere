@@ -5,7 +5,6 @@ import fr.eni.bll.ArticleManager;
 import fr.eni.bll.CategorieManager;
 import fr.eni.bo.Categorie;
 import fr.eni.bo.InfoArticle;
-import fr.eni.bo.TransfertRequest;
 import fr.eni.bo.Utilisateur;
 
 import javax.servlet.ServletException;
@@ -24,14 +23,21 @@ public class PageAccueilEnchere extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Categorie categorieObjet = new Categorie();
         CategorieManager cm = new CategorieManager();
         listeCategories = cm.AfficherCategories();
-
+//Récupération et réinjection des paramètres de la page jsp pour conservation lors de l'actualisation
         req.setAttribute("listeCategories", listeCategories);
         req.setAttribute("categorie", req.getParameter("combo"));
         req.setAttribute("saisie", req.getParameter("filtreSaisi"));
-
+        //conservation valeur radio button achats & ventes
+        req.setAttribute("check", req.getParameter("AchatsVentes"));
+        //conservation valeurs checkbox
+        req.setAttribute("btnEnchereOuverte",req.getParameter("btnEnchereOuverte"));
+        req.setAttribute("btnEnchereEnCour",req.getParameter("btnEnchereEnCour"));
+        req.setAttribute("btnEnchereRemporte",req.getParameter("btnEnchereRemporte"));
+        req.setAttribute("btnVenteEnCour",req.getParameter("btnVenteEnCour"));
+        req.setAttribute("btnVenteNonDebute",req.getParameter("btnVenteNonDebute"));
+        req.setAttribute("btnVenteTerminee",req.getParameter("btnVenteTerminee"));
 
         req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
     }
@@ -39,8 +45,6 @@ public class PageAccueilEnchere extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-
-//        session.setAttribute("AchatVentes",session.getAttribute("AchatsVentes"));
 
         ArticleManager aM = new ArticleManager();
         BusinessException businessException = new BusinessException();
@@ -63,10 +67,11 @@ public class PageAccueilEnchere extends HttpServlet {
                 noCatSelect = Integer.parseInt(req.getParameter("combo"));
             }
 
-            if (req.getParameter("AchatsVentes").equals("a")) {
+            if (req.getParameter("AchatsVentes") !=null && req.getParameter("AchatsVentes").equals("a")) {
 
-                if (req.getParameter("achats").equals("encheresOuvertes")) {
+                if (req.getParameter("btnEnchereOuverte") != null && req.getParameter("btnEnchereOuverte").equals("on")) {
                     try {
+
                         encheresOuvertes = aM.encheresOuvertes(idUtilisateur, filtreSaisi, noCatSelect);
                     } catch (BusinessException e) {
                         e.printStackTrace();
@@ -75,7 +80,7 @@ public class PageAccueilEnchere extends HttpServlet {
                     req.setAttribute("encheresOuvertes", encheresOuvertes);
                 }
 
-                if (req.getParameter("achats").equals("mesEncheresEnCours")) {
+                if (req.getParameter("btnEnchereEnCour") != null && req.getParameter("btnEnchereEnCour").equals("on")) {
                     try {
                         mesEncheresEnCours = aM.mesEncheresEnCours(idUtilisateur, filtreSaisi, noCatSelect);
                     } catch (BusinessException e) {
@@ -84,7 +89,7 @@ public class PageAccueilEnchere extends HttpServlet {
                     }
                     req.setAttribute("mesEncheresEnCours", mesEncheresEnCours);
                 }
-                if (req.getParameter("achats").equals("mesEncheresRemportees")) {
+                if (req.getParameter("btnEnchereRemporte") != null && req.getParameter("btnEnchereRemporte").equals("on")) {
                     try {
                         mesEncheresRemportees = aM.mesEncheresRemportees(idUtilisateur, filtreSaisi, noCatSelect);
                     } catch (BusinessException e) {
@@ -96,9 +101,9 @@ public class PageAccueilEnchere extends HttpServlet {
 
             }
 
-            if (req.getParameter("AchatsVentes").equals("v")) {
+            if (req.getParameter("AchatsVentes") != null && req.getParameter("AchatsVentes").equals("v")) {
 
-                if (req.getParameter("ventes").equals("mesVentesEnCours")) {
+                if (req.getParameter("btnVenteEnCour") != null && req.getParameter("btnVenteEnCour").equals("on")) {
                     try {
                         mesVentesEnCours = aM.MesVentesEnCours(idUtilisateur, filtreSaisi, noCatSelect);
                     } catch (BusinessException e) {
@@ -109,7 +114,7 @@ public class PageAccueilEnchere extends HttpServlet {
                     req.setAttribute("mesVentesEnCours", mesVentesEnCours);
                 }
 
-                if (req.getParameter("ventes").equals("ventesNonDebutees")) {
+                if (req.getParameter("btnVenteNonDebute") != null && req.getParameter("btnVenteNonDebute").equals("on")) {
                     try {
                         mesVentesNonDebutees = aM.MesVentesNonDebutees(idUtilisateur, filtreSaisi, noCatSelect);
                     } catch (BusinessException e) {
@@ -119,7 +124,7 @@ public class PageAccueilEnchere extends HttpServlet {
                     req.setAttribute("mesVentesNonDebutees", mesVentesNonDebutees);
                 }
 
-                if (req.getParameter("ventes").equals("ventesTerminees")) {
+                if (req.getParameter("btnVenteTerminee") != null && req.getParameter("btnVenteTerminee").equals("on")) {
                     try {
                         mesVentesTerminees = aM.MesVentesTerminees(idUtilisateur, filtreSaisi, noCatSelect);
                     } catch (BusinessException e) {
