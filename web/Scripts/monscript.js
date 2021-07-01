@@ -25,20 +25,20 @@ function  ManageDate(){
     });
 }
 
-function ChangeDateFinEnchere(){
-    let dateFin = document.getElementById('dateFin');
-    dateFin.setAttribute('min',dateDebut.value);
-}
-
 //Etat des checkBox à l'activation du radio bouton Achats
 function DesactiveVentes(){
     cbEncheresOuvertes.disabled = false;
     cbEncheresEnCours.disabled = false;
     cbEncheresRemportes.disabled = false;
+
     cbEncheresOuvertes.checked = true;
+    cbEncheresEnCours.checked = false;
+    cbEncheresRemportes.checked = false;
+
     cbVentesEnCours.disabled = true;
     cbVentesNonDebutes.disabled = true;
     cbVentesTerminees.disabled = true;
+
     cbVentesEnCours.checked = false;
     cbVentesNonDebutes.checked = false;
     cbVentesTerminees.checked = false;
@@ -49,10 +49,15 @@ function DesactiveAchats(){
     cbEncheresOuvertes.disabled = true;
     cbEncheresEnCours.disabled = true;
     cbEncheresRemportes.disabled = true;
+
     cbEncheresOuvertes.checked = false;
     cbEncheresEnCours.checked = false;
     cbEncheresRemportes.checked = false;
+
     cbVentesEnCours.checked = true;
+    cbVentesNonDebutes.checked = false;
+    cbVentesTerminees.checked = false;
+
     cbVentesEnCours.disabled = false;
     cbVentesNonDebutes.disabled = false;
     cbVentesTerminees.disabled = false;

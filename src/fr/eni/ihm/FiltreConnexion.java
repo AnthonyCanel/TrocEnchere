@@ -22,18 +22,13 @@ public class FiltreConnexion implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain isConnected) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest)servletRequest;
         HttpSession session = req.getSession();
-
-        Utilisateur util = new Utilisateur();
-
+        //Ce filtre redirige vers la page connexion s'il est déconnecté
         if(session.getAttribute("utilisateur")!=null){
+        //tapper le code ici pour qu'il s'éxécute pendant le filtre
             isConnected.doFilter(req, servletResponse);
         }else{
-            req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req,servletResponse);
+            req.getRequestDispatcher("WEB-INF/html/PageConnexion.jsp").forward(req,servletResponse);
         }
-
-
-
-//        req.getRequestDispatcher("PageAccueilEnchere").forward(req,servletResponse);
 
     }
 
