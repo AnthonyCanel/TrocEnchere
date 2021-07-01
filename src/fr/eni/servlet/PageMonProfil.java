@@ -20,6 +20,9 @@ public class PageMonProfil extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Récupère la session
         HttpSession session = req.getSession();
+        //recupération de l'pseudo du vendeur et push vers la PageMonProfil.jsp
+        req.setAttribute("",req.getAttribute("pseudo"));
+
         util = (Utilisateur) session.getAttribute("utilisateur");
         //Si utilisateur est connecté
         if(session.getAttribute("utilisateur") != null ) {

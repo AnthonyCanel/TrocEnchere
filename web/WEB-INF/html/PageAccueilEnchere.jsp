@@ -10,17 +10,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Accueil</title>
+
 </head>
 <body>
 <form action="PageAccueilEnchere" method="post">
-            <c:choose>
-                <c:when test="${sessionScope.utilisateur != null}">
-                    <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
-                </c:when>
-                <c:otherwise>
-                    <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
-                </c:otherwise>
-            </c:choose>
+    <c:choose>
+        <c:when test="${sessionScope.utilisateur != null}">
+            <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
+        </c:otherwise>
+    </c:choose>
     <div class="d-flex justify-content-center">
         <div class="shadow p-5 w-75 ">
             <div class="row">
@@ -76,39 +77,38 @@
                     <jsp:include page="inclusion/CheckBoxAchatsVentes.jsp"></jsp:include>
                 </c:if>
             </div>
-
             <div class="row ">
-                <%--                <c:if test="${not empty rechercheParDefaut}">--%>
-                <%--                    <h3 class="row text-center">--%>
-                <%--&lt;%&ndash;                        Mes ventes en cours&ndash;%&gt;--%>
-                <%--                    </h3>--%>
-                <%--                </c:if>--%>
                 <c:forEach items="${rechercheParDefaut}" var="unElement">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${unElement.idArticle}"
-                               name="nomArticle" value="${unElement.idArticle}">
-                                <div class="w-100 row">
-                                    <div class="col-3">
-                                    </div>
-                                    <div class="col-9">
-                                        <div>
-                                            <div class="row">
-                                                <h5 class="font-weight-bold">${unElement.nomArticle}</h5>
-                                            </div>
-                                            <div class="row">
-                                                <label>Prix : ${unElement.prixArticle} banane</label>
-                                            </div>
-                                            <div class="row">
-                                                <label>Fin de l'enchère : ${unElement.finEnchere}</label>
-                                            </div>
-                                            <div class="row">
+
+
+                            <div class="w-100 row">
+                                <div class="col-3">
+                                </div>
+                                <div class="col-9">
+                                    <div>
+                                        <div class="row">
+                                            <a href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${unElement.idArticle}"
+                                               name="nomArticle" value="${unElement.idArticle}">
+                                            <h5 class="font-weight-bold">${unElement.nomArticle}</h5>
+                                            </a>
+                                        </div>
+                                        <div class="row">
+                                            <label>Prix : ${unElement.prixArticle} banane</label>
+                                        </div>
+                                        <div class="row">
+                                            <label>Fin de l'enchère : ${unElement.finEnchere}</label>
+                                        </div>
+                                        <div class="row">
+                                            <a href="${pageContext.request.contextPath}/PageMonProfil?pseudoVendeur=${unElement.vendeur}">
                                                 <label>Vendeur : ${unElement.vendeur}</label>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
+
                         </div>
                     </div>
                 </c:forEach>
@@ -122,29 +122,34 @@
                 <c:forEach items="${mesVentesEnCours}" var="maVenteEnCours">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteEnCours.idArticle}"
-                               name="nomArticle" value="${maVenteEnCours.idArticle}">
-                                <div class="w-100 row">
-                                    <div class="col-3">
-                                    </div>
-                                    <div class="col-9">
-                                        <div>
-                                            <div class="row">
-                                                <h5 class="font-weight-bold">${maVenteEnCours.nomArticle}</h5>
-                                            </div>
-                                            <div class="row">
-                                                <label>Prix : ${maVenteEnCours.prixArticle} banane</label>
-                                            </div>
-                                            <div class="row">
-                                                <label>Fin de l'enchère : ${maVenteEnCours.finEnchere}</label>
-                                            </div>
-                                            <div class="row">
+
+
+                            <div class="w-100 row">
+                                <div class="col-3">
+                                </div>
+                                <div class="col-9">
+                                    <div>
+                                        <div class="row">
+                                            <a href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteEnCours.idArticle}"
+                                               name="nomArticle" value="${maVenteEnCours.idArticle}">
+                                            <h5 class="font-weight-bold">${maVenteEnCours.nomArticle}</h5>
+                                            </a>
+                                        </div>
+                                        <div class="row">
+                                            <label>Prix : ${maVenteEnCours.prixArticle} banane</label>
+                                        </div>
+                                        <div class="row">
+                                            <label>Fin de l'enchère : ${maVenteEnCours.finEnchere}</label>
+                                        </div>
+                                        <div class="row">
+                                            <a href="${pageContext.request.contextPath}/PageMonProfil?pseudo=${maVenteNonDebutee.vendeur}">
                                                 <label>Vendeur : ${maVenteEnCours.vendeur}</label>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
+
                         </div>
                     </div>
                 </c:forEach>
@@ -158,29 +163,35 @@
                 <c:forEach items="${mesVentesNonDebutees}" var="maVenteNonDebutee">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteNonDebutee.idArticle}"
-                               name="nomArticle" value="${maVenteNonDebutee.idArticle}">
-                                <div class="w-100 row">
-                                    <div class="col-3">
-                                    </div>
-                                    <div class="col-9">
-                                        <div>
-                                            <div class="row">
-                                                <h5 class="font-weight-bold">${maVenteNonDebutee.nomArticle}</h5>
-                                            </div>
-                                            <div class="row">
-                                                <label>Prix : ${maVenteNonDebutee.prixArticle} banane</label>
-                                            </div>
-                                            <div class="row">
-                                                <label>Fin de l'enchère : ${maVenteNonDebutee.finEnchere}</label>
-                                            </div>
-                                            <div class="row">
+
+
+                            <div class="w-100 row">
+                                <div class="col-3">
+                                </div>
+                                <div class="col-9">
+                                    <div>
+                                        <div class="row">
+                                            <a class="p-0 btn btn-white"
+                                               href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteNonDebutee.idArticle}"
+                                               name="nomArticle" value="${maVenteNonDebutee.idArticle}">
+                                            <h5 class="font-weight-bold">${maVenteNonDebutee.nomArticle}</h5>
+                                            </a>
+                                        </div>
+                                        <div class="row">
+                                            <label>Prix : ${maVenteNonDebutee.prixArticle} banane</label>
+                                        </div>
+                                        <div class="row">
+                                            <label>Fin de l'enchère : ${maVenteNonDebutee.finEnchere}</label>
+                                        </div>
+                                        <div class="row">
+                                            <a href="${pageContext.request.contextPath}/PageMonProfil?pseudoVendeur=${maVenteNonDebutee.vendeur}">
                                                 <label>Vendeur : ${maVenteNonDebutee.vendeur}</label>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
+
                         </div>
                     </div>
                 </c:forEach>
@@ -194,29 +205,35 @@
                 <c:forEach items="${mesVentesTerminees}" var="maVenteTerminee">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteTerminee.idArticle}"
-                               name="nomArticle" value="${maVenteTerminee.idArticle}">
-                                <div class="w-100 row">
-                                    <div class="col-3">
-                                    </div>
-                                    <div class="col-9">
-                                        <div>
-                                            <div class="row">
-                                                <h5 class="font-weight-bold">${maVenteTerminee.nomArticle}</h5>
-                                            </div>
-                                            <div class="row">
-                                                <label>Prix : ${maVenteTerminee.prixArticle} banane</label>
-                                            </div>
-                                            <div class="row">
-                                                <label>Fin de l'enchère : ${maVenteTerminee.finEnchere}</label>
-                                            </div>
-                                            <div class="row">
+
+
+                            <div class="w-100 row">
+                                <div class="col-3">
+                                </div>
+                                <div class="col-9">
+                                    <div>
+                                        <div class="row">
+                                            <a class="p-0 btn btn-white"
+                                               href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteTerminee.idArticle}"
+                                               name="nomArticle" value="${maVenteTerminee.idArticle}">
+                                            <h5 class="font-weight-bold">${maVenteTerminee.nomArticle}</h5>
+                                            </a>
+                                        </div>
+                                        <div class="row">
+                                            <label>Prix : ${maVenteTerminee.prixArticle} banane</label>
+                                        </div>
+                                        <div class="row">
+                                            <label>Fin de l'enchère : ${maVenteTerminee.finEnchere}</label>
+                                        </div>
+                                        <div class="row">
+                                            <a href="${pageContext.request.contextPath}/PageMonProfil?pseudoVendeur=${maVenteTerminee.vendeur}">
                                                 <label>Vendeur : ${maVenteTerminee.vendeur}</label>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
+
                         </div>
                     </div>
                 </c:forEach>
@@ -230,29 +247,35 @@
                 <c:forEach items="${encheresOuvertes}" var="enchereOuverte">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereOuverte.idArticle}"
-                               name="nomArticle" value="${enchereOuverte.idArticle}">
-                                <div class="w-100 row">
-                                    <div class="col-3">
-                                    </div>
-                                    <div class="col-9">
-                                        <div>
-                                            <div class="row">
-                                                <h5 class="font-weight-bold">${enchereOuverte.nomArticle}</h5>
-                                            </div>
-                                            <div class="row">
-                                                <label>Prix : ${enchereOuverte.prixArticle} banane</label>
-                                            </div>
-                                            <div class="row">
-                                                <label>Fin de l'enchère : ${enchereOuverte.finEnchere}</label>
-                                            </div>
-                                            <div class="row">
+
+
+                            <div class="w-100 row">
+                                <div class="col-3">
+                                </div>
+                                <div class="col-9">
+                                    <div>
+                                        <div class="row">
+                                            <a href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereOuverte.idArticle}"
+                                                    name="nomArticle" value="${enchereOuverte.idArticle}">
+                                            <h5 class="font-weight-bold">${enchereOuverte.nomArticle}</h5>
+                                            </a>
+                                        </div>
+
+                                        <div class="row">
+                                            <label>Prix : ${enchereOuverte.prixArticle} banane</label>
+                                        </div>
+                                        <div class="row">
+                                            <label>Fin de l'enchère : ${enchereOuverte.finEnchere}</label>
+                                        </div>
+                                        <div class="row">
+                                            <a href="${pageContext.request.contextPath}/PageMonProfil?pseudoVendeur=${enchereOuverte.vendeur}">
                                                 <label>Vendeur : ${enchereOuverte.vendeur}</label>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
+
                         </div>
                     </div>
                 </c:forEach>
@@ -266,29 +289,34 @@
                 <c:forEach items="${mesEncheresEnCours}" var="enchereEnCours">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereEnCours.idArticle}"
-                               name="nomArticle" value="${enchereEnCours.idArticle}">
-                                <div class="w-100 row">
-                                    <div class="col-3">
-                                    </div>
-                                    <div class="col-9">
-                                        <div>
-                                            <div class="row">
-                                                <h5 class="font-weight-bold">${enchereEnCours.nomArticle}</h5>
-                                            </div>
-                                            <div class="row">
-                                                <label>Prix : ${enchereEnCours.prixArticle} banane</label>
-                                            </div>
-                                            <div class="row">
-                                                <label>Fin de l'enchère : ${enchereEnCours.finEnchere}</label>
-                                            </div>
-                                            <div class="row">
+
+                            </a>
+                            <div class="w-100 row">
+                                <div class="col-3">
+                                </div>
+                                <div class="col-9">
+                                    <div>
+                                        <div class="row">
+                                            <a  href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereEnCours.idArticle}"
+                                                name="nomArticle" value="${enchereEnCours.idArticle}">
+                                            <h5 class="font-weight-bold">${enchereEnCours.nomArticle}</h5>
+                                            </a>
+                                        </div>
+                                        <div class="row">
+                                            <label>Prix : ${enchereEnCours.prixArticle} banane</label>
+                                        </div>
+                                        <div class="row">
+                                            <label>Fin de l'enchère : ${enchereEnCours.finEnchere}</label>
+                                        </div>
+                                        <div class="row">
+                                            <a href="${pageContext.request.contextPath}/PageMonProfil?pseudoVendeur=${enchereEnCours.vendeur}">
                                                 <label>Vendeur : ${enchereEnCours.vendeur}</label>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
+
                         </div>
                     </div>
                 </c:forEach>
@@ -302,39 +330,37 @@
                 <c:forEach items="${mesEncheresRemportees}" var="enchereRemportee">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereRemportee.idArticle}"
-                               name="nomArticle" value="${enchereRemportee.idArticle}">
-                                <div class="w-100 row">
-                                    <div class="col-3">
-                                    </div>
-                                    <div class="col-9">
-                                        <div>
-                                            <div class="row">
-                                                <h5 class="font-weight-bold">${enchereRemportee.nomArticle}</h5>
-                                            </div>
-                                            <div class="row">
-                                                <label>Prix : ${enchereRemportee.prixArticle} banane</label>
-                                            </div>
-                                            <div class="row">
-                                                <label>Fin de l'enchère
-                                                    : ${enchereRemportee.finEnchere}</label>
-                                            </div>
-                                            <div class="row">
+
+
+                            <div class="w-100 row">
+                                <div class="col-3">
+                                </div>
+                                <div class="col-9">
+                                    <div>
+                                        <div class="row">
+                                            <a href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereRemportee.idArticle}"
+                                                    name="nomArticle" value="${enchereRemportee.idArticle}">
+                                            <h5 class="font-weight-bold">${enchereRemportee.nomArticle}</h5>
+                                            </a>
+                                        </div>
+                                        <div class="row">
+                                            <label>Prix : ${enchereRemportee.prixArticle} banane</label>
+                                        </div>
+                                        <div class="row">
+                                            <label>Fin de l'enchère
+                                                : ${enchereRemportee.finEnchere}</label>
+                                        </div>
+                                        <div class="row">
+                                            <a href="${pageContext.request.contextPath}/PageMonProfil?pseudoVendeur=${enchereRemportee.vendeur}">
                                                 <label>Vendeur : ${enchereRemportee.vendeur}</label>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </c:forEach>
-
-
-                <!-- fin de la boucle-->
-                <!-- article complementaire a enlever une fois la boucle faite-->
-
-                <%--            <!-- fin de l'article complementaire a enlever une fois la boucle faite-->--%>
             </div>
         </div>
     </div>
