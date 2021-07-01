@@ -36,9 +36,72 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
     private static String SELECT_BY_ID_DATE_INF_DEB_ENCHERE                 ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres and arts_no_utilisateur=? ";
     //mes ventes terminees
     private static String SELECT_BY_ID_DATE_SUP_FIN_ENCHERE                 ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?>arts_date_fin_encheres and arts_no_utilisateur=? ";
+    //recherche par fitre et catégorie
+    private static String SELECT_BY_NOM_ARTICLE_NO_CATEGORIE                ="SELECT articles.no_article, articles.nom_article,articles.prix_initial,articles.prix_vente,pseudo,ARTICLES.date_fin_encheres,montant_enchere,libelle, C.no_categorie FROM V_UTILISATEURS_ENCHERES_ARTICLES LEFT OUTER JOIN ARTICLES ON V_UTILISATEURS_ENCHERES_ARTICLES.no_utilisateur = ARTICLES.no_utilisateur LEFT JOIN CATEGORIES C on C.no_categorie = ARTICLES.no_categorie WHERE der_ench = 1 and pseudo<>'compte supprimé' ";
+
 
     private static String SELECT_BY_ID_VIEW = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, credit, date_enchere, montant_enchere, etat_enchere, no_acquereur, no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, rueRetrait, codePostalRetrait, villeRetrait, no_categorie, libelle FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS WHERE no_article = ? ";
 
+
+    public List<InfoArticle> rechercheParFiltreEtNoCategorie(int idUtilisateur, String filtre, int noCategorie){
+        List<InfoArticle> listInfoArticle = new ArrayList<>();
+        String requestSql=null;
+        String restrictionsComplementaire = "";
+        Boolean filtreSaisi = false;
+        Boolean categorieSelect = false;
+
+
+        try (
+                Connection cxn = ConnectionProvider.getConnection();
+        ){
+
+            if(filtre!=""){
+                restrictionsComplementaire += " AND articles.nom_article LIKE '%'+?+'%' ";
+                filtreSaisi = true;
+
+            }
+            if(noCategorie!=0){
+                restrictionsComplementaire += " AND C.no_categorie=? ";
+                categorieSelect = true;
+            }
+            //Preparation de la requete
+            requestSql = SELECT_BY_NOM_ARTICLE_NO_CATEGORIE + restrictionsComplementaire;
+
+            PreparedStatement ptt = cxn.prepareStatement(requestSql);
+
+            if(filtreSaisi && categorieSelect){
+                ptt.setString(1, filtre);
+                ptt.setInt(2, noCategorie);
+            }
+            if(filtreSaisi && !categorieSelect){
+                ptt.setString(1, filtre);
+            }
+            if(!filtreSaisi && categorieSelect){
+                ptt.setInt(1, noCategorie);
+            }
+
+            ResultSet rs = ptt.executeQuery();
+            while(rs.next()){
+                InfoArticle infoArticle = new InfoArticle();
+
+                infoArticle.setIdArticle(rs.getInt("no_article"));
+                infoArticle.setPrixArticle(Math.max(rs.getInt("prix_initial"),Math.max(rs.getInt( "prix_vente"),
+                        rs.getInt("montant_enchere" ))));
+                infoArticle.setNomArticle(rs.getString("nom_article"));
+                infoArticle.setFinEnchere(rs.getDate("date_fin_encheres").toLocalDate());
+                infoArticle.setVendeur(rs.getString("pseudo"));
+
+                listInfoArticle.add(infoArticle);
+            }
+            ptt.close();
+            rs.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_ARTICLE_ECHEC);
+        }
+
+        return listInfoArticle;
+    }
 
 //Mes encheres en Cours
     /**

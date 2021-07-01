@@ -106,6 +106,23 @@ public class ArticleManager {
         return null;
     }
 
+
+    /**
+     * return listArticle en fonction du filtre et de la catégorie selectionnée
+     * @param idUtilisateur
+     * @param filtre
+     * @param idCategorie
+     * @return
+     * @throws BusinessException
+     */
+    public List<InfoArticle> rechercheParFiltreEtNoCategorie(int idUtilisateur, String filtre, int idCategorie) throws BusinessException {
+        List<InfoArticle> listInfoArticle = null;
+
+        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
+
+        listInfoArticle =   articleDAO.rechercheParFiltreEtNoCategorie(idUtilisateur,filtre, idCategorie);
+        return listInfoArticle;
+    }
     /**
      * return listArticle en fonction de l'id utilisateur et de l'id categories (Ventes en cours de l'utilisateur)
      * @param idUtilisateur

@@ -64,13 +64,13 @@
 
                                 <option name="cat" value="0">Toutes</option>
                                 <c:forEach items="${listeCategories}" var="chaqueCategorie">
-                                    <option name="cat"
+                                    <option
                                             value="${chaqueCategorie.noCategorie}"
                                             <c:if test="${categorie == chaqueCategorie.noCategorie }">
                                                 selected
                                             </c:if>
                                     >
-<%--                                            ${chaqueCategorie.libelle}--%>
+                                            ${chaqueCategorie.libelle}
                                     </option>
                                 </c:forEach>
                             </select>
@@ -82,21 +82,52 @@
                 </div>
             </div>
             <div class="row">
-<%--                ${sessionScope.utilisateur}--%>
                 <c:if test="${sessionScope.utilisateur != null}">
                     <jsp:include page="inclusion/CheckBoxAchatsVentes.jsp"></jsp:include>
                 </c:if>
-<%--                <div class="col-4"></div>--%>
-<%--                <div class="col-4"></div>--%>
             </div>
 
             <div class="row ">
-                <%--            <c:choose>--%>
-                <%--                <c:when test="${AchatsVentes eq 'v'}">--%>
+                <%--                <c:if test="${not empty rechercheParDefaut}">--%>
+                <%--                    <h3 class="row text-center">--%>
+                <%--&lt;%&ndash;                        Mes ventes en cours&ndash;%&gt;--%>
+                <%--                    </h3>--%>
+                <%--                </c:if>--%>
+                <c:forEach items="${rechercheParDefaut}" var="unElement">
+                    <div class="col-6 p-3 align-items-center">
+                        <div class="bg-light shadow-sm p-3">
+                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir"
+                               name="nomArticle" value="${unElement.idArticle}">
+                                <div class="w-100 row">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-9">
+                                        <div>
+                                            <div class="row">
+                                                <h5 class="font-weight-bold">${unElement.nomArticle}</h5>
+                                            </div>
+                                            <div class="row">
+                                                <label>Prix : ${unElement.prixArticle} banane</label>
+                                            </div>
+                                            <div class="row">
+                                                <label>Fin de l'enchère : ${unElement.finEnchere}</label>
+                                            </div>
+                                            <div class="row">
+                                                <label>Vendeur : ${unElement.vendeur}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </c:forEach>
                 <c:if test="${not empty mesVentesEnCours}">
-                    <h3 class="row text-center">
-                        Mes ventes en cours
-                    </h3>
+                    <div class="row text-center">
+                        <h3>
+                            Mes ventes en cours
+                        </h3>
+                    </div>
                 </c:if>
                 <c:forEach items="${mesVentesEnCours}" var="maVenteEnCours">
                     <div class="col-6 p-3 align-items-center">
@@ -128,9 +159,11 @@
                     </div>
                 </c:forEach>
                 <c:if test="${not empty mesVentesNonDebutees}">
-                    <h3 class="row text-center">
-                        Mes ventes non débutées
-                    </h3>
+                    <div class="row text-center">
+                        <h3>
+                            Mes ventes non débutées
+                        </h3>
+                    </div>
                 </c:if>
                 <c:forEach items="${mesVentesNonDebutees}" var="maVenteNonDebutee">
                     <div class="col-6 p-3 align-items-center">
@@ -162,9 +195,11 @@
                     </div>
                 </c:forEach>
                 <c:if test="${not empty mesVentesEnCours}">
-                    <h3 class="row text-center">
-                        Mes ventes terminées
-                    </h3>
+                    <div class="row text-center">
+                        <h3>
+                            Mes ventes terminées
+                        </h3>
+                    </div>
                 </c:if>
                 <c:forEach items="${mesVentesTerminees}" var="maVenteTerminee">
                     <div class="col-6 p-3 align-items-center">
@@ -196,9 +231,11 @@
                     </div>
                 </c:forEach>
                 <c:if test="${not empty encheresOuvertes}">
-                    <h3 class="row text-center">
-                        Les enchères ouvertes
-                    </h3>
+                    <div class="row text-center">
+                        <h3>
+                            Les enchères ouvertes
+                        </h3>
+                    </div>
                 </c:if>
                 <c:forEach items="${encheresOuvertes}" var="enchereOuverte">
                     <div class="col-6 p-3 align-items-center">
@@ -266,9 +303,11 @@
                     </div>
                 </c:forEach>
                 <c:if test="${not empty mesEncheresRemportees}">
-                    <h3 class="row text-center">
-                        Mes enchères remportées
-                    </h3>
+                    <div class="row text-center">
+                        <h3>
+                            Mes enchères remportées
+                        </h3>
+                    </div>
                 </c:if>
                 <c:forEach items="${mesEncheresRemportees}" var="enchereRemportee">
                     <div class="col-6 p-3 align-items-center">
@@ -300,7 +339,6 @@
                         </div>
                     </div>
                 </c:forEach>
-
 
 
                 <!-- fin de la boucle-->
