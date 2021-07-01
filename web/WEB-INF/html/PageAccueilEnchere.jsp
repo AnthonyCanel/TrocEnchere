@@ -13,14 +13,6 @@
 </head>
 <body>
 <form action="PageAccueilEnchere" method="post">
-    <div class="row">
-        <div class="row p-0 d-flex justify-content-around">
-            <div class="col d-flex">
-                <a class="btn btn-white mt-3" href="${pageContext.request.contextPath}/PageAccueilEnchere">
-                    <h1>ENI Enchère</h1>
-                </a>
-
-            </div>
             <c:choose>
                 <c:when test="${sessionScope.utilisateur != null}">
                     <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
@@ -29,8 +21,6 @@
                     <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
                 </c:otherwise>
             </c:choose>
-        </div>
-    </div>
     <div class="d-flex justify-content-center">
         <div class="shadow p-5 w-75 ">
             <div class="row">

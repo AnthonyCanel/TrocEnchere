@@ -13,15 +13,8 @@
 
     <title>Connexion</title>
 </head>
-<body class="container-fluid">
-<div class="row">
-    <div class="col-6 p-0">
-        <div class="m-5 mt-3">
-            <a class="btn btn-white" href="${pageContext.request.contextPath}/PageAccueilEnchere">
-                <h1>ENI Enchère</h1>
-            </a>
-        </div>
-    </div>
+<body>
+
     <c:choose>
         <c:when test="${sessionScope.utilisateur != null}">
             <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
@@ -31,8 +24,7 @@
         </c:otherwise>
     </c:choose>
 </div>
-<div class="mx-auto" style="width: 400px;">
-
+<div class="mx-auto" style="width: 400px">
     <div class="shadow p-5">
         <form action="PageConnexion" method="post">
             <div class="row">

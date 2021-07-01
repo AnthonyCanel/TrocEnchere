@@ -7,13 +7,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body class="container-fluid">
-<header class="row">
-    <div class="col">
-        <a class="btn btn-white m-5 mt-3" href="${pageContext.request.contextPath}/PageAccueilEnchere">
-            <h1>ENI Enchère</h1>
-        </a>
-    </div>
-    <div class="col-6">
+<header>
         <c:choose>
             <c:when test="${sessionScope.utilisateur != null}">
                 <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>

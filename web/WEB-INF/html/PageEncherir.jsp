@@ -6,35 +6,33 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
-<body class="container-fluid">
-<header class=" row m-2">
-    <div class="col-4">
-        <a class="btn btn-white m-5 mt-3" href="${pageContext.request.contextPath}/PageAccueilEnchere">
-            <h1>ENI Enchère</h1>
-        </a>
-    </div>
-    <div class="col-4">
-        <h3 class="m-5 ml-1">Enchère</h3>
-    </div>
-    <div class="col-4">
-        <c:choose>
-            <c:when test="${sessionScope.utilisateur != null}">
-                <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
-            </c:when>
-            <c:otherwise>
-                <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
-            </c:otherwise>
-        </c:choose>
-    </div>
+<body>
+<header>
+    <c:choose>
+        <c:when test="${sessionScope.utilisateur != null}">
+            <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
+        </c:otherwise>
+    </c:choose>
 </header>
 <div class=" row m-2 p-3 ">
     <div class="col-4">
         <div class="w-100 bg-secondary shadow"><img src="" alt=""></div>
     </div>
     <div class="col-8 shadow p-3">
+        <div class="row m-2">
+            <h3 class="font-weight-bold">Enchère</h3>
+        </div>
 
         <div class="row m-2">
-            <h5>${nom_art}</h5>
+            <div class="col-3">
+                <h5>${nom_art}</h5>
+            </div>
+            <div class="col-3 d-flex flex-row-reverse w-75">
+                <p>points disponibles : ${credit}</p>
+            </div>
         </div>
 
         <div class=" row m-2">
