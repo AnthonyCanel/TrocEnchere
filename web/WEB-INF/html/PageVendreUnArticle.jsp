@@ -6,7 +6,7 @@
     <title>Création Compte</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
-<body class="container-fluid">
+<body class="container-fluid" document.onload="ManageDate()">
 <header class="row">
     <div class="col">
         <a class="btn btn-white m-5 mt-3" href="${pageContext.request.contextPath}/PageAccueilEnchere">
@@ -86,7 +86,7 @@
                 <p>Début de l'enchère</p>
             </div>
             <div class="col-8">
-                <input type="date" name="dateDebut" required>
+                <input type="date" name="dateDebut" min="${dateDuJour}" id="dateDebutArticle" required>
             </div>
         </div>
 
@@ -95,12 +95,12 @@
                 <p>Fin de l'enchère</p>
             </div>
             <div class="col-8">
-                <input type="date" name="dateFin" required>
+                <input type="date" name="dateFin" id="dateFinArticle" required>
             </div>
         </div>
 
-        <div class="border border-dark m-4">
-            <div class=" row m-2">
+        <div class="mx-0 m-4">
+            <div class="border border-dark row m-2">
                 <h3>Retrait</h3>
                 <div class=" row m-2">
                     <div class="col-4">

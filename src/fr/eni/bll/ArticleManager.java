@@ -18,7 +18,7 @@ public class ArticleManager {
 
 
     public Article ajouterArticle(Article article) throws BusinessException {
-        validerCoordonnees(article, businessException);
+        validerCaracteristique(article, businessException);
         if(!businessException.hasErreurs()){
             articleDAO.insert(article);
         }
@@ -28,7 +28,7 @@ public class ArticleManager {
         return article;
     }
 
-    private void validerCoordonnees(Article article, BusinessException bE) {
+    private void validerCaracteristique(Article article, BusinessException bE) {
         if (article.getNomArticle() == null || article.getNomArticle().trim().equals("")){
             bE.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_NOM_SAISIE_ERREUR);
         }
@@ -40,15 +40,6 @@ public class ArticleManager {
         }
         if(article.getPrixInitial() < 0) {
             bE.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_PRIX_INITIAL_ERREUR);
-        }
-        if(article.getRetrait().getCodePostal() == null ||  article.getRetrait().getCodePostal().trim().equals("") || article.getRetrait().getCodePostal().length() > 10 || article.getRetrait().getCodePostal().contains("[a-zA-Z]")){
-            bE.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEURS_CODEPOSTAL_ERREUR);
-        }
-        if(article.getRetrait().getRue() == null || article.getRetrait().getRue().trim().equals("") || article.getRetrait().getRue().length() >30){
-            bE.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEURS_RUE_ERREUR);
-        }
-        if(article.getRetrait().getVille() == null || article.getRetrait().getVille().trim().equals("") || article.getRetrait().getVille().length() >30 || article.getRetrait().getVille().contains("[0-9]")){
-            bE.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEURS_VILLE_ERREUR);
         }
     }
 

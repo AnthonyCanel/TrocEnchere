@@ -3,11 +3,13 @@ package fr.eni.servlet;
 import fr.eni.BusinessException;
 import fr.eni.bll.ArticleManager;
 import fr.eni.bll.CategorieManager;
+import fr.eni.bll.RetraitManager;
 import fr.eni.bll.UtilisateurManager;
 import fr.eni.bo.Article;
 import fr.eni.bo.Categorie;
 import fr.eni.bo.Retrait;
 import fr.eni.bo.Utilisateur;
+import javafx.util.converter.LocalDateStringConverter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,6 +32,8 @@ public class PageVendreUnArticle extends HttpServlet {
         //Session
         HttpSession session = req.getSession();
         CategorieManager cm = new CategorieManager();
+        LocalDate dateDuJour = java.time.LocalDate.now();
+        req.setAttribute("dateDuJour", dateDuJour);
         listeCategories = cm.AfficherCategories();
         req.setAttribute("listeCategories",listeCategories);
         session.setAttribute("categorie",session.getAttribute("combo"));
@@ -42,13 +46,15 @@ public class PageVendreUnArticle extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Utilisateur util = (Utilisateur) session.getAttribute("utilisateur");
         String btn = req.getParameter("btn");
         if (btn.equals("annulerVente") ) {
 
         } else if (btn.equals("annuler")){
             req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
         } else if(btn.equals("enregistrer")) {
-            Retrait retrait = new Retrait();
+            Retrait retraitTest = new Retrait();
             Categorie categorie = new Categorie();
             Article newArticle = new Article();
 
@@ -60,12 +66,11 @@ public class PageVendreUnArticle extends HttpServlet {
             } catch (BusinessException e) {
                 e.printStackTrace();
             }
-            categorie.setLibelle(categorie.getLibelle());
-            categorie.setNoCategorie(categorie.getNoCategorie());
-            newArticle.setCategorie(categorie);
+            newArticle.setPrixInitial(Integer.parseInt(req.getParameter("prix")));
 
+            newArticle.setPhoto((req.getParameter("photo") != null)? req.getParameter("photo"): "");
+            newArticle.setEtat_Article("nondisponible");
 
-            newArticle.setPrixVente(Integer.parseInt(req.getParameter("prix")));
             //Formatage de Date
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String dateD = req.getParameter("dateDebut");
@@ -77,10 +82,15 @@ public class PageVendreUnArticle extends HttpServlet {
             newArticle.setDateDebutEncheres(dateDebut);
             newArticle.setDateFinEncheres(dateFin);
 
-            retrait.setRue(req.getParameter("rue"));
-            retrait.setCodePostal(req.getParameter("CP"));
-            retrait.setVille(req.getParameter("ville"));
-            newArticle.setRetrait(retrait);
+            newArticle.setUtilisateur(util);
+
+            categorie.setLibelle(categorie.getLibelle());
+            categorie.setNoCategorie(categorie.getNoCategorie());
+            newArticle.setCategorie(categorie);
+
+            retraitTest.setRue(req.getParameter("rue"));
+            retraitTest.setCodePostal(req.getParameter("CP"));
+            retraitTest.setVille(req.getParameter("ville"));
 
             ArticleManager articleManager = new ArticleManager();
             try {
@@ -88,6 +98,21 @@ public class PageVendreUnArticle extends HttpServlet {
             } catch (BusinessException e) {
                 e.printStackTrace();
             }
+
+            if (retraitTest.getRue() != util.getRue() || retraitTest.getCodePostal() != util.getCodePostal() || retraitTest.getVille() != util.getVille()){
+                Retrait newRetrait = new Retrait();
+                RetraitManager rm = new RetraitManager();
+                newRetrait.setId(newArticle.getNoArticle());
+                newRetrait.setRue(retraitTest.getRue());
+                newRetrait.setCodePostal(retraitTest.getCodePostal());
+                newRetrait.setVille(retraitTest.getVille());
+                try {
+                    rm.ajouterLieu(newRetrait);
+                } catch (BusinessException e) {
+                    e.printStackTrace();
+                }
+            }
+
             req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
             }
         }

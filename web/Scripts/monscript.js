@@ -14,6 +14,22 @@ let cbVentesTerminees = document.getElementById('VentesTerminees');
 rdAchats.onclick = DesactiveVentes;
 rdMesVentes.onclick = DesactiveAchats;
 
+function  ManageDate(){
+    document.getElementById("dateDebutArticle").addEventListener('change', function () {
+        //$("#dateFinArticle").prop('max', )
+        document.getElementById("dateFinArticle").min = document.getElementById("dateDebutArticle").value;
+    });
+    document.getElementById("dateFinArticle").addEventListener('change', function () {
+        //$("#dateFinArticle").prop('max', )
+        document.getElementById("dateDebutArticle").max = document.getElementById("dateFinArticle").value;
+    });
+}
+
+function ChangeDateFinEnchere(){
+    let dateFin = document.getElementById('dateFin');
+    dateFin.setAttribute('min',dateDebut.value);
+}
+
 //Etat des checkBox à l'activation du radio bouton Achats
 function DesactiveVentes(){
     cbEncheresOuvertes.disabled = false;
@@ -33,13 +49,10 @@ function DesactiveAchats(){
     cbEncheresOuvertes.disabled = true;
     cbEncheresEnCours.disabled = true;
     cbEncheresRemportes.disabled = true;
-
     cbEncheresOuvertes.checked = false;
     cbEncheresEnCours.checked = false;
     cbEncheresRemportes.checked = false;
-
     cbVentesEnCours.checked = true;
-
     cbVentesEnCours.disabled = false;
     cbVentesNonDebutes.disabled = false;
     cbVentesTerminees.disabled = false;
