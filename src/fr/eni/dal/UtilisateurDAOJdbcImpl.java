@@ -23,6 +23,8 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             "code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ? and  mot_de_passe=?";
     private String SELECTBYIDCREDIT = "SELECT montant_enchere, U.no_utilisateur AS Utilisateurenchere FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS AS V INNER JOIN UTILISATEURS AS U ON U.no_utilisateur = V.utilisateurEnchere WHERE V.no_utilisateur = ?";
 
+
+
     /**
      * Sélectionner tous les utilisateurs
      * @return liste des utilisateurs présents dans la base de données
@@ -324,5 +326,35 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             throw businessException;
         }
         return util;
+    }
+
+    public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
+        Utilisateur vendeur = new Utilisateur();
+        if(verifUtilisateur(pseudo)){
+            try (
+                    Connection cnx = ConnectionProvider.getConnection();
+                    PreparedStatement pstt = cnx.prepareStatement(SELECTBYPSEUDO)
+            ) {
+                pstt.setString(1,pseudo.trim());
+                ResultSet rs = pstt.executeQuery();
+                if(rs.next()){
+                    vendeur.setNoUtilisateur(rs.getInt("no_utilisateur"));
+                    vendeur.setPseudo(rs.getString("pseudo"));
+                    vendeur.setEmail(rs.getString("email"));
+                    vendeur.setVille(rs.getString("ville"));
+                }
+                rs.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
+                throw businessException;
+            }
+            return vendeur;
+        }else{
+            businessException.ajouterErreur(CodesResultatDAL.PSEUDO_UTILISATEUR_ECHEC);
+            throw businessException;
+        }
+
     }
 }

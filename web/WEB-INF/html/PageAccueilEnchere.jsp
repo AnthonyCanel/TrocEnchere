@@ -142,7 +142,7 @@
                                             <label>Fin de l'enchère : ${maVenteEnCours.finEnchere}</label>
                                         </div>
                                         <div class="row">
-                                            <a href="${pageContext.request.contextPath}/PageMonProfil?pseudo=${maVenteNonDebutee.vendeur}">
+                                            <a href="${pageContext.request.contextPath}/PageMonProfil?pseudoVendeur=${maVenteEnCours.vendeur}">
                                                 <label>Vendeur : ${maVenteEnCours.vendeur}</label>
                                             </a>
                                         </div>

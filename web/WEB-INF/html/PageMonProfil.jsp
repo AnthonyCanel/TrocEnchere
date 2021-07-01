@@ -30,6 +30,7 @@
                     <label name="pseudo">${pseudo}</label>
                 </div>
             </div>
+<c:if test="${sessionScope.utilisateur.pseudo == pseudoVendeur}">
             <div class="row">
                 <div class="col-4 mt-2 mb-2">
                     <label>Nom :</label>
@@ -38,6 +39,7 @@
                     <label name="nom">${nom}</label>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-4 mt-2 mb-2">
                     <label>Prénom :</label>
@@ -46,6 +48,7 @@
                     <label name="prenom">${prenom}</label>
                 </div>
             </div>
+</c:if>
             <div class="row">
                 <div class="col-4 mt-2 mb-2">
                     <label>Email : </label>
@@ -55,7 +58,7 @@
                 </div>
             </div>
 
-            <c:if test="${sessionScope.utilisateur.noUtilisateur == pseudoVendeur}">
+            <c:if test="${sessionScope.utilisateur.pseudo == pseudoVendeur}">
                 <div class="row">
                     <div class="col-4 mt-2 mb-2">
                         <label>Téléphone : </label>
@@ -80,6 +83,7 @@
                         <label name="CP">${CP}</label>
                     </div>
                 </div>
+            </c:if>
                 <div class="row">
                     <div class="col-4 mt-2 mb-2">
                         <label>Ville </label>
@@ -88,7 +92,7 @@
                         <label name="ville">${ville}</label>
                     </div>
                 </div>
-
+            <c:if test="${sessionScope.utilisateur.pseudo == pseudoVendeur}">
 
 
                 <div class="row m-5 mt-3">

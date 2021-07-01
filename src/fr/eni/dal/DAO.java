@@ -58,4 +58,5 @@ public interface DAO<T>{
     default List<InfoArticle> selectByIdDateDerEnchere(int idUtilisateur, String filtre, int noCategorie) throws BusinessException{return null;}
     default List<InfoArticle> rechercheParFiltreEtNoCategorie(int idUtilisateur, String filtre, int noCategorie)throws BusinessException{return null;}
 
+    default Utilisateur selectByPseudo(String pseudo) throws BusinessException {return null;}
 }

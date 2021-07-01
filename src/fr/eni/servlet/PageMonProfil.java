@@ -3,6 +3,7 @@ package fr.eni.servlet;
 import fr.eni.BusinessException;
 import fr.eni.bll.UtilisateurManager;
 import fr.eni.bo.Utilisateur;
+import fr.eni.dal.CodesResultatDAL;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,30 +22,45 @@ public class PageMonProfil extends HttpServlet {
         //Récupère la session
         HttpSession session = req.getSession();
         //recupération de l'pseudo du vendeur et push vers la PageMonProfil.jsp
-        req.setAttribute("",req.getAttribute("pseudo"));
-
-        util = (Utilisateur) session.getAttribute("utilisateur");
-        //Si utilisateur est connecté
-        if(session.getAttribute("utilisateur") != null ) {
+        req.setAttribute("pseudoVendeur", req.getParameter("pseudoVendeur"));
+        if (req.getParameter("pseudoVendeur").equals(((Utilisateur) session.getAttribute("utilisateur")).getPseudo())) {
+            util = (Utilisateur) session.getAttribute("utilisateur");
+            //Si utilisateur est connecté
+            if (session.getAttribute("utilisateur") != null) {
+                try {
+                    Utilisateur utilEnCours = um.choisirUtilisateur(util.getNoUtilisateur());
+                    //Mise en place des informations récupérées
+                    req.setAttribute("pseudo", utilEnCours.getPseudo());
+                    req.setAttribute("nom", utilEnCours.getNom());
+                    req.setAttribute("prenom", utilEnCours.getPrenom());
+                    req.setAttribute("email", utilEnCours.getEmail());
+                    req.setAttribute("telephone", utilEnCours.getTelephone());
+                    req.setAttribute("rue", utilEnCours.getRue());
+                    req.setAttribute("CP", utilEnCours.getCodePostal());
+                    req.setAttribute("ville", utilEnCours.getVille());
+                    //Affichage de la page
+                    req.getRequestDispatcher("WEB-INF/html/PageMonProfil.jsp").forward(req, resp);
+                } catch (BusinessException e) {
+                    e.printStackTrace();
+                    businessException.ajouterErreur(CodesResultatServlet.LECTURE_UTILISATEUR_ECHEC);
+                }
+            } else {
+                req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
+            }
+        } else {
             try {
-                Utilisateur utilEnCours = um.choisirUtilisateur(util.getNoUtilisateur());
-                //Mise en place des informations récupérées
-                req.setAttribute("pseudo", utilEnCours.getPseudo());
-                req.setAttribute("nom", utilEnCours.getNom());
-                req.setAttribute("prenom", utilEnCours.getPrenom());
-                req.setAttribute("email", utilEnCours.getEmail());
-                req.setAttribute("telephone", utilEnCours.getTelephone());
-                req.setAttribute("rue", utilEnCours.getRue());
-                req.setAttribute("CP", utilEnCours.getCodePostal());
-                req.setAttribute("ville", utilEnCours.getVille());
-                //Affichage de la page
-                req.getRequestDispatcher("WEB-INF/html/PageMonProfil.jsp").forward(req, resp);
+                Utilisateur vendeur = um.choisirUtilisateurPseudo((String) req.getAttribute("pseudoVendeur"));
+
+                req.setAttribute("pseudo", vendeur.getPseudo());
+                req.setAttribute("email", vendeur.getEmail());
+                req.setAttribute("ville", vendeur.getVille());
+
             } catch (BusinessException e) {
                 e.printStackTrace();
+                businessException.ajouterErreur(CodesResultatServlet.ERREUR_REGLE_DE_GESTION);
             }
-        }else{
-            req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
         }
+        req.getRequestDispatcher("WEB-INF/html/PageMonProfil.jsp").forward(req, resp);
     }
 
     @Override
@@ -53,7 +69,7 @@ public class PageMonProfil extends HttpServlet {
         HttpSession session = req.getSession();
         util = (Utilisateur) session.getAttribute("utilisateur");
         //Si utilisateur est connecté
-        if(session.getAttribute("utilisateur") != null ) {
+        if (session.getAttribute("utilisateur") != null) {
             //Récupération des différents champs afin de faire un update
             int idUtilisateur = util.getNoUtilisateur();
             String pseudo = req.getParameter("pseudo");
@@ -66,14 +82,14 @@ public class PageMonProfil extends HttpServlet {
             String ville = req.getParameter("ville");
             String motPasse = "";
             //si mot de passe actuel différent de nouveau Mot de passe et que confirmation Mot de passe est rempli
-            if((req.getParameter("mdpa") != req.getParameter("nmdp")) && req.getParameter("cmdp") != ""){
-                if(req.getParameter("nmdp") == req.getParameter("cmdp")){
+            if ((req.getParameter("mdpa") != req.getParameter("nmdp")) && req.getParameter("cmdp") != "") {
+                if (req.getParameter("nmdp") == req.getParameter("cmdp")) {
                     motPasse = req.getParameter("nmdp");
-                }else{
+                } else {
                     businessException.ajouterErreur(CodesResultatServlet.REGLE_UTILISATEUR_NOUVEAUMOTDEPASSE_ERREUR);
                 }
             }
-            if(req.getParameter("nmdp") == ""){
+            if (req.getParameter("nmdp") == "") {
                 //motPasse = req.getParameter("mdpa");
                 try {
                     Utilisateur utilMDP = um.choisirUtilisateur(idUtilisateur);
