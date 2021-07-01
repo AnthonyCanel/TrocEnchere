@@ -1,6 +1,7 @@
 package fr.eni.servlet;
 
 import fr.eni.BusinessException;
+import fr.eni.bll.ArticleManager;
 import fr.eni.bll.CategorieManager;
 import fr.eni.bll.UtilisateurManager;
 import fr.eni.bo.Article;

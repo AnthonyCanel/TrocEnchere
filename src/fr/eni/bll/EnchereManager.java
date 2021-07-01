@@ -12,14 +12,11 @@ import java.util.List;
 
 public class EnchereManager {
     private DAO<Enchere> generiqueDao;
-    private static BusinessException businessException = new BusinessException();
+    private BusinessException businessException = new BusinessException();
     private DAO<Utilisateur> utilisateurDAO;
 
-    /**
-     * return List of enchere 's table
-     * @throws BusinessException
-     */
-    public EnchereManager() throws BusinessException {
+
+    public void EnchereManager() throws BusinessException {
 
         this.generiqueDao = DAOFactory.getEnchereDAO();
     }
