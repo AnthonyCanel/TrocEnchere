@@ -21,7 +21,7 @@ import java.util.List;
 public class ArticleDAOJdbcImpl implements DAO<Article> {
     BusinessException businessException = new BusinessException();
 
-    private static final String SELECT_ALL = "SELECT TOP(6) no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, photo, vues,no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM V_ARTICLES_CATEGORIES_UTILISATEURS";
+    private static final String SELECT_ALL     = "SELECT TOP(6) no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, photo, vues,no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM V_ARTICLES_CATEGORIES_UTILISATEURS";
 
     private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, no_utilisateur, no_categorie) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -29,28 +29,26 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
 
     private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES WHERE id=?";
     //encheres ouvertes
-    private static String SELECT_BY_DATE_SUP_DEB_ENCH_AND_INF_FIN_ENCHERE = "SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?>=arts_date_debut_encheres and ?<= arts_date_fin_encheres AND encs_derniere_enchere=1 ";
-
+    private static String SELECT_BY_DATE_SUP_DEB_ENCH_AND_INF_FIN_ENCHERE   ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?>=arts_date_debut_encheres and ?<= arts_date_fin_encheres AND encs_derniere_enchere=1 ";
     //Mes encheres en Cours
-    private static String SELECT_BY_ID_DATE_DER_ENCHERE = "SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE arts_date_debut_encheres <= ? AND  ? <= arts_date_fin_encheres AND  encs_no_utilisateur=? ";
+    private static String SELECT_BY_ID_DATE_DER_ENCHERE                     ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE arts_date_debut_encheres <= ? AND  ? <= arts_date_fin_encheres AND  encs_no_utilisateur=? ";
     //Mes encheres Remportees
-    private static String SELECT_BY_ID_AND_ETATENCHERE = "SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES   WHERE encs_no_acquereur=? AND encs_etat_enchere='Vendu'";
+    private static String SELECT_BY_ID_AND_ETATENCHERE                      ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES   WHERE encs_no_acquereur=? AND encs_etat_enchere='Vendu'";
     //mes ventes en cours
-    private static String SELECT_BY_ID_AND_DATES_ENCHERE = "SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES where arts_no_utilisateur=? and ?<=arts_date_fin_encheres and arts_date_debut_encheres<=? ";
-
+    private static String SELECT_BY_ID_AND_DATES_ENCHERE                    ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES where arts_no_utilisateur=? and ?<=arts_date_fin_encheres and arts_date_debut_encheres<=? ";
     //mes ventes non débutees
-    private static String SELECT_BY_ID_DATE_INF_DEB_ENCHERE = "SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres and arts_no_utilisateur=? ";
+    private static String SELECT_BY_ID_DATE_INF_DEB_ENCHERE                 ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres and arts_no_utilisateur=? ";
     //mes ventes terminees
-    private static String SELECT_BY_ID_DATE_SUP_FIN_ENCHERE = "SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?>arts_date_fin_encheres and arts_no_utilisateur=? ";
+    private static String SELECT_BY_ID_DATE_SUP_FIN_ENCHERE                 ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?>arts_date_fin_encheres and arts_no_utilisateur=? ";
 
     //recherche par fitre et catégorie
-    private static String SELECT_BY_NOM_ARTICLE_NO_CATEGORIE = "SELECT no_article,nom_article,prix_initial,prix_vente,pseudo,date_fin_encheres, montant_enchere FROM V_UTILISATEURS_ENCHERES_ARTICLES WHERE der_ench = 1 and pseudo<>'compte supprimé' ";
+    private static String SELECT_BY_NOM_ARTICLE_NO_CATEGORIE                ="SELECT articles.no_article, articles.nom_article,articles.prix_initial,articles.prix_vente,pseudo,ARTICLES.date_fin_encheres,montant_enchere,libelle, C.no_categorie FROM V_UTILISATEURS_ENCHERES_ARTICLES LEFT OUTER JOIN ARTICLES ON V_UTILISATEURS_ENCHERES_ARTICLES.no_utilisateur = ARTICLES.no_utilisateur LEFT JOIN CATEGORIES C on C.no_categorie = ARTICLES.no_categorie WHERE der_ench = 1 and pseudo<>'compte supprimé' ";
 
     //Données pour la page enchère
-    private static String SELECT_BY_ID_VIEW = "SELECT V.no_utilisateur, V.pseudo, V.nom, V.prenom, V.email, V.telephone, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, V.credit, date_enchere, montant_enchere, etat_enchere, no_acquereur, no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, " +
-            "etat_article, rueRetrait, codePostalRetrait, villeRetrait, no_categorie, libelle, U.pseudo AS pseudoEnchere FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS AS V INNER JOIN UTILISATEURS AS U ON U.no_utilisateur = V.utilisateurEnchere WHERE no_article = ? ORDER BY montant_enchere DESC";
+    private static String SELECT_BY_ID_VIEW                                 = "SELECT V.no_utilisateur, V.pseudo, V.nom, V.prenom, V.email, V.telephone, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, V.credit, date_enchere, montant_enchere, etat_enchere, no_acquereur, no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, " +
+                                                                              "etat_article, rueRetrait, codePostalRetrait, villeRetrait, no_categorie, libelle, U.pseudo AS pseudoEnchere FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS AS V INNER JOIN UTILISATEURS AS U ON U.no_utilisateur = V.utilisateurEnchere WHERE no_article = ? ORDER BY montant_enchere DESC";
     //Données pour la page Acquisition
-    private static String SELECT_BY_ENCHERE_REMPORTEE = "SELECT nom_article, description, prix_vente, prix_initial, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, rueRetrait, codePostalRetrait, villeRetrait, pseudo, telephone FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS where no_acquereur = ?";
+    private static String SELECT_BY_ENCHERE_REMPORTEE                       ="SELECT nom_article, description, prix_vente, prix_initial, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, rueRetrait, codePostalRetrait, villeRetrait, pseudo, telephone FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS where no_acquereur = ?";
 
 
     public List<InfoArticle> rechercheParFiltreEtNoCategorie(int idUtilisateur, String filtre, int noCategorie) {
@@ -195,29 +193,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
             }
             i++;
         }
-//        Collections.sort(listInfoArticle, new Comparator<InfoArticle>(){
-//            @Override
-//            public int compare(InfoArticle l1, InfoArticle l2){
-//                return l1.getPrixArticle()-l2.getPrixArticle();
-//            }
-//        });
-//        Collections.reverse(listInfoArticle);
-//        for (InfoArticle a : listInfoArticle
-//        ) {
-//            System.out.println("\n id :"+a.getIdArticle()+"prix: "+a.getPrixArticle());
-//        }
-//        if(listInfoArticle.size()>0) {
-//            for (int i = 0; i < listInfoArticle.size(); i++) {
-//                if (listInfoArticle.get(i).getIdArticle() == listInfoArticle.get(i + 1).getIdArticle()) {
-//                    listInfoArticle.remove(i + 1);
-//
-//                    if(!((i+1)<listInfoArticle.size())){
-//                        break;
-//                    }
-//                    i--;
-//                }
-//            }
-//        }
+
 
         return listInfoArticle;
     }
@@ -328,7 +304,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
             ptt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
             ptt.setDate(2, java.sql.Date.valueOf(LocalDate.now()));
 
-            if (filtreSaisi && categorieSelect) {
+            if(filtreSaisi && categorieSelect){
                 ptt.setString(3, filtre);
                 ptt.setInt(4, noCategorie);
             }
@@ -574,17 +550,6 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
         }
 
         //retrait des doublons
-//        Collections.sort(listInfoArticle, new Comparator<InfoArticle>(){
-//            @Override
-//            public int compare(InfoArticle l1, InfoArticle l2){
-//                return l1.getPrixArticle()-l2.getPrixArticle();
-//            }
-//        });
-//        Collections.reverse(listInfoArticle);
-//        for (InfoArticle a : listInfoArticle
-//        ) {
-//            System.out.println("\n id :"+a.getIdArticle()+"prix: "+a.getPrixArticle());
-//        }
         int i=0;
         while((i+1)<listInfoArticle.size()){
             if (listInfoArticle.get(i).getIdArticle() == listInfoArticle.get(i + 1).getIdArticle()) {
@@ -593,14 +558,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
             }
             i++;
         }
-//        if(listInfoArticle.size()>0) {
-//            for (int i = 0; i < listInfoArticle.size(); i++) {
-//
-//                if(!((i+1)<listInfoArticle.size())){
-//                    break;
-//                }
-//            }
-//        }
+
 
         return listInfoArticle;
 
@@ -904,6 +862,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                 Utilisateur util = new Utilisateur();
                 Retrait retrait = null;
                 if (rs.next()) {
+                    art = new Article();
                     art.setNomArticle(rs.getString("nom_article"));
                     art.setDescription(rs.getString("description"));
                     art.setPrixInitial(rs.getInt("prix_initial"));
@@ -915,10 +874,15 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                         util.setVille(rs.getString("villeUtilisateur"));
                         util.setPseudo(rs.getString("pseudo"));
                         util.setTelephone(rs.getString("telephone"));
-                    } else {
-                        retrait.setRue("rueRetrait");
-                        retrait.setCodePostal("codePostalRetrait");
-                        retrait.setVille("villeRetrait");
+                    }else{
+
+                        //TODO Avoir avec AL
+                        retrait = new Retrait();
+                        retrait.setRue(rs.getString("rueRetrait"));
+                        retrait.setCodePostal(rs.getString("codePostalRetrait"));
+                        retrait.setVille(rs.getString("villeRetrait"));
+                        util.setPseudo(rs.getString("pseudo"));
+                        util.setTelephone(rs.getString("telephone"));
                     }
                     if (retrait == null) {
                         art.setUtilisateur(util);

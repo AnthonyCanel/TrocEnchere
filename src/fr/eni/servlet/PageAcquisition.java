@@ -23,7 +23,7 @@ public class PageAcquisition extends HttpServlet {
         util = (Utilisateur) session.getAttribute("utilisateur");
         //Récupère l'enchère remportée
         //TODO passage de paramètre
-        int id = 1;
+        int id = util.getNoUtilisateur();
         //Si utilisateur est connecté
         if(session.getAttribute("utilisateur") != null ) {
             //Récupération de l'article en fonction de l'id
@@ -34,7 +34,7 @@ public class PageAcquisition extends HttpServlet {
                     req.setAttribute("description", art.getDescription());
                     req.setAttribute("prix_vente", art.getPrixVente());
                     req.setAttribute("prix_initial", art.getPrixInitial());
-                    if (art.getRetrait() != null) {
+                    if (art.getRetrait().getRue() != null) {
                         req.setAttribute("rue", art.getRetrait().getRue());
                         req.setAttribute("CP", art.getRetrait().getCodePostal());
                         req.setAttribute("ville", art.getRetrait().getVille());
