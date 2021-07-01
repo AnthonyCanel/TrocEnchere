@@ -47,41 +47,6 @@ public class ArticleManager {
         articleDAO = DAOFactory.getArticleDAO();
     }
 
-    /**
-     * retourne toutes les ventes Terminées (etat enchere 'Vendu') auquelles l'utilisateur a participé de la plus récente a la plus ancienne.
-     * @param idUtilisateur
-     * @return
-     */
-//    public List<Article> ventesTerminées(int idUtilisateur){
-//        ArticleDAOJdbcImpl adao = new ArticleDAOJdbcImpl();
-//       List<Article> listArticles = adao.selectByIdDateEnchereEtatEnchere(idUtilisateur);
-//        return listArticles;
-//
-//    }
-
-    /**
-     * retourne les ventes non débutées
-     * @return une liste d'article
-     */
-//    public List<Article> ventesNonDebutees(){
-//
-//        ArticleDAOJdbcImpl adao = new ArticleDAOJdbcImpl();
-//        List<Article> listArticle =  adao.selectByDateInfDebEnchere();
-//
-//        return listArticle;
-//    }
-    /**
-     * Recherche en étant connecté
-     *
-     * @param utilisateur
-     * @param motCle
-     * @param categorie
-     * @param achatOuVente
-     * @return
-     */
-    public List<Article> affichageArticlesConnexion(String utilisateur, String motCle, String categorie, String achatOuVente) {
-        return null;
-    }
 
     public List<Article> affichageArticles(String categorie, String motCle) {
         List<Article> listeArticle = new ArrayList<>();
@@ -93,17 +58,9 @@ public class ArticleManager {
         return listeArticle;
     }
 
-    public void VenteArticle(String utilisateur, String nomArticle, String articleCategorie, LocalDate dateDebutArticle, LocalDateTime debutEnchere, LocalDate dateFinArticle, String rueRetrait,
-                             String codePostalRetrait, String villeRetrait) {
-
-    }
 
     public boolean VerifDates(LocalDate dateDebutArticle, LocalDate dateFinArticle) {
         return true;
-    }
-
-    public Article selectArticle(String idArt) {
-        return null;
     }
 
 
@@ -144,15 +101,6 @@ public class ArticleManager {
         DAO<Article> articleDAO = DAOFactory.getArticleDAO();
 
         listInfoArticles = articleDAO.selectByDateSupDebEnchereAndInfFinEnchere(idUtilisateur, filtre, noCategorie );
-//        for ( InfoArticle i: listInfoArticles
-//             ) {
-//            System.out.println(
-//                    i.getIdArticle()+"\n"+
-//                    i.getPrixArticle()+"\n"+
-//                    i.getFinEnchere()+"\n"+
-//                    i.getNomArticle()+"\n"
-//                    );
-//        }
 
         return listInfoArticles;
 

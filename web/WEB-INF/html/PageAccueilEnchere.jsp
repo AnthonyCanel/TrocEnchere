@@ -86,7 +86,7 @@
                 <c:forEach items="${rechercheParDefaut}" var="unElement">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir"
+                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${unElement.idArticle}"
                                name="nomArticle" value="${unElement.idArticle}">
                                 <div class="w-100 row">
                                     <div class="col-3">
@@ -122,7 +122,7 @@
                 <c:forEach items="${mesVentesEnCours}" var="maVenteEnCours">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir"
+                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteEnCours.idArticle}"
                                name="nomArticle" value="${maVenteEnCours.idArticle}">
                                 <div class="w-100 row">
                                     <div class="col-3">
@@ -158,7 +158,7 @@
                 <c:forEach items="${mesVentesNonDebutees}" var="maVenteNonDebutee">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir"
+                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteNonDebutee.idArticle}"
                                name="nomArticle" value="${maVenteNonDebutee.idArticle}">
                                 <div class="w-100 row">
                                     <div class="col-3">
@@ -194,7 +194,7 @@
                 <c:forEach items="${mesVentesTerminees}" var="maVenteTerminee">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir"
+                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteTerminee.idArticle}"
                                name="nomArticle" value="${maVenteTerminee.idArticle}">
                                 <div class="w-100 row">
                                     <div class="col-3">
@@ -230,7 +230,7 @@
                 <c:forEach items="${encheresOuvertes}" var="enchereOuverte">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir"
+                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereOuverte.idArticle}"
                                name="nomArticle" value="${enchereOuverte.idArticle}">
                                 <div class="w-100 row">
                                     <div class="col-3">
@@ -266,7 +266,7 @@
                 <c:forEach items="${mesEncheresEnCours}" var="enchereEnCours">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir"
+                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereEnCours.idArticle}"
                                name="nomArticle" value="${enchereEnCours.idArticle}">
                                 <div class="w-100 row">
                                     <div class="col-3">
@@ -302,7 +302,7 @@
                 <c:forEach items="${mesEncheresRemportees}" var="enchereRemportee">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir"
+                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereRemportee.idArticle}"
                                name="nomArticle" value="${enchereRemportee.idArticle}">
                                 <div class="w-100 row">
                                     <div class="col-3">
