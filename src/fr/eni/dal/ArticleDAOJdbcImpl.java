@@ -20,7 +20,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
 
     private static final String SELECT_ALL = "SELECT TOP(6) no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, photo, vues,no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM V_ARTICLES_CATEGORIES_UTILISATEURS";
 
-    private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, photo, prix_vente, etat_article, no_utilisateur, no_categorie) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, no_utilisateur, no_categorie) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String UPDATE_ARTICLE = "UPDATE ARTICLES SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, etat_article = ?, photo = ?, no_utilisateur = ?, no_categorie = ?, vues = ? where no_article=?";
 
@@ -566,9 +566,8 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                     pstmt.setInt(5, article.getPrixInitial());
                     pstmt.setInt(6, article.getPrixVente());
                     pstmt.setString(7, article.getEtat_Article());
-                    pstmt.setString(8, article.getPhoto());
-                    pstmt.setInt(9, article.getUtilisateur().getNoUtilisateur());
-                    pstmt.setInt(10, article.getCategorie().getNoCategorie());
+                    pstmt.setInt(8, article.getUtilisateur().getNoUtilisateur());
+                    pstmt.setInt(9, article.getCategorie().getNoCategorie());
                     pstmt.executeUpdate();
                     rs = pstmt.getGeneratedKeys();
                     if (rs.next()){

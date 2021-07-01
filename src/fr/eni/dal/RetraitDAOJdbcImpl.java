@@ -11,7 +11,7 @@ import java.util.List;
 public class RetraitDAOJdbcImpl implements DAO<Retrait>{
 
     private static final BusinessException businessException = new BusinessException();
-    private static final String INSERT = "INSERT INTO RETRAITS (rue, code_postal, ville) values (?,?,?)";
+    private static final String INSERT = "INSERT INTO RETRAITS (no_article, rue, code_postal, ville) values (?,?,?,?)";
     private static final String SELECTBYID = "SELECT no_article, rue, code_postal, ville FROM RETRAITS WHERE no_article = ?";
     private static final String SELECTALL = "SELECT no_article, rue, code_postal, ville FROM RETRAITS";
     private static final String UPDATE = "UPDATE RETRAITS SET rue = ?, code_postal = ?, ville = ? WHERE no_article=?";
@@ -74,9 +74,10 @@ public class RetraitDAOJdbcImpl implements DAO<Retrait>{
         }
         try (Connection cnx = ConnectionProvider.getConnection();
              PreparedStatement pstt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            pstt.setString(1, retrait.getRue());
-            pstt.setString(2, retrait.getCodePostal());
-            pstt.setString(3, retrait.getVille());
+            pstt.setInt(1, retrait.getId());
+            pstt.setString(2, retrait.getRue());
+            pstt.setString(3, retrait.getCodePostal());
+            pstt.setString(4, retrait.getVille());
             pstt.executeUpdate();
             ResultSet rs = pstt.getGeneratedKeys();
             if(rs.next()){
