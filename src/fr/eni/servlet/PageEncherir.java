@@ -33,7 +33,7 @@ public class PageEncherir  extends HttpServlet {
 
         util = (Utilisateur) session.getAttribute("utilisateur");
 
-        //TODO récupérer numéro article
+        //Récupérer numéro article
         if (req.getParameter("nomArticle") != null) {
             int id = Integer.parseInt(req.getParameter("nomArticle"));
             //Si utilisateur est connecté

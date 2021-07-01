@@ -819,6 +819,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                 Utilisateur util = new Utilisateur();
                 Retrait retrait = null;
                 if (rs.next()) {
+                    art = new Article();
                     art.setNomArticle(rs.getString("nom_article"));
                     art.setDescription(rs.getString("description"));
                     art.setPrixInitial(rs.getInt("prix_initial"));
@@ -831,9 +832,12 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                         util.setPseudo(rs.getString("pseudo"));
                         util.setTelephone(rs.getString("telephone"));
                     }else{
-                        retrait.setRue("rueRetrait");
-                        retrait.setCodePostal("codePostalRetrait");
-                        retrait.setVille("villeRetrait");
+                        retrait = new Retrait();
+                        retrait.setRue(rs.getString("rueRetrait"));
+                        retrait.setCodePostal(rs.getString("codePostalRetrait"));
+                        retrait.setVille(rs.getString("villeRetrait"));
+                        util.setPseudo(rs.getString("pseudo"));
+                        util.setTelephone(rs.getString("telephone"));
                     }
                     if(retrait == null){
                         art.setUtilisateur(util);

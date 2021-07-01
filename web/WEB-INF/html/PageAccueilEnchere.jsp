@@ -302,7 +302,7 @@
                 <c:forEach items="${mesEncheresRemportees}" var="enchereRemportee">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageAcquisitionr?nomArticle=${enchereRemportee.idArticle}"
+                            <a class="p-0 btn btn-white" href="${pageContext.request.contextPath}/PageAcquisition?nomArticle=${enchereRemportee.idArticle}"
                                name="nomArticle" value="${enchereRemportee.idArticle}">
                                 <div class="w-100 row">
                                     <div class="col-3">

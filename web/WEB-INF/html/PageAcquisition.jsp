@@ -84,7 +84,7 @@
         </div>
 
         <div class="m-4">
-            <a href="${pageContext.request.contextPath}/PageAccueilEnchere"><input class="p-2" type="button"
+            <a href="${pageContext.request.contextPath}/PageAccueilEnchere"><input class="btn btn-outline-dark" type="button"
                                                                                    value="Back"></a>
         </div>
     </div>
