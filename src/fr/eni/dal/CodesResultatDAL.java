@@ -115,6 +115,10 @@ public class CodesResultatDAL {
      * Echec lors de la suppression d'un catégorie
      */
     public static final int DELETE_CATEGORIE_ERREUR=10109;
+    /**
+     * Echec lors de la récupération de l'enchère terminée via un identifiant Utilisateur
+     */
+    public static final int LECTURE_ID_UTILISATEUR_ECHEC=10110;
 
-
+    public static final int LECTURE_ENCHERE_ID_UTILISATEUR_ECHEC=10111;
 }

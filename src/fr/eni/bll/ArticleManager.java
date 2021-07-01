@@ -16,6 +16,9 @@ public class ArticleManager {
     private final DAO<Article> articleDAO;
     private final BusinessException businessException = new BusinessException();
 
+    public ArticleManager() {
+        articleDAO = DAOFactory.getArticleDAO();
+    }
 
     public Article ajouterArticle(Article article) throws BusinessException {
         validerCaracteristique(article, businessException);
@@ -43,9 +46,7 @@ public class ArticleManager {
         }
     }
 
-    public ArticleManager() {
-        articleDAO = DAOFactory.getArticleDAO();
-    }
+
 
     /**
      * retourne toutes les ventes Terminées (etat enchere 'Vendu') auquelles l'utilisateur a participé de la plus récente a la plus ancienne.
@@ -189,6 +190,18 @@ public class ArticleManager {
 
         listInfoArticles = articleDAO.selectByIdAndEtatEnchere(idUtilisateur, filtreSaisi, noCatSelect);
         return listInfoArticles;
+    }
+
+    /**
+     * Récupère les informations de l'enchère remportée via l'identifiant utilisateur
+     * @param idUtilisateur
+     * @return objet Article avec les objets : Utilisateur, Retrait
+     * @throws BusinessException
+     */
+    public Article ChoisirArticlesRemportes(int idUtilisateur) throws BusinessException {
+        Article art = null;
+        art = articleDAO.selectByEnchereRemportee(idUtilisateur);
+        return art;
     }
 
 }

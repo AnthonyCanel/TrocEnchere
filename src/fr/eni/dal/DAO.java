@@ -17,7 +17,6 @@ public interface DAO<T>{
 
     //TODO Ajouter le seletById apres test des requetes
     default void restituerPoints(int points, int idAcquereur) throws BusinessException {
-
     }
 
     default boolean verifMail(String email) throws BusinessException {
@@ -40,6 +39,10 @@ public interface DAO<T>{
      * @throws BusinessException
      */
     default List<Article> selectByEnchere(int id) throws BusinessException{
+        return null;
+    }
+
+    default Article selectByEnchereRemportee(int id) throws BusinessException {
         return null;
     }
 

@@ -14,7 +14,7 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
     private final String UPDATE_UTILISATEURS= "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, administrateur = ? WHERE no_utilisateur = ?";
     private final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
     private final String INSERT= "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-    private final String UPDATE_DELETE= "UPDATE UTILISATEURS SET pseudo = 'compte supprimé', nom = 'compte supprimé', prenom = 'compte supprimé', email = 'compte supprimé', telephone = 'compte supprimé', rue = 'compte supprimé',code_postal = 'supp.', mot_de_passe='compte supprimé', credit = 0 WHERE no_utilisateur = ?";
+    private final String UPDATE_DELETE= "UPDATE UTILISATEURS SET pseudo = 'compte supprimé', nom = 'compte supprimé', prenom = 'compte supprimé', email = 'compte supprimé', telephone = 'compte supprimé', rue = 'compte supprimé',code_postal = 'supp.', ville='compte supprimé', mot_de_passe='compte supprimé', credit = 0 WHERE no_utilisateur = ?";
     private final String UPDATE_DELETE_ENCHERES = "UPDATE ENCHERES SET etat_enchere = 'annulé' WHERE no_utilisateur = ?";
     private final String UPDATE_DELETE_ARTICLES = "UPDATE ARTICLES SET etat_article = 'nondisponible' WHERE no_utilisateur = ?";
     private final String SELECTBYMAIL= "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email = ?";

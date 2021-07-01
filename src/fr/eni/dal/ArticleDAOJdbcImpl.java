@@ -18,7 +18,7 @@ import java.util.List;
 public class ArticleDAOJdbcImpl implements DAO<Article> {
     BusinessException businessException = new BusinessException();
 
-    private static final String SELECT_ALL = "SELECT TOP(6) no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, photo, vues,no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM V_ARTICLES_CATEGORIES_UTILISATEURS";
+    private static final String SELECT_ALL     = "SELECT TOP(6) no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, photo, vues,no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM V_ARTICLES_CATEGORIES_UTILISATEURS";
 
     private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, no_utilisateur, no_categorie) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -37,12 +37,13 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
     private static String SELECT_BY_ID_DATE_INF_DEB_ENCHERE                 ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres and arts_no_utilisateur=? ";
     //mes ventes terminees
     private static String SELECT_BY_ID_DATE_SUP_FIN_ENCHERE                 ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?>arts_date_fin_encheres and arts_no_utilisateur=? ";
+    //Données pour la page enchère
+    private static String SELECT_BY_ID_VIEW                                 = "SELECT V.no_utilisateur, V.pseudo, V.nom, V.prenom, V.email, V.telephone, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, V.credit, date_enchere, montant_enchere, etat_enchere, no_acquereur, no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, " +
+                                                                              "etat_article, rueRetrait, codePostalRetrait, villeRetrait, no_categorie, libelle, U.pseudo AS pseudoEnchere FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS AS V INNER JOIN UTILISATEURS AS U ON U.no_utilisateur = V.utilisateurEnchere WHERE no_article = ? ORDER BY montant_enchere DESC";
+    //Données pour la page Acquisition
+    private static String SELECT_BY_ENCHERE_REMPORTEE                       ="SELECT nom_article, description, prix_vente, prix_initial, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, rueRetrait, codePostalRetrait, villeRetrait, pseudo, telephone FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS where no_acquereur = ?";
 
-    private static String SELECT_BY_ID_VIEW = "SELECT V.no_utilisateur, V.pseudo, V.nom, V.prenom, V.email, V.telephone, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, V.credit, date_enchere, montant_enchere, etat_enchere, no_acquereur, no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, " +
-                                              "etat_article, rueRetrait, codePostalRetrait, villeRetrait, no_categorie, libelle, U.pseudo AS pseudoEnchere FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS AS V INNER JOIN UTILISATEURS AS U ON U.no_utilisateur = V.utilisateurEnchere WHERE no_article = ? ORDER BY montant_enchere DESC";
-
-
-//Mes encheres en Cours
+    //Mes encheres en Cours
     /**
      * retour les encheres en cours pour l'utilisateur
      * @param idUtilisateur
@@ -113,6 +114,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
 
         return listInfoArticle;
     }
+
     /**
      * retourne la liste des infoArticles des encheres remportees par l'utilisateur en fonction du filtre saisie et de la catégorie selectionnée
      * @param idUtilisateur
@@ -641,7 +643,6 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
      */
     @Override
     public List<Article> selectByEnchere(int id) throws BusinessException {
-        DAO<Retrait> retraitDAO = DAOFactory.getRetraitDAO();
         List<Article> listeArticles = new ArrayList<>();
         List<Utilisateur> listeUtilisateurs = new ArrayList<>();
         List<Categorie> listeCategories = new ArrayList<>();
@@ -732,5 +733,57 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
             }
         }
         return listeArticles;
+    }
+
+    /**
+     * Méthode pour récupérer les différentes données pour la page Acquisition
+     * @param id no_utilisateur
+     * @return Objet Article avec les données d'autres objets : Utilisateur, Enchère, Retrait
+     */
+    @Override
+    public Article selectByEnchereRemportee(int id) throws BusinessException {
+        Article art = null;
+        if(id == 0){
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_ID_UTILISATEUR_ECHEC);
+            throw businessException;
+        }else {
+            try (Connection cnx = ConnectionProvider.getConnection();
+                 PreparedStatement pstt = cnx.prepareStatement(SELECT_BY_ENCHERE_REMPORTEE)) {
+                pstt.setInt(1, id);
+                ResultSet rs = pstt.executeQuery();
+                Utilisateur util = new Utilisateur();
+                Retrait retrait = null;
+                if (rs.next()) {
+                    art.setNomArticle(rs.getString("nom_article"));
+                    art.setDescription(rs.getString("description"));
+                    art.setPrixInitial(rs.getInt("prix_initial"));
+                    art.setPrixVente(rs.getInt("prix_vente"));
+                    //Si pas d'adresse renseignée dans la table RETRAITS
+                    if(rs.getString("rueRetrait") == ""){
+                        util.setRue(rs.getString("rueUtilisateur"));
+                        util.setCodePostal(rs.getString("codePostalUtilisateur"));
+                        util.setVille(rs.getString("villeUtilisateur"));
+                        util.setPseudo(rs.getString("pseudo"));
+                        util.setTelephone(rs.getString("telephone"));
+                    }else{
+                        retrait.setRue("rueRetrait");
+                        retrait.setCodePostal("codePostalRetrait");
+                        retrait.setVille("villeRetrait");
+                    }
+                    if(retrait == null){
+                        art.setUtilisateur(util);
+                    }else{
+                        art.setUtilisateur(util);
+                        art.setRetrait(retrait);
+                    }
+                } else {
+                    businessException.ajouterErreur(CodesResultatDAL.LECTURE_ENCHERE_ID_UTILISATEUR_ECHEC);
+                    throw businessException;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return art;
     }
 }

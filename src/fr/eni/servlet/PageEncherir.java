@@ -37,6 +37,7 @@ public class PageEncherir  extends HttpServlet {
         int id = 2;
         //Si utilisateur est connecté
         if(session.getAttribute("utilisateur") != null ) {
+            //Récupération de l'article en fonction de l'id
             List<Article> listeArticles = am.ChoisirArticlesEncherir(id);
             //Affichage des données dans la jsp
             for (Article art: listeArticles) {
