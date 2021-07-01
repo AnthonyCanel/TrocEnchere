@@ -14,4 +14,5 @@ public class CodesResultatServlet {
      */
     public static final int IMPORT_UTILISATEUR=30052;
 
+    public static final int ENCHERE_MONTANT_ECHEC=30053;
 }

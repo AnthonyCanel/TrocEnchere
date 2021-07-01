@@ -51,4 +51,22 @@ public class EnchereManager {
         }
         return listEnchere;
     }
+
+    public void miseAJourEnchere(Enchere enchere) throws BusinessException{
+        try {
+            //Vérification du montant enchère avec crédit dispo de l'utilisateur
+            //Création de l'objet Utilisateur
+            utilisateurDAO = DAOFactory.getUtilisateurDAO();
+            Utilisateur util = utilisateurDAO.selectById(enchere.getNoUtilisateur());
+            if(enchere.getMontantEnchere() < util.getCredit()) {
+                generiqueDao.update(enchere);
+            }else{
+                businessException.ajouterErreur(CodesResultatBLL.UPDATE_BLL_ENCHERES);
+            }
+
+        } catch (BusinessException e) {
+            e.printStackTrace();
+            businessException.ajouterErreur(CodesResultatBLL.UPDATE_BLL_ENCHERES);
+        }
+    }
 }

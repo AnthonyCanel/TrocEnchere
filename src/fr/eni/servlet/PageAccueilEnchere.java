@@ -138,9 +138,6 @@ public class PageAccueilEnchere extends HttpServlet {
 
         }
 
-//    req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req,resp);
-
-
 
         doGet(req, resp);
     }

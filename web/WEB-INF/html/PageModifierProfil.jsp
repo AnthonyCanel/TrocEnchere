@@ -133,31 +133,32 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="row mb-3">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-4">
-                                <label>Mot de passe actuel : </label>
-                            </div>
-                            <div class="col-8">
-                                <div class="input-group input-group-sm mb-3">
-                                    <input class="w-100" type="password" name="mdpa" id="motPasseActuel" value="${mdpa}">
-                                </div>
-                            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4">
+                            <label>Mot de passe actuel : </label>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-4">
-                                <label></label>
-                            </div>
-                            <div class="col-8">
-                                <label></label>
+                        <div class="col-8">
+                            <div class="input-group input-group-sm mb-3">
+                                <input class="w-100" type="password" name="mdpa" id="motPasseActuel" value="${mdpa}">
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4">
+                            <label></label>
+                        </div>
+                        <div class="col-8">
+                            <label></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
                 <div class="row mb-3">
                     <div class="col">
@@ -223,5 +224,6 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 </body>
 </html>

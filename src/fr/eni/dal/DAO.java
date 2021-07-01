@@ -16,8 +16,8 @@ public interface DAO<T>{
     void delete(int id) throws BusinessException;
 
     //TODO Ajouter le seletById apres test des requetes
-    default T restituerPoints(int idvendeur, int idAcquereur) {
-        return null;
+    default void restituerPoints(int points, int idAcquereur) throws BusinessException {
+
     }
 
     default boolean verifMail(String email) throws BusinessException {
