@@ -52,6 +52,10 @@ public class CodesResultatDAL {
      */
     public static final int PSEUDO_UTILISATEUR_ECHEC = 10011;
     /**
+     * Erreur lors de la restitution des crédits
+     */
+    public static final int RESTITUTIONPOINTS_UTILISATEUR_ECHEC = 10012;
+    /**
      * Lors de l'import de la table enchere dans la dal
      */
     public static final int IMPORT_DAL_ENCHERE = 10050;
@@ -67,6 +71,10 @@ public class CodesResultatDAL {
      * Import des ventes terminées impossible
      */
     public static final int IMPORT_VENTES_TERMINEES = 10053;
+    /**
+     *
+     */
+    public static final int UPDATE_DAL_ENCHERE = 10054;
     /**
      * Echec de la lecture de la table Articles
      */

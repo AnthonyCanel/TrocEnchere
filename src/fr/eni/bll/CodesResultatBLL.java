@@ -66,6 +66,8 @@ public class CodesResultatBLL {
     public static final int IMPORT_BLL_ENCHERES_GAGNEES=20051;
 
     public static final int UTILISATEUR_CONNECTION_IMPOSSIBLE = 20052;
+
+    public static final int UPDATE_BLL_ENCHERES = 20053;
     /**
      * Echec de la sélection par Id de catégorie
      */

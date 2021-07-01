@@ -21,7 +21,13 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
     private final String SELECTBYPSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ?";
     private final String SELECTBYPSEUDOANDPWD = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, " +
             "code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ? and  mot_de_passe=?";
+    private String SELECTBYIDCREDIT = "SELECT montant_enchere, U.no_utilisateur AS Utilisateurenchere FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS AS V INNER JOIN UTILISATEURS AS U ON U.no_utilisateur = V.utilisateurEnchere WHERE V.no_utilisateur = ?";
 
+    /**
+     * Sélectionner tous les utilisateurs
+     * @return liste des utilisateurs présents dans la base de données
+     * @throws BusinessException
+     */
     @Override
     public List<Utilisateur> selectAll() throws BusinessException{
         List<Utilisateur> listUtilisateurs = new ArrayList<>();
@@ -54,6 +60,12 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
         return listUtilisateurs;
     }
 
+    /**
+     * Sélectionne un utilisateur par rapport à son identifiant
+     * @param id
+     * @return objet Utilisateur
+     * @throws BusinessException
+     */
     @Override
     public Utilisateur selectById(int id) throws BusinessException {
         Utilisateur util = null;
@@ -166,11 +178,14 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
     /**
      * Si un utilisateur est supprimé on anonymise son compte afin de garder l'historique
      * Mise à jour de l'état article dans la table Articles et dans la table Enchères
+     * redonner les points si enchère en cours pour le futur acquéreur
      * @param id
      * @throws BusinessException
      */
     @Override
     public void delete(int id) throws BusinessException {
+        int points = 0;
+        int idEnchereur = 0;
         try (Connection cnx = ConnectionProvider.getConnection();
             PreparedStatement pstt = cnx.prepareStatement(UPDATE_DELETE)) {
             pstt.setInt(1, id);
@@ -183,6 +198,19 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             PreparedStatement pstt2 = cnx.prepareStatement(UPDATE_DELETE_ENCHERES);
             pstt2.setInt(1, id);
             pstt2.executeUpdate();
+            //Restitution des points lors de l'annulation de l'enchère
+            PreparedStatement pstt3 = cnx.prepareStatement(SELECTBYIDCREDIT);
+            pstt3.setInt(1, id);
+            ResultSet rs = pstt3.executeQuery();
+            if(rs.next()){
+                points = rs.getInt(1);
+                idEnchereur = rs.getInt(2);
+            }
+            restituerPoints(points, idEnchereur);
+            //Fermeture des requêtes
+            pstt1.close();
+            pstt2.close();
+            pstt3.close();
         } catch (Exception e) {
             e.printStackTrace();
             businessException.ajouterErreur(CodesResultatDAL.DELETE_UTILISATEUR_ECHEC);
@@ -237,6 +265,34 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur>{
             throw businessException;
         }
         return unique;
+    }
+
+    /**
+     * Restitution des points si le compte est supprimé
+     * @param points
+     * @param idAcquereur
+     * @return
+     */
+    @Override
+    public void restituerPoints(int points, int idAcquereur) throws BusinessException {
+        //récupération des points dans la table Enchère et mise à jour des points dans la table Utilisateur.
+        try(Connection cnx = ConnectionProvider.getConnection();
+            PreparedStatement pstt = cnx.prepareStatement(UPDATE_CREDIT)) {
+            if(points != 0 && idAcquereur != 0) {
+                pstt.setInt(1, idAcquereur);
+                pstt.setInt(2, points);
+                pstt.executeUpdate();
+            }else{
+                businessException.ajouterErreur(CodesResultatDAL.RESTITUTIONPOINTS_UTILISATEUR_ECHEC);
+                throw businessException;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
+            throw businessException;
+        }
+
     }
 
     public Utilisateur getUtilisateur(String pseudo, String pwd) throws BusinessException {

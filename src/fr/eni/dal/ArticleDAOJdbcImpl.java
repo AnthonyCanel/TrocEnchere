@@ -11,6 +11,7 @@ import sun.invoke.empty.Empty;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
 
     private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, no_utilisateur, no_categorie) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String UPDATE_ARTICLE = "UPDATE ARTICLES SET no_article = ?, nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, etat_article = ?, photo = ?, no_utilisateur = ?, no_categorie = ?, vues = ? where id=?";
+    private static final String UPDATE_ARTICLE = "UPDATE ARTICLES SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, etat_article = ?, photo = ?, no_utilisateur = ?, no_categorie = ?, vues = ? where no_article=?";
 
     private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES WHERE id=?";
     //encheres ouvertes
@@ -40,7 +41,8 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
     private static String SELECT_BY_NOM_ARTICLE_NO_CATEGORIE                ="SELECT articles.no_article, articles.nom_article,articles.prix_initial,articles.prix_vente,pseudo,ARTICLES.date_fin_encheres,montant_enchere,libelle, C.no_categorie FROM V_UTILISATEURS_ENCHERES_ARTICLES LEFT OUTER JOIN ARTICLES ON V_UTILISATEURS_ENCHERES_ARTICLES.no_utilisateur = ARTICLES.no_utilisateur LEFT JOIN CATEGORIES C on C.no_categorie = ARTICLES.no_categorie WHERE der_ench = 1 and pseudo<>'compte supprimé' ";
 
 
-    private static String SELECT_BY_ID_VIEW = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, credit, date_enchere, montant_enchere, etat_enchere, no_acquereur, no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, rueRetrait, codePostalRetrait, villeRetrait, no_categorie, libelle FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS WHERE no_article = ? ";
+    private static String SELECT_BY_ID_VIEW = "SELECT V.no_utilisateur, V.pseudo, V.nom, V.prenom, V.email, V.telephone, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, V.credit, date_enchere, montant_enchere, etat_enchere, no_acquereur, no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, " +
+                                              "etat_article, rueRetrait, codePostalRetrait, villeRetrait, no_categorie, libelle, U.pseudo AS pseudoEnchere FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS AS V INNER JOIN UTILISATEURS AS U ON U.no_utilisateur = V.utilisateurEnchere WHERE no_article = ? ORDER BY montant_enchere DESC";
 
 
     public List<InfoArticle> rechercheParFiltreEtNoCategorie(int idUtilisateur, String filtre, int noCategorie){
@@ -552,7 +554,10 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                     utilisateurEnCours.setVille(rs.getString(21));
                     utilisateurEnCours.setMotDePasse(rs.getString(22));
                     utilisateurEnCours.setCredit(rs.getInt(23));
-                    boolean admin = rs.getByte(24) != 0;
+                    boolean admin = true;
+                    if (rs.getByte(24) == 0){
+                        admin = false;
+                    }
                     utilisateurEnCours.setAdmin(admin);
                     listeUtilisateur.add(utilisateurEnCours);
                 }
@@ -714,10 +719,11 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                 pstt.setInt(1,id);
                 ResultSet rs = pstt.executeQuery();
                 Utilisateur utilisateurEnCours = new Utilisateur();
+                Enchere enchereEnCours = new Enchere();
+                boolean passe = false;
                 while(rs.next()){
                     //Si l'identifiant de la requête est différent de l'identifiant de l'objet
                     if(rs.getInt("no_utilisateur") != utilisateurEnCours.getNoUtilisateur()){
-//                        utilisateurEnCours = new Utilisateur();
                         utilisateurEnCours.setNoUtilisateur(rs.getInt("no_utilisateur"));
                         utilisateurEnCours.setPseudo(rs.getString("pseudo"));
                         utilisateurEnCours.setNom(rs.getString("nom"));
@@ -729,6 +735,9 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                         utilisateurEnCours.setVille(rs.getString("villeUtilisateur"));
                         utilisateurEnCours.setCredit(rs.getInt("credit"));
                         listeUtilisateurs.add(utilisateurEnCours);
+                        passe = true;
+                    }else{
+                        passe = false;
                     }
                     //Catégorie
                     Categorie categorieEnCours = new Categorie();
@@ -739,40 +748,46 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                     }
 
                     //Retrait
-                    Retrait retraitEnCours = null;
+                    Retrait retraitEnCours = new Retrait();
                     if(rs.getInt("no_article") != retraitEnCours.getId()){
-                        retraitEnCours = retraitDAO.selectById(rs.getInt("no_article")); //SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, credit, date_enchere, montant_enchere, etat_enchere, no_acquereur, no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, rueRetrait, codePostalRetrait, villeRetrait, no_categorie, libelle FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS WHERE no_article = ?"
-                        if(!retraitEnCours.equals(null)) {
-                            listeRetraits.add(retraitEnCours);
-                        }
+                        retraitEnCours.setId(rs.getInt("no_article"));
+                        retraitEnCours.setRue(rs.getString("rueRetrait"));
+                        retraitEnCours.setCodePostal(rs.getString("codePostalRetrait"));
+                        retraitEnCours.setVille(rs.getString("villeRetrait"));
+                        listeRetraits.add(retraitEnCours);
                     }
                     //Enchere
-                    Enchere enchereEnCours = new Enchere();
-                    if(rs.getInt("no_article")!= enchereEnCours.getNoArticle() && rs.getInt("no_utilisateur") != enchereEnCours.getNoUtilisateur()){ //date_enchere, montant_enchere, etat_enchere, no_acquereur
-                        enchereEnCours.setNoArticle(rs.getInt("no_article"));
-                        enchereEnCours.setNoUtilisateur(rs.getInt("no_utilisateur"));
-                        enchereEnCours.setDateEnchere(rs.getTimestamp("date_enchere"));
-                        enchereEnCours.setMontantEnchere(rs.getInt("montant_enchere"));
-                        enchereEnCours.setEtatEnchere(rs.getString("etat_enchere"));
-                        enchereEnCours.setNoAcquereur(rs.getInt("no_acquereur"));
-                        listeEncheres.add(enchereEnCours);
+                    if(rs.getInt("no_article")!= enchereEnCours.getNoArticle() && rs.getInt("no_utilisateur") != enchereEnCours.getNoUtilisateur()){
+                        if(enchereEnCours.getMontantEnchere() >= rs.getInt("montant_enchere") || enchereEnCours.getNoArticle() == 0) {
+                            enchereEnCours.setNoArticle(rs.getInt("no_article"));
+                            enchereEnCours.setNoUtilisateur(rs.getInt("no_utilisateur"));
+                            enchereEnCours.setDateEnchere(rs.getTimestamp("date_enchere"));
+                            enchereEnCours.setMontantEnchere(rs.getInt("montant_enchere"));
+                            enchereEnCours.setEtatEnchere(rs.getString("etat_enchere"));
+                            enchereEnCours.setNoAcquereur(rs.getInt("no_acquereur"));
+                            enchereEnCours.setNomAcquereur(rs.getString("pseudoEnchere"));
+                            listeEncheres.add(enchereEnCours);
+                        }
                     }
                     //Article
                     Article articleEnCours = new Article();
                     if(rs.getInt("no_article") != articleEnCours.getNoArticle()) {
-                        articleEnCours.setNoArticle(rs.getInt("no_article"));
-                        articleEnCours.setNomArticle(rs.getString("nom_article"));
-                        articleEnCours.setDescription(rs.getString("description"));
-                        articleEnCours.setDateDebutEncheres(rs.getDate("date_debut_encheres").toLocalDate());
-                        articleEnCours.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
-                        articleEnCours.setPrixInitial(rs.getInt("prix_initial"));
-                        articleEnCours.setPrixVente(rs.getInt("prix_vente"));
-                        articleEnCours.setEtat_Article(rs.getString("etat_article"));
-                        articleEnCours.setUtilisateur(utilisateurEnCours);
-                        articleEnCours.setCategorie(categorieEnCours);
-                        articleEnCours.setRetrait(retraitEnCours);
-                        articleEnCours.setEnchere(enchereEnCours);
-                        listeArticles.add(articleEnCours);
+                        //Teste de l'utilisateur
+                        if(passe) {
+                            articleEnCours.setNoArticle(rs.getInt("no_article"));
+                            articleEnCours.setNomArticle(rs.getString("nom_article"));
+                            articleEnCours.setDescription(rs.getString("description"));
+                            articleEnCours.setDateDebutEncheres(rs.getDate("date_debut_encheres").toLocalDate());
+                            articleEnCours.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
+                            articleEnCours.setPrixInitial(rs.getInt("prix_initial"));
+                            articleEnCours.setPrixVente(rs.getInt("prix_vente"));
+                            articleEnCours.setEtat_Article(rs.getString("etat_article"));
+                            articleEnCours.setUtilisateur(utilisateurEnCours);
+                            articleEnCours.setCategorie(categorieEnCours);
+                            articleEnCours.setRetrait(retraitEnCours);
+                            articleEnCours.setEnchere(enchereEnCours);
+                            listeArticles.add(articleEnCours);
+                        }
                     }
                 } //Fin de la boucle while
             } catch (Exception e) {
