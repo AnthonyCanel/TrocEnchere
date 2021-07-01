@@ -3,6 +3,7 @@ package fr.eni.bll;
 
 import fr.eni.BusinessException;
 import fr.eni.bo.Enchere;
+import fr.eni.bo.Utilisateur;
 import fr.eni.dal.DAO;
 import fr.eni.dal.DAOFactory;
 import fr.eni.dal.EnchereDAOJdbcImpl;
@@ -10,8 +11,9 @@ import fr.eni.dal.EnchereDAOJdbcImpl;
 import java.util.List;
 
 public class EnchereManager {
-    private DAO generiqueDao;
+    private DAO<Enchere> generiqueDao;
     private static BusinessException businessException = new BusinessException();
+    private DAO<Utilisateur> utilisateurDAO;
 
     /**
      * return List of enchere 's table
@@ -48,5 +50,23 @@ public class EnchereManager {
             businessException.ajouterErreur(CodesResultatBLL.IMPORT_BLL_ENCHERES_GAGNEES);
         }
         return listEnchere;
+    }
+
+    public void miseAJourEnchere(Enchere enchere) throws BusinessException{
+        try {
+            //Vérification du montant enchère avec crédit dispo de l'utilisateur
+            //Création de l'objet Utilisateur
+            utilisateurDAO = DAOFactory.getUtilisateurDAO();
+            Utilisateur util = utilisateurDAO.selectById(enchere.getNoUtilisateur());
+            if(enchere.getMontantEnchere() < util.getCredit()) {
+                generiqueDao.update(enchere);
+            }else{
+                businessException.ajouterErreur(CodesResultatBLL.UPDATE_BLL_ENCHERES);
+            }
+
+        } catch (BusinessException e) {
+            e.printStackTrace();
+            businessException.ajouterErreur(CodesResultatBLL.UPDATE_BLL_ENCHERES);
+        }
     }
 }

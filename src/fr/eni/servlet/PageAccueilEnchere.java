@@ -21,7 +21,7 @@ public class PageAccueilEnchere extends HttpServlet {
         CategorieManager cm =new CategorieManager();
         listeCategories = cm.AfficherCategories();
         req.setAttribute("listeCategories",listeCategories);
-        session.setAttribute("categorie",session.getAttribute("combo"));
+        //session.setAttribute("categorie",session.getAttribute("combo"));
         req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req,resp);
     }
 

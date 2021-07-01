@@ -65,7 +65,7 @@
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
                                 <input class="w-100" type="text" name="prenom" id="prenom" value="${prenom}" required
-                                       pattern="[A-Za-z]{1,30}">
+                                       pattern="[0-9A-Za-zÀ-ÖØ-öø-ÿ-' ]{1,30}">
                             </div>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
                                 <input class="w-100" type="text" name="ville" id="ville" value="${ville}" required
-                                       pattern="^[A-Za-z'- ]{1,30}">
+                                       pattern="[0-9A-Za-zÀ-ÖØ-öø-ÿ-' ]{1,30}">
                             </div>
                         </div>
                     </div>

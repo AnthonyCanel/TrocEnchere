@@ -34,7 +34,12 @@
     <div class="col-8 shadow p-3">
 
         <div class="row m-2">
-            <h5>${nom_art}</h5>
+            <div class="col-3">
+                <h5>${nom_art}</h5>
+            </div>
+            <div class="col-3 d-flex flex-row-reverse w-75">
+                <p>points disponibles : ${credit}</p>
+            </div>
         </div>
 
         <div class=" row m-2">
@@ -51,7 +56,7 @@
                 <p>Catégorie</p>
             </div>
             <div class="col-8">
-                <p>Informatique</p>
+                <p>${categorie}</p>
             </div>
         </div>
 
@@ -60,7 +65,9 @@
                 <p>Meilleur offre :</p>
             </div>
             <div class="col-8">
-                <p>210 pts par Bob</p>
+                <c:if test="${acquereur != null}">
+                    <p>${offre} pts par ${acquereur}</p>
+                </c:if>
             </div>
         </div>
 
@@ -69,7 +76,16 @@
                 <p>Mise à prix :</p>
             </div>
             <div class="col-8">
-                <p>185 points</p>
+                <p>${prixInitial} points</p>
+            </div>
+        </div>
+
+        <div class=" row m-2">
+            <div class="col-4">
+                <p>Fin de l'enchère :</p>
+            </div>
+            <div class="col-8">
+                <p>${dateFinEnchere}</p>
             </div>
         </div>
 
@@ -78,8 +94,8 @@
                 <p>Retrait</p>
             </div>
             <div class="col-8">
-                <p>10 allée des Alouettes</p>
-                <p>44800 Saint Herblain</p>
+                <p>${rue}</p>
+                <p>${CP} ${ville}</p>
             </div>
         </div>
 
@@ -88,30 +104,31 @@
                 <p>Vendeur : </p>
             </div>
             <div class="col-8">
-                <p>jojo44</p>
+                <p>${vendeur}</p>
             </div>
         </div>
-
-        <div class=" row m-2">
-            <div class="col-4">
-                <label for="maProposition">Fin de l'enchère</label>
-            </div>
-            <div class="col-8">
-                <div class="row">
-                    <div class="col">
-                        <input type="number" id="maProposition" min="0" max="150">
-                    </div>
-                    <div class="col">
-                        <a href="${pageContext.request.contextPath}/PageAccueilEnchere"><input type="button"
-                                                                                               value="Enchérir"></a>
+            <div class=" row m-2">
+                <div class="col-4">
+                    <label for="maProposition">Ma proposition</label>
+                </div>
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col">
+                            <form  action="PageEncherir" method="post" id="encherir">
+                                <input type="number" id="maProposition" name="maProposition" min="${Proposition}" value="${Proposition}"  />
+                            </form>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-outline-dark" form="encherir">Enchérir</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </div>
-</div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

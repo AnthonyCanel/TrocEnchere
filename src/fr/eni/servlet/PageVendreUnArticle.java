@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class PageVendreUnArticle extends HttpServlet {
@@ -57,14 +59,12 @@ public class PageVendreUnArticle extends HttpServlet {
             newArticle.setCategorie(categorie);
 
             newArticle.setPrixVente(Integer.parseInt(req.getParameter("prix")));
-            Date dateDebut = null;
-            Date dateFin = null;
-            try {
-                dateDebut = (Date) new SimpleDateFormat("yyyy-mm-dd").parse(req.getParameter("dateDebut"));
-                dateFin = (Date) new SimpleDateFormat("yyyy-mm-dd").parse(req.getParameter("dateFin"));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            //Formatage dates
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String dateD = req.getParameter("dateDebut");
+            String dateF = req.getParameter("dateFin");
+            LocalDate dateDebut = LocalDate.parse(dateD, formatter);
+            LocalDate dateFin = LocalDate.parse(dateF, formatter);
             newArticle.setDateDebutEncheres(dateDebut);
             newArticle.setDateFinEncheres(dateFin);
 
