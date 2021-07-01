@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class SupprimerCompte extends HttpServlet {
-    private static UtilisateurManager um = new UtilisateurManager();
+    private static final UtilisateurManager um = new UtilisateurManager();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Récupére la session

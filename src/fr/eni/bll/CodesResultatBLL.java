@@ -72,5 +72,21 @@ public class CodesResultatBLL {
      * Echec de la sélection par Id de catégorie
      */
     public static final int REGLE_CATEGORIES_ID_ERREUR = 20100;
+    /**
+     * Echec de la sélection par Id de catégorie
+     */
+    public static final int REGLE_ARTICLE_PRIX_INITIAL_ERREUR = 20101;
+    /**
+     * Echec de la sélection par Id de catégorie
+     */
+    public static final int REGLE_ARTICLE_CATEGORIE_NUL_ERREUR = 20102;
+    /**
+     * Echec de la sélection par Id de catégorie
+     */
+    public static final int REGLE_ARTICLE_DESCRIPTION_SAISIE_ERREUR = 20103;
+    /**
+     * Echec de la sélection par Id de catégorie
+     */
+    public static final int REGLE_ARTICLE_NOM_SAISIE_ERREUR = 20104;
 
 }

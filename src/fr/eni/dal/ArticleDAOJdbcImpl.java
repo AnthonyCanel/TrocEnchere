@@ -1,7 +1,13 @@
 package fr.eni.dal;
 
 import fr.eni.BusinessException;
-import fr.eni.bo.*;
+import fr.eni.bo.Article;
+import fr.eni.bo.Categorie;
+import fr.eni.bo.Retrait;
+import fr.eni.bo.Enchere;
+import fr.eni.bo.InfoArticle;
+import fr.eni.bo.Utilisateur;
+import sun.invoke.empty.Empty;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -14,162 +20,448 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
 
     private static final String SELECT_ALL = "SELECT TOP(6) no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, photo, vues,no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM V_ARTICLES_CATEGORIES_UTILISATEURS";
 
-    private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_article, no_utilisateur, no_categorie) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, photo, prix_vente, etat_article, no_utilisateur, no_categorie) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String UPDATE_ARTICLE = "UPDATE ARTICLES SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ?, etat_article = ?, photo = ?, no_utilisateur = ?, no_categorie = ?, vues = ? where no_article=?";
 
     private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES WHERE id=?";
-
-    private static String selectByIdUtilisateurAndDateFinEnchere ="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente,etat_article, photo, vues, no_categorie, libelle, no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM V_ARTICLES_CATEGORIES_UTILISATEURS where no_utilisateur=? and date_fin_encheres>?";
-
-    private static String SELECT_BY_DATE_INF_DEB_ENCHERE ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_date_debut_encheres, encs_montant_enchere,utils_nom, utils_no_utilisateur, cats_no_categorie, cats_libelle from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres ORDER BY arts_date_debut_encheres DESC";
-
-    private static String SELECT_BY_ID_AND_DATE_FIN_ENCHERE="SELECT no_utilisateur, nom, pseudo, nom_article, montant_enchere, date_fin_encheres FROM V_UTILISATEURS_ENCHERES_ARTICLES_RETRAITS_CATEGORIES WHERE ?>date_fin_encheres and no_utilisateur=? and etat_enchere='Vendu' ORDER BY date_fin_encheres DESC";
+    //encheres ouvertes
+    private static String SELECT_BY_DATE_SUP_DEB_ENCH_AND_INF_FIN_ENCHERE   ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?>=arts_date_debut_encheres and ?<= arts_date_fin_encheres AND encs_derniere_enchere=1 ";
+    //Mes encheres en Cours
+    private static String SELECT_BY_ID_DATE_DER_ENCHERE                     ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE arts_date_debut_encheres <= ? AND  ? <= arts_date_fin_encheres AND  encs_no_utilisateur=? ";
+    //Mes encheres Remportees
+    private static String SELECT_BY_ID_AND_ETATENCHERE                      ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES   WHERE encs_no_acquereur=? AND encs_etat_enchere='Vendu'";
+    //mes ventes en cours
+    private static String SELECT_BY_ID_AND_DATES_ENCHERE                    ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES where arts_no_utilisateur=? and ?<=arts_date_fin_encheres and arts_date_debut_encheres<=? ";
+    //mes ventes non débutees
+    private static String SELECT_BY_ID_DATE_INF_DEB_ENCHERE                 ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres  from V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?< arts_date_debut_encheres and arts_no_utilisateur=? ";
+    //mes ventes terminees
+    private static String SELECT_BY_ID_DATE_SUP_FIN_ENCHERE                 ="SELECT arts_no_articles, arts_nom_article, arts_prix_initial, arts_prix_vente, encs_montant_enchere, cats_libelle, utils_pseudo, arts_date_fin_encheres FROM V_ARTICLES_CATEGORIES_UTILISATEURS_ENCHERES WHERE ?>arts_date_fin_encheres and arts_no_utilisateur=? ";
 
     private static String SELECT_BY_ID_VIEW = "SELECT V.no_utilisateur, V.pseudo, V.nom, V.prenom, V.email, V.telephone, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, V.credit, date_enchere, montant_enchere, etat_enchere, no_acquereur, no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, " +
                                               "etat_article, rueRetrait, codePostalRetrait, villeRetrait, no_categorie, libelle, U.pseudo AS pseudoEnchere FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS AS V INNER JOIN UTILISATEURS AS U ON U.no_utilisateur = V.utilisateurEnchere WHERE no_article = ? ORDER BY montant_enchere DESC";
 
+
+//Mes encheres en Cours
     /**
-     * (ventes terminées consulté par l'utilisateur)
+     * retour les encheres en cours pour l'utilisateur
      * @param idUtilisateur
-     * @return list's articles
+     * @param filtre
+     * @param noCategorie
+     * @return
      */
-    public List<Article> selectByIdDateEnchereEtatEnchere(int idUtilisateur){
-        List<Article> listArticle = new ArrayList<>();
-        Article article = new Article();
+    public List<InfoArticle> selectByIdDateDerEnchere(int idUtilisateur, String filtre, int noCategorie){
+        List<InfoArticle> listInfoArticle = new ArrayList<>();
+        String requestSql=null;
+        String restrictionsComplementaire = "";
+        Boolean filtreSaisi = false;
+        Boolean categorieSelect = false;
+
+
         try (
                 Connection cxn = ConnectionProvider.getConnection();
-                PreparedStatement ptt = cxn.prepareStatement(SELECT_BY_ID_AND_DATE_FIN_ENCHERE);
-                ){
-            ptt.setDate(1,java.sql.Date.valueOf(LocalDate.now()));
-            ptt.setInt(2,idUtilisateur);
+        ){
+
+            if(filtre!=""){
+                restrictionsComplementaire += "AND arts_nom_article LIKE '%'+?+'%'";
+                filtreSaisi = true;
+
+            }
+            if(noCategorie!=0){
+                restrictionsComplementaire += "AND cats_no_categorie=?";
+                categorieSelect = true;
+            }
+            //Preparation de la requete
+            requestSql = SELECT_BY_ID_DATE_DER_ENCHERE + restrictionsComplementaire;
+
+            PreparedStatement ptt = cxn.prepareStatement(requestSql);
+
+            ptt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+            ptt.setDate(2, java.sql.Date.valueOf(LocalDate.now()));
+            ptt.setInt(3, idUtilisateur);
+
+            if(filtreSaisi && categorieSelect){
+                ptt.setString(4, filtre);
+                ptt.setInt(5, noCategorie);
+            }
+            if(filtreSaisi && !categorieSelect){
+                ptt.setString(4, filtre);
+            }
+            if(!filtreSaisi && categorieSelect){
+                ptt.setInt(4, noCategorie);
+            }
 
             ResultSet rs = ptt.executeQuery();
-
             while(rs.next()){
-                article.setNoArticle(rs.getInt("no_article"));
-                article.setNomArticle(rs.getString("nom_article"));
-                article.getEnchere().setMontantEnchere(rs.getInt("montant_enchere"));
-                article.getCategorie().setNoCategorie(rs.getInt("no_categorie"));
-                article.getCategorie().setLibelle(rs.getString("libelle"));
-                article.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
-                article.getUtilisateur().setNoUtilisateur(rs.getInt("no_utilisateur"));
-                article.getUtilisateur().setNom(rs.getString("nom"));
-                article.getEnchere().setNoAcquereur(rs.getInt("no_acquereur"));
+                InfoArticle infoArticle = new InfoArticle();
 
-                listArticle.add(article);
+                infoArticle.setIdArticle(rs.getInt("arts_no_articles"));
+                infoArticle.setPrixArticle(Math.max(rs.getInt("arts_prix_initial"),Math.max(rs.getInt( "arts_prix_vente"),
+                        rs.getInt("encs_montant_enchere" ))));
+                infoArticle.setNomArticle(rs.getString("arts_nom_article"));
+                infoArticle.setFinEnchere(rs.getDate("arts_date_fin_encheres").toLocalDate());
+                infoArticle.setVendeur(rs.getString("utils_pseudo"));
+
+                listInfoArticle.add(infoArticle);
             }
+            ptt.close();
             rs.close();
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            businessException.ajouterErreur(CodesResultatDAL.IMPORT_VENTES_TERMINEES);
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_ARTICLE_ECHEC);
         }
-        return listArticle;
+
+        return listInfoArticle;
+    }
+    /**
+     * retourne la liste des infoArticles des encheres remportees par l'utilisateur en fonction du filtre saisie et de la catégorie selectionnée
+     * @param idUtilisateur
+     * @param filtre
+     * @param noCategorie
+     * @return
+     */
+    public List<InfoArticle> selectByIdAndEtatEnchere(int idUtilisateur, String filtre, int noCategorie){
+        List<InfoArticle> listInfoArticle = new ArrayList<>();
+        String requestSql=null;
+        String restrictionsComplementaire = "";
+        Boolean filtreSaisi = false;
+        Boolean categorieSelect = false;
+
+
+        try (
+                Connection cxn = ConnectionProvider.getConnection();
+        ){
+
+            if(filtre!=""){
+                restrictionsComplementaire += "AND arts_nom_article LIKE '%'+?+'%'";
+                filtreSaisi = true;
+
+            }
+            if(noCategorie!=0){
+                restrictionsComplementaire += "AND cats_no_categorie=?";
+                categorieSelect = true;
+            }
+            //Preparation de la requete
+            requestSql = SELECT_BY_ID_AND_ETATENCHERE + restrictionsComplementaire;
+
+            PreparedStatement ptt = cxn.prepareStatement(requestSql);
+            ptt.setInt(1, idUtilisateur);
+
+            if(filtreSaisi && categorieSelect){
+                ptt.setString(2, filtre);
+                ptt.setInt(3, noCategorie);
+            }
+            if(filtreSaisi && !categorieSelect){
+                ptt.setString(2, filtre);
+            }
+            if(!filtreSaisi && categorieSelect){
+                ptt.setInt(2, noCategorie);
+            }
+
+            ResultSet rs = ptt.executeQuery();
+            while(rs.next()){
+                InfoArticle infoArticle = new InfoArticle();
+                infoArticle.setIdArticle(rs.getInt("arts_no_articles"));
+                infoArticle.setPrixArticle(Math.max(rs.getInt("arts_prix_initial"),Math.max(rs.getInt( "arts_prix_vente"),
+                        rs.getInt("encs_montant_enchere" ))));
+                infoArticle.setNomArticle(rs.getString("arts_nom_article"));
+                infoArticle.setFinEnchere(rs.getDate("arts_date_fin_encheres").toLocalDate());
+                infoArticle.setVendeur(rs.getString("utils_pseudo"));
+
+                listInfoArticle.add(infoArticle);
+            }
+            ptt.close();
+            rs.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_ARTICLE_ECHEC);
+        }
+
+        return listInfoArticle;
+
     }
 
     /**
-     * (Ventes non débutées)
-     *return the list's article where the selling haven't started
-     * @return list's article
+     * retourne la liste des infoArticles des encheres ouvertes (en cours) en fonction du filtre saisie et de la catégorie selectionnée
+     * @param idUtilisateur
+     * @param filtre
+     * @param noCategorie
+     * @return
      */
-    public List<Article> selectByDateInfDebEnchere(){
-        List<Article> listArticle = null;
+    public List<InfoArticle> selectByDateSupDebEnchereAndInfFinEnchere(int idUtilisateur, String filtre, int noCategorie){
+        List<InfoArticle> listInfoArticle = new ArrayList<>();
+        String requestSql=null;
+        String restrictionsComplementaire = "";
+        Boolean filtreSaisi = false;
+        Boolean categorieSelect = false;
+
 
         try (
-            Connection cxn = ConnectionProvider.getConnection();
-            PreparedStatement ptt = cxn.prepareStatement(SELECT_BY_DATE_INF_DEB_ENCHERE);
-            ){
-            ptt.setDate(1,java.sql.Date.valueOf(LocalDate.now()));
-            ResultSet rs = ptt.executeQuery();
+                Connection cxn = ConnectionProvider.getConnection();
+        ){
+            if(filtre!=""){
+                restrictionsComplementaire += "AND arts_nom_article LIKE '%'+?+'%'";
+                filtreSaisi = true;
 
-            while(rs.next()) {
-                listArticle.add(new Article(
-                        rs.getInt("arts_no_article"),
-                        rs.getString("arts_nom_article"),
-                        rs.getInt("arts_prix_initial"),
-                        rs.getDate("arts_date_debut_enchere").toLocalDate(),
-                        rs.getInt("encs_montant_enchere"),
-                        rs.getString("utils_nom"),
-                        rs.getInt("utils_no_utilisateur"),
-                        rs.getInt("cats_no_categorie"),
-                        rs.getString("cats_labelle")
-                ));
             }
+            if(noCategorie!=0){
+                restrictionsComplementaire += "AND cats_no_categorie=?";
+                categorieSelect = true;
+            }
+
+            //Preparation de la requete
+            requestSql = SELECT_BY_DATE_SUP_DEB_ENCH_AND_INF_FIN_ENCHERE + restrictionsComplementaire;
+
+            PreparedStatement ptt = cxn.prepareStatement(requestSql);
+            ptt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+            ptt.setDate(2, java.sql.Date.valueOf(LocalDate.now()));
+
+            if(filtreSaisi && categorieSelect){
+                ptt.setString(3, filtre);
+                ptt.setInt(4, noCategorie);
+            }
+
+            if(filtreSaisi && !(categorieSelect)){
+                ptt.setString(3, filtre);
+            }
+
+            if(!(filtreSaisi) && categorieSelect){
+                ptt.setInt(3, noCategorie);
+            }
+
+            ResultSet rs = ptt.executeQuery();
+            while(rs.next()){
+                InfoArticle infoArticle = new InfoArticle();
+                infoArticle.setIdArticle(rs.getInt("arts_no_articles"));
+                infoArticle.setPrixArticle(Math.max(rs.getInt("arts_prix_initial"),Math.max(rs.getInt( "arts_prix_vente"),
+                        rs.getInt("encs_montant_enchere" ))));
+                infoArticle.setNomArticle(rs.getString("arts_nom_article"));
+                infoArticle.setFinEnchere(rs.getDate("arts_date_fin_encheres").toLocalDate());
+                infoArticle.setVendeur(rs.getString("utils_pseudo"));
+
+                listInfoArticle.add(infoArticle);
+            }
+            ptt.close();
             rs.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            businessException.ajouterErreur(CodesResultatDAL.IMPORT_VENTES_NON_DEBUTEES);
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_ARTICLE_ECHEC);
         }
-    return listArticle;
+
+        return listInfoArticle;
+
     }
 
-    public List<Article> selectByIdDateFinEnchere(int idUtilisateur, int idCategorie, String filtreSaisie) throws BusinessException {
-        List<Article> listArticles = null;
-        Categorie  cat = new Categorie();
-        Utilisateur util = new Utilisateur();
+
+    /**
+     * retourne la liste des infoArticles des ventes terminées de l'utilisateur (uniquement les articles qu'il a mis en vente) en fonction du filtre saisie et de la catégorie selectionnée.
+     * @param idUtilisateur
+     * @param filtre
+     * @param noCategorie
+     * @return
+     */
+    public List<InfoArticle> selectByIdAndDateSupFinEnchere(int idUtilisateur, String filtre, int noCategorie){
+        List<InfoArticle> listInfoArticle = new ArrayList<>();
+        String requestSql = null;
+        String restrictionsComplementaire = "";
+        Boolean filtreSaisi = false;
+        Boolean categorieSelect = false;
+
+
         try (
                 Connection cxn = ConnectionProvider.getConnection();
-                )
-        {
-            //TOdo tester avec la valeur par défaut de la combobox
-            String restrictionComplementaire = " no_categorie=?";
-            if(idCategorie>0){
-                selectByIdUtilisateurAndDateFinEnchere=
-                        selectByIdUtilisateurAndDateFinEnchere+restrictionComplementaire;
-            }
-            if(filtreSaisie!= ""&&filtreSaisie!=null){
+        ){
+            if(filtre!=""){
+                restrictionsComplementaire += "AND arts_nom_article LIKE '%'+?+'%'";
+                filtreSaisi = true;
 
             }
-        PreparedStatement pst = cxn.prepareStatement(selectByIdUtilisateurAndDateFinEnchere);
-        pst.setInt(1, idUtilisateur);
-        pst.setDate(2, java.sql.Date.valueOf(LocalDateTime.now().toLocalDate()));
-        ResultSet rs = pst.executeQuery();
-        while(rs.next()){
-            cat.setNoCategorie(rs.getInt("no_categorie"));
-            cat.setLibelle(rs.getString("libelle"));
+            if(noCategorie!=0){
+                restrictionsComplementaire += "AND cats_no_categorie=?";
+                categorieSelect = true;
+            }
+            //Preparation de la requete
+            requestSql = SELECT_BY_ID_DATE_SUP_FIN_ENCHERE + restrictionsComplementaire;
 
-                    util.setNoUtilisateur(rs.getInt("no_utilisateur"));
-                    util.setPseudo(rs.getString("pseudo"));
-                    util.setNom(rs.getString("nom"));
+            PreparedStatement ptt = cxn.prepareStatement(requestSql);
+            ptt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+            ptt.setInt(2, idUtilisateur);
 
-                    util.setPrenom(rs.getString("prenom"));
-                    util.setEmail(rs.getString("email"));
-                    util.setTelephone(rs.getString("telephone"));
+            if(filtreSaisi && categorieSelect){
+                ptt.setString(3, filtre);
+                ptt.setInt(4, noCategorie);
+            }
+            if(filtreSaisi && !categorieSelect){
+                ptt.setString(3, filtre);
+            }
+            if(!filtreSaisi && categorieSelect){
+                ptt.setInt(3, noCategorie);
+            }
 
-                    util.setRue(rs.getString("rue"));
-                    util.setCodePostal(rs.getString("code_postal"));
-                    util.setVille(rs.getString("ville"));
+            ResultSet rs = ptt.executeQuery();
+            while(rs.next()){
+                InfoArticle infoArticle = new InfoArticle();
+                infoArticle.setIdArticle(rs.getInt("arts_no_articles"));
+                infoArticle.setPrixArticle(Math.max(rs.getInt("arts_prix_initial"),Math.max(rs.getInt( "arts_prix_vente"),
+                        rs.getInt("encs_montant_enchere" ))));
+                infoArticle.setNomArticle(rs.getString("arts_nom_article"));
+                infoArticle.setFinEnchere(rs.getDate("arts_date_fin_encheres").toLocalDate());
+                infoArticle.setVendeur(rs.getString("utils_pseudo"));
 
-                    util.setMotDePasse(rs.getString("mot_de_passe"));
-                    util.setCredit(rs.getInt("credit"));
-                    util.setAdmin(false);
-
-            listArticles.add(new Article(
-                    rs.getInt("no_article"),
-                    rs.getString("nom_article"),
-                    rs.getString("description"),
-                    rs.getDate("date_debut_enchere").toLocalDate(),
-                    rs.getDate("date_fin_enchere").toLocalDate(),
-                    rs.getInt("prix_initial"),
-                    rs.getInt("prix_vente"),
-                    rs.getString("etat_article"),
-                    "",
-                    util,
-                    cat,
-          0
-            ));
-        }
-        rs.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+                listInfoArticle.add(infoArticle);
+            }
+            ptt.close();
+            rs.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
             businessException.ajouterErreur(CodesResultatDAL.LECTURE_ARTICLE_ECHEC);
-            throw businessException;
         }
 
-        return listArticles;
+        return listInfoArticle;
+
     }
+
+
+    /**
+     * retourne la liste des infoArticles des ventes en cours non débutées
+     * @param idUtilisateur
+     * @param filtre
+     * @param noCategorie
+     * @return
+     */
+    public List<InfoArticle> selectByIdDateInfDebEnchere(int idUtilisateur, String filtre, int noCategorie){
+        List<InfoArticle> listInfoArticle = new ArrayList<>();
+        String requestSql=null;
+        String restrictionsComplementaire = "";
+        Boolean filtreSaisi = false;
+        Boolean categorieSelect = false;
+
+
+        try (
+                Connection cxn = ConnectionProvider.getConnection();
+        ){
+
+            if(filtre!=""){
+                restrictionsComplementaire += "AND arts_nom_article LIKE '%'+?+'%'";
+                filtreSaisi = true;
+
+            }
+            if(noCategorie!=0){
+                restrictionsComplementaire += "AND cats_no_categorie=?";
+                categorieSelect = true;
+            }
+            //Preparation de la requete
+            requestSql = SELECT_BY_ID_DATE_INF_DEB_ENCHERE + restrictionsComplementaire;
+
+            PreparedStatement ptt = cxn.prepareStatement(requestSql);
+            ptt.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+            ptt.setInt(2, idUtilisateur);
+
+            if(filtreSaisi && categorieSelect){
+                ptt.setString(3, filtre);
+                ptt.setInt(4, noCategorie);
+            }
+            if(filtreSaisi && !categorieSelect){
+                ptt.setString(3, filtre);
+            }
+            if(!filtreSaisi && categorieSelect){
+                ptt.setInt(3, noCategorie);
+            }
+
+            ResultSet rs = ptt.executeQuery();
+            while(rs.next()){
+                InfoArticle infoArticle = new InfoArticle();
+                infoArticle.setIdArticle(rs.getInt("arts_no_articles"));
+                infoArticle.setPrixArticle(Math.max(rs.getInt("arts_prix_initial"),Math.max(rs.getInt( "arts_prix_vente"),
+                        rs.getInt("encs_montant_enchere" ))));
+                infoArticle.setNomArticle(rs.getString("arts_nom_article"));
+                infoArticle.setFinEnchere(rs.getDate("arts_date_fin_encheres").toLocalDate());
+                infoArticle.setVendeur(rs.getString("utils_pseudo"));
+
+                listInfoArticle.add(infoArticle);
+            }
+            ptt.close();
+            rs.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_ARTICLE_ECHEC);
+        }
+
+        return listInfoArticle;
+
+    }
+
+    /**
+     * return la liste des infoArticles des ventes en cours en fonction du filtre saisie et de la catégorie selectionnée
+     * @param idUtilisateur
+     * @param filtre
+     * @param noCategorie
+     * @return
+     */
+    public List<InfoArticle> selectByIdAndDatesEnchere(int idUtilisateur, String filtre, int noCategorie){
+        List<InfoArticle> listInfoArticle = new ArrayList<>();
+        String requestSql=null;
+        String restrictionsComplementaire = "";
+        Boolean filtreSaisi = false;
+        Boolean categorieSelect = false;
+
+
+        try (
+                Connection cxn = ConnectionProvider.getConnection();
+        ){
+
+            if(filtre!=""){
+                restrictionsComplementaire += "AND arts_nom_article LIKE '%'+?+'%'";
+                filtreSaisi = true;
+
+            }
+            if(noCategorie!=0){
+                restrictionsComplementaire += "AND cats_no_categorie=?";
+                categorieSelect = true;
+            }
+            //Preparation de la requete
+            requestSql = SELECT_BY_ID_AND_DATES_ENCHERE + restrictionsComplementaire;
+
+            PreparedStatement ptt = cxn.prepareStatement(requestSql);
+            ptt.setInt(1, idUtilisateur);
+            ptt.setDate(2, java.sql.Date.valueOf(LocalDate.now()));
+            ptt.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
+
+            if(filtreSaisi && categorieSelect){
+                ptt.setString(4, filtre);
+                ptt.setInt(5, noCategorie);
+            }
+            if(filtreSaisi && !categorieSelect){
+                ptt.setString(4, filtre);
+            }
+            if(!filtreSaisi && categorieSelect){
+                ptt.setInt(4, noCategorie);
+            }
+
+            ResultSet rs = ptt.executeQuery();
+            while(rs.next()){
+                InfoArticle infoArticle = new InfoArticle();
+                infoArticle.setIdArticle(rs.getInt("arts_no_articles"));
+                infoArticle.setPrixArticle(Math.max(rs.getInt("arts_prix_initial"),Math.max(rs.getInt( "arts_prix_vente"),
+                        rs.getInt("encs_montant_enchere" ))));
+                infoArticle.setNomArticle(rs.getString("arts_nom_article"));
+                infoArticle.setFinEnchere(rs.getDate("arts_date_fin_encheres").toLocalDate());
+                infoArticle.setVendeur(rs.getString("utils_pseudo"));
+
+                listInfoArticle.add(infoArticle);
+            }
+            ptt.close();
+            rs.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            businessException.ajouterErreur(CodesResultatDAL.LECTURE_ARTICLE_ECHEC);
+        }
+
+        return listInfoArticle;
+
+    }
+
 
     /**
      * Récupère toute les données de la table article
@@ -189,15 +481,15 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                 if(rs.getInt(1) != utilisateurEnCours.getNoUtilisateur()){
                     utilisateurEnCours = new Utilisateur();
                     utilisateurEnCours.setNoUtilisateur(rs.getInt(13));
-                    utilisateurEnCours.setPseudo(rs.getString(14).toString());
-                    utilisateurEnCours.setNom(rs.getString(15).toString());
-                    utilisateurEnCours.setPrenom(rs.getString(16).toString());
-                    utilisateurEnCours.setEmail(rs.getString(17).toString());
-                    utilisateurEnCours.setTelephone(rs.getString(18).toString());
-                    utilisateurEnCours.setRue(rs.getString(19).toString());
-                    utilisateurEnCours.setCodePostal(rs.getString(20).toString());
-                    utilisateurEnCours.setVille(rs.getString(21).toString());
-                    utilisateurEnCours.setMotDePasse(rs.getString(22).toString());
+                    utilisateurEnCours.setPseudo(rs.getString(14));
+                    utilisateurEnCours.setNom(rs.getString(15));
+                    utilisateurEnCours.setPrenom(rs.getString(16));
+                    utilisateurEnCours.setEmail(rs.getString(17));
+                    utilisateurEnCours.setTelephone(rs.getString(18));
+                    utilisateurEnCours.setRue(rs.getString(19));
+                    utilisateurEnCours.setCodePostal(rs.getString(20));
+                    utilisateurEnCours.setVille(rs.getString(21));
+                    utilisateurEnCours.setMotDePasse(rs.getString(22));
                     utilisateurEnCours.setCredit(rs.getInt(23));
                     boolean admin = true;
                     if (rs.getByte(24) == 0){
@@ -209,7 +501,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                 Categorie categorieEnCours = new Categorie();
                 if (rs.getInt(1) != categorieEnCours.getNoCategorie()){
                     categorieEnCours.setNoCategorie(rs.getInt(1));
-                    categorieEnCours.setLibelle(rs.getString(2).toString());
+                    categorieEnCours.setLibelle(rs.getString(2));
                     listeCategorie.add(categorieEnCours);
                 }
                 Article articleEnCours = new Article();
@@ -244,9 +536,8 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
      * @return
      */
     @Override
-    public Article selectById(int id) throws BusinessException {
-        Article art = null;
-        return art;
+    public Article selectById(int id) {
+        return null;
     }
 
     /**
@@ -351,6 +642,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
      */
     @Override
     public List<Article> selectByEnchere(int id) throws BusinessException {
+        DAO<Retrait> retraitDAO = DAOFactory.getRetraitDAO();
         List<Article> listeArticles = new ArrayList<>();
         List<Utilisateur> listeUtilisateurs = new ArrayList<>();
         List<Categorie> listeCategories = new ArrayList<>();

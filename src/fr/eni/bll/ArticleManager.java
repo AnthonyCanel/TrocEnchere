@@ -2,6 +2,7 @@ package fr.eni.bll;
 
 import fr.eni.BusinessException;
 import fr.eni.bo.Article;
+import fr.eni.bo.InfoArticle;
 import fr.eni.dal.ArticleDAOJdbcImpl;
 import fr.eni.dal.DAO;
 import fr.eni.dal.DAOFactory;
@@ -12,12 +13,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleManager {
-    private DAO<Article> articleDao;
+    private final DAO<Article> articleDAO;
+    private final BusinessException businessException = new BusinessException();
 
 
+    public Article ajouterArticle(Article article) throws BusinessException {
+        validerCoordonnees(article, businessException);
+        if(!businessException.hasErreurs()){
+            articleDAO.insert(article);
+        }
+        else{
+            throw businessException;
+        }
+        return article;
+    }
+
+    private void validerCoordonnees(Article article, BusinessException bE) {
+        if (article.getNomArticle() == null || article.getNomArticle().trim().equals("")){
+            bE.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_NOM_SAISIE_ERREUR);
+        }
+        if(article.getDescription() == null || article.getDescription().trim().equals("") || article.getDescription().length()>200){
+            bE.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DESCRIPTION_SAISIE_ERREUR);
+        }
+        if(article.getCategorie().getNoCategorie() == 0){
+            bE.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_CATEGORIE_NUL_ERREUR);
+        }
+        if(article.getPrixInitial() < 0) {
+            bE.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_PRIX_INITIAL_ERREUR);
+        }
+        if(article.getRetrait().getCodePostal() == null ||  article.getRetrait().getCodePostal().trim().equals("") || article.getRetrait().getCodePostal().length() > 10 || article.getRetrait().getCodePostal().contains("[a-zA-Z]")){
+            bE.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEURS_CODEPOSTAL_ERREUR);
+        }
+        if(article.getRetrait().getRue() == null || article.getRetrait().getRue().trim().equals("") || article.getRetrait().getRue().length() >30){
+            bE.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEURS_RUE_ERREUR);
+        }
+        if(article.getRetrait().getVille() == null || article.getRetrait().getVille().trim().equals("") || article.getRetrait().getVille().length() >30 || article.getRetrait().getVille().contains("[0-9]")){
+            bE.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEURS_VILLE_ERREUR);
+        }
+    }
 
     public ArticleManager() {
-        articleDao = DAOFactory.getArticleDAO();
+        articleDAO = DAOFactory.getArticleDAO();
     }
 
     /**
@@ -25,24 +61,24 @@ public class ArticleManager {
      * @param idUtilisateur
      * @return
      */
-    public List<Article> ventesTerminées(int idUtilisateur){
-        ArticleDAOJdbcImpl adao = new ArticleDAOJdbcImpl();
-        List<Article> listArticles = adao.selectByIdDateEnchereEtatEnchere(idUtilisateur);
-        return listArticles;
-
-    }
+//    public List<Article> ventesTerminées(int idUtilisateur){
+//        ArticleDAOJdbcImpl adao = new ArticleDAOJdbcImpl();
+//       List<Article> listArticles = adao.selectByIdDateEnchereEtatEnchere(idUtilisateur);
+//        return listArticles;
+//
+//    }
 
     /**
      * retourne les ventes non débutées
      * @return une liste d'article
      */
-    public List<Article> ventesNonDebutees(){
-
-        ArticleDAOJdbcImpl adao = new ArticleDAOJdbcImpl();
-        List<Article> listArticle =  adao.selectByDateInfDebEnchere();
-
-        return listArticle;
-    }
+//    public List<Article> ventesNonDebutees(){
+//
+//        ArticleDAOJdbcImpl adao = new ArticleDAOJdbcImpl();
+//        List<Article> listArticle =  adao.selectByDateInfDebEnchere();
+//
+//        return listArticle;
+//    }
     /**
      * Recherche en étant connecté
      *
@@ -59,7 +95,7 @@ public class ArticleManager {
     public List<Article> affichageArticles(String categorie, String motCle) {
         List<Article> listeArticle = new ArrayList<>();
         try {
-            listeArticle = articleDao.selectAll();
+            listeArticle = articleDAO.selectAll();
         } catch (BusinessException e) {
             e.printStackTrace();
         }
@@ -86,14 +122,60 @@ public class ArticleManager {
      * @return
      * @throws BusinessException
      */
-    public List<Article> MesVentesEnCours(int idUtilisateur, int idCategorie) throws BusinessException {
-        List<Article> listArticle = null;
+    public List<InfoArticle> MesVentesEnCours(int idUtilisateur, String filtre, int idCategorie) throws BusinessException {
+        List<InfoArticle> listInfoArticle = null;
 
-        ArticleDAOJdbcImpl articleDAOJdbc = new ArticleDAOJdbcImpl();
        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
 
-        listArticle = articleDAOJdbc.selectByIdDateFinEnchere(idUtilisateur, idCategorie);
-        return listArticle;
+        listInfoArticle =   articleDAO.selectByIdAndDatesEnchere(idUtilisateur,filtre, idCategorie);
+        return listInfoArticle;
+    }
+
+    public List<InfoArticle> encheresOuvertes(int idUtilisateur, String filtre, int noCategorie) throws BusinessException {
+        List<InfoArticle> listInfoArticles = null;
+        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
+
+        listInfoArticles = articleDAO.selectByDateSupDebEnchereAndInfFinEnchere(idUtilisateur, filtre, noCategorie );
+//        for ( InfoArticle i: listInfoArticles
+//             ) {
+//            System.out.println(
+//                    i.getIdArticle()+"\n"+
+//                    i.getPrixArticle()+"\n"+
+//                    i.getFinEnchere()+"\n"+
+//                    i.getNomArticle()+"\n"
+//                    );
+//        }
+
+        return listInfoArticles;
+
+    }
+
+    public List<InfoArticle> MesVentesNonDebutees(int idUtilisateur, String filtreSaisi, int noCatSelect) throws BusinessException {
+        List<InfoArticle> listInfoArticles = null;
+        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
+
+        listInfoArticles = articleDAO.selectByIdDateInfDebEnchere(idUtilisateur, filtreSaisi, noCatSelect);
+        return listInfoArticles;
+
+    }
+
+    public List<InfoArticle> mesEncheresEnCours(int idUtilisateur, String filtreSaisi, int noCatSelect) throws BusinessException {
+        List<InfoArticle> listInfoArticles = null;
+        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
+
+        listInfoArticles = articleDAO.selectByIdDateDerEnchere(idUtilisateur, filtreSaisi, noCatSelect);
+        return listInfoArticles;
+
+
+    }
+
+    public List<InfoArticle> MesVentesTerminees(int idUtilisateur, String filtreSaisi, int noCatSelect) throws BusinessException {
+        List<InfoArticle> listInfoArticles = null;
+        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
+
+        listInfoArticles = articleDAO.selectByIdAndDateSupFinEnchere(idUtilisateur, filtreSaisi, noCatSelect);
+        return listInfoArticles;
+
     }
 
     /**
@@ -102,11 +184,20 @@ public class ArticleManager {
     public List<Article> ChoisirArticlesEncherir(int idArticle){
         List<Article> listeArticles = null;
         try {
-            listeArticles = articleDao.selectByEnchere(idArticle);
+            listeArticles = articleDAO.selectByEnchere(idArticle);
         } catch (BusinessException e) {
             e.printStackTrace();
         }
         return listeArticles;
+    }
+
+    public List<InfoArticle> mesEncheresRemportees(int idUtilisateur, String filtreSaisi, int noCatSelect) throws BusinessException {
+
+        List<InfoArticle> listInfoArticles = null;
+        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
+
+        listInfoArticles = articleDAO.selectByIdAndEtatEnchere(idUtilisateur, filtreSaisi, noCatSelect);
+        return listInfoArticles;
     }
 
 }

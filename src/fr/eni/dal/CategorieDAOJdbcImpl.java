@@ -47,7 +47,7 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
                 pstmt.setInt(1, id);
                 ResultSet rs = pstmt.executeQuery();
                 if(rs.next()){
-                    String libelle = rs.getString(2);
+                    String libelle = rs.getString(1);
                     categorie = new Categorie(id, libelle);
                 }
                 rs.close();

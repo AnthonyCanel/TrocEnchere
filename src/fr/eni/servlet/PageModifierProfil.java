@@ -12,8 +12,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class PageModifierProfil extends HttpServlet {
-    private UtilisateurManager um = new UtilisateurManager();
-    private BusinessException businessException = new BusinessException();
+    private final UtilisateurManager um = new UtilisateurManager();
+    private final BusinessException businessException = new BusinessException();
     Utilisateur util = null;
 
     /**

@@ -23,6 +23,7 @@ import java.util.List;
 
 public class PageVendreUnArticle extends HttpServlet {
     List<Categorie> listeCategories = null;
+    CategorieManager categorieManager = new CategorieManager();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Session
@@ -53,18 +54,25 @@ public class PageVendreUnArticle extends HttpServlet {
             newArticle.setNomArticle(req.getParameter("nomArticle"));
             newArticle.setDescription(req.getParameter("description"));
 
-
-            categorie.setLibelle(req.getParameter("categories"));
-            categorie.setNoCategorie(Integer.parseInt(req.getParameter("categories")));
+            try {
+                categorie = categorieManager.ChoisirCategorie(Integer.parseInt(req.getParameter("combo")));
+            } catch (BusinessException e) {
+                e.printStackTrace();
+            }
+            categorie.setLibelle(categorie.getLibelle());
+            categorie.setNoCategorie(categorie.getNoCategorie());
             newArticle.setCategorie(categorie);
 
+
             newArticle.setPrixVente(Integer.parseInt(req.getParameter("prix")));
-            //Formatage dates
+            //Formatage de Date
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String dateD = req.getParameter("dateDebut");
             String dateF = req.getParameter("dateFin");
+
             LocalDate dateDebut = LocalDate.parse(dateD, formatter);
             LocalDate dateFin = LocalDate.parse(dateF, formatter);
+
             newArticle.setDateDebutEncheres(dateDebut);
             newArticle.setDateFinEncheres(dateFin);
 
@@ -72,6 +80,13 @@ public class PageVendreUnArticle extends HttpServlet {
             retrait.setCodePostal(req.getParameter("CP"));
             retrait.setVille(req.getParameter("ville"));
             newArticle.setRetrait(retrait);
+
+            ArticleManager articleManager = new ArticleManager();
+            try {
+                articleManager.ajouterArticle(newArticle);
+            } catch (BusinessException e) {
+                e.printStackTrace();
+            }
             req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
             }
         }
