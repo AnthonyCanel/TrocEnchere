@@ -1,4 +1,3 @@
-<%@ page import="fr.eni.bo.Categorie" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -6,16 +5,8 @@
     <title>Création Compte</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
-<body class="container-fluid" document.onload="ManageDate()">
-<header class="row">
-    <div class="col">
-        <a class="btn btn-white m-5 mt-3" href="${pageContext.request.contextPath}/PageAccueilEnchere">
-            <h1>ENI Enchère</h1>
-        </a>
-    </div>
-    <div class="col">
-        <h3 class="m-5 ml-1">Nouvelle vente</h3>
-    </div>
+<body document.onload="ManageDate()">
+<header>
     <c:choose>
         <c:when test="${sessionScope.utilisateur != null}">
             <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
@@ -26,10 +17,13 @@
     </c:choose>
 </header>
 <div class=" row m-2 p-3 ">
-    <div class="col">
+    <div class="col-4">
         <div class="w-100 bg-secondary shadow"><img src="" alt=""></div>
     </div>
     <div class="col-8 shadow p-3">
+        <div class="row">
+            <h3 class="m-5 ml-1">Nouvelle vente</h3>
+        </div>
         <form class="row" action="PageVendreUnArticle" method="post">
         <div class=" row m-2">
             <div class="col-4">
@@ -68,7 +62,7 @@
                 <p>Photo de l'article</p>
             </div>
             <div class="col-8">
-                <input type="button" name="photo" value="UPLOADER">
+                <input type="button" name="photo" value="UPLOADER" disabled>
             </div>
         </div>
 
@@ -95,7 +89,7 @@
                 <p>Fin de l'enchère</p>
             </div>
             <div class="col-8">
-                <input type="date" name="dateFin" id="dateFinArticle" required>
+                <input type="date" name="dateFin" min="${dateDuJour}" id="dateFinArticle" required>
             </div>
         </div>
 
