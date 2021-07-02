@@ -116,7 +116,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="CP" id="codePostal" value="${CP}" required pattern="[0-9]{1,5}">
+                                <input class="w-100" type="text" name="CP" id="codePostal" value="${CP}" required pattern="[0-9]{5}">
                             </div>
                         </div>
                     </div>
@@ -204,26 +204,16 @@
             </div>
     <div class="row mb-3">
         <div class="col d-flex justify-content-center">
-            <a href="${pageContext.request.contextPath}/PageMonProfil">
-                <button type="submit" name="button" class="btn btn-outline-dark" value="valider">Enregistrer</button>
-            </a>
-            </form>
+                <button type="submit" name="button" class="btn btn-dark" value="valider">Enregistrer</button>
         </div>
         <div class="col">
-            <form method="post" action="<%=request.getContextPath()%>/PageModifierProfil">
-                <div class="col d-flex justify-content-center">
-                    <input type="hidden" name="action" value="supprimer"/>
-                    <a href="${pageContext.request.contextPath}/PageModifierProfil">
-                        <button type="submit" name="button" class="btn btn-outline-dark" value="supprimer">Supprimer mon
-                            compte
-                        </button>
-                    </a>
-                </div>
-            </form>
+            <div class="col d-flex justify-content-center">
+                <button type="submit" name="button" class="btn btn-dark" value="supprimer">Supprimer mon compte</button>
+            </div>
         </div>
+        </form>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
 </body>
 </html>

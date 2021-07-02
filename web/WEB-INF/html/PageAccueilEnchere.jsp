@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class="col-2">
-                    <button name="recherche" class="btn btn-outline-dark btn mb-3">Rechercher</button>
+                    <button name="recherche" class="btn btn-dark btn mb-3">Rechercher</button>
                 </div>
             </div>
             <div class="row">

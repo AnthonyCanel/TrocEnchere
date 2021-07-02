@@ -24,6 +24,7 @@ function  ManageDate(){
         document.getElementById("dateDebutArticle").max = document.getElementById("dateFinArticle").value;
     });
 }
+
 //Etat des checkBox à l'activation du radio bouton Achats
 function DesactiveVentes(){
     cbEncheresOuvertes.disabled = false;

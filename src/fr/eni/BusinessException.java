@@ -1,5 +1,7 @@
 package fr.eni;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +12,14 @@ import java.util.List;
  * Cette classe permet de recenser l'ensemble des erreurs (par leur code) pouvant survenir lors d'un traitement
  * quel que soit la couche à l'origine.
  */
+@Data
 public class BusinessException extends Exception {
     private static final long serialVersionUID = 1L;
     private final List<Integer> listeCodesErreur;
 
     public BusinessException() {
         super();
-        this.listeCodesErreur=new ArrayList<>();
+        this.listeCodesErreur = new ArrayList<>();
     }
 
     /**

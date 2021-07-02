@@ -100,7 +100,7 @@
                         <input type="number" id="maProposition" min="0" max="150">
                     </div>
                     <div class="col">
-                        <a href="${pageContext.request.contextPath}/PageAccueilEnchere"><input type="button"
+                        <a href="${pageContext.request.contextPath}/PageAccueilEnchere"><input class="btn btn-dark" type="button"
                                                                                                value="Enchérir"></a>
                     </div>
                 </div>

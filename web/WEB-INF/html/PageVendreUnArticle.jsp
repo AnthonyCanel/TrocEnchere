@@ -124,20 +124,19 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
                 <div class="col">
-                    <input class="btn btn-outline-dark" type="submit" name="btn" value="enregistrer">
+                    <input class="btn btn-dark" type="submit" name="btn" value="enregistrer">
                 </div>
                 <div class="col">
-                    <input class="btn btn-outline-dark" type="submit" name="btn" value="annuler">
+                    <input class="btn btn-dark" type="submit" name="btn" value="annuler">
                 </div>
                 <div class="col">
-                    <input class="btn btn-outline-dark" type="submit" name="btn" value="annulerVente">
+                    <a class="btn btn-dark">Annuler vente</a>
+                    <p>Arrive bientôt</p>
                 </div>
         </div>
-        </form>
-    </div>
+    </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
