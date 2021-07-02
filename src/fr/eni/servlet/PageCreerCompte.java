@@ -61,7 +61,7 @@ req.setAttribute("error", s);
                     businessException.ajouterErreur(CodesResultatServlet.RECORD_UTILISATEUR);
                 }
                 finally {
-                    if(businessException.hasErreurs() == true){
+                    if(businessException.hasErreurs()){
                         req.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
                     }
                 }

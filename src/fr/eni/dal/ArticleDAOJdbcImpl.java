@@ -52,7 +52,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
 
     //Données pour la page enchère
     private static String SELECT_BY_ID_VIEW                                 = "SELECT U.no_utilisateur, U.pseudo, U.nom, U.prenom, U.email, U.telephone, U.rue AS rueUtilisateur, U.code_postal AS codePostalUtilisateur, U.ville AS villeUtilisateur, U.credit, E.date_enchere, E.montant_enchere, E.etat_enchere, E.no_acquereur, A.no_article, A.nom_article, A.description, A.date_debut_encheres, A.date_fin_encheres, A.prix_initial, A.prix_vente, " +
-                                                                              "A.etat_article,  R.rue AS rueRetrait, R.code_postal AS codePostalRetrait, R.ville AS villeRetrait, C.no_categorie, C.libelle, UEncheres.pseudo AS pseudoEnchere " +
+                                                                              "A.etat_article,  R.rue AS rueRetrait, R.code_postal AS codePostalRetrait, R.ville AS villeRetrait, C.no_categorie, C.libelle, UEncheres.pseudo AS pseudoEnchere, UEncheres.credit AS creditEncheres " +
                                                                               "FROM UTILISATEURS  AS U " +
                                                                               "INNER JOIN ARTICLES AS A ON U.no_utilisateur = A.no_utilisateur " +
                                                                               "LEFT JOIN ENCHERES AS E ON A.no_article = E.no_article " +
@@ -791,7 +791,7 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                         utilisateurEnCours.setRue(rs.getString("rueUtilisateur"));
                         utilisateurEnCours.setCodePostal(rs.getString("codePostalUtilisateur"));
                         utilisateurEnCours.setVille(rs.getString("villeUtilisateur"));
-                        utilisateurEnCours.setCredit(rs.getInt("credit"));
+                        utilisateurEnCours.setCredit(rs.getInt("creditEncheres"));
                         listeUtilisateurs.add(utilisateurEnCours);
                         passe = true;
                     } else {
