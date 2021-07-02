@@ -81,8 +81,6 @@
                 <c:forEach items="${rechercheParDefaut}" var="unElement">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-
-
                             <div class="w-100 row">
                                 <div class="col-3">
                                 </div>
@@ -110,6 +108,7 @@
                             </div>
 
                         </div>
+                            ${maVenteEnCours.vendeur}
                     </div>
                 </c:forEach>
                 <c:if test="${not empty mesVentesEnCours}">
@@ -171,8 +170,7 @@
                                 <div class="col-9">
                                     <div>
                                         <div class="row">
-                                            <a class="p-0 btn btn-white"
-                                               href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteNonDebutee.idArticle}"
+                                            <a href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteNonDebutee.idArticle}"
                                                name="nomArticle" value="${maVenteNonDebutee.idArticle}">
                                             <h5 class="font-weight-bold">${maVenteNonDebutee.nomArticle}</h5>
                                             </a>
@@ -195,7 +193,7 @@
                         </div>
                     </div>
                 </c:forEach>
-                <c:if test="${not empty mesVentesEnCours}">
+                <c:if test="${not empty mesVentesTerminees}">
                     <div class="row text-center">
                         <h3>
                             Mes ventes terminées
@@ -213,7 +211,7 @@
                                 <div class="col-9">
                                     <div>
                                         <div class="row">
-                                            <a class="p-0 btn btn-white"
+                                            <a
                                                href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteTerminee.idArticle}"
                                                name="nomArticle" value="${maVenteTerminee.idArticle}">
                                             <h5 class="font-weight-bold">${maVenteTerminee.nomArticle}</h5>
@@ -247,8 +245,6 @@
                 <c:forEach items="${encheresOuvertes}" var="enchereOuverte">
                     <div class="col-6 p-3 align-items-center">
                         <div class="bg-light shadow-sm p-3">
-
-
                             <div class="w-100 row">
                                 <div class="col-3">
                                 </div>

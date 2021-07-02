@@ -72,14 +72,6 @@ public class PageAccueilEnchere extends HttpServlet {
                                 (req.getParameter("btnVenteEnCour") == null ) &&
                                 (req.getParameter("btnVenteNonDebute") == null) &&
                                 (req.getParameter("btnVenteTerminee") == null)
-//
-//        (req.getParameter("btnEnchereOuverte") == null || req.getParameter("btnEnchereOuverte") != "on") &&
-//                (req.getParameter("btnEnchereEnCour") == null || req.getParameter("btnEnchereEnCour") != "on") &&
-//                (req.getParameter("btnEnchereRemporte") == null || req.getParameter("btnEnchereRemporte") != "on") &&
-//
-//                (req.getParameter("btnVenteEnCour") == null || req.getParameter("btnVenteEnCour") != "on") &&
-//                (req.getParameter("btnVenteNonDebute") == null || req.getParameter("btnVenteNonDebute") != "on") &&
-//                (req.getParameter("btnVenteTerminee") == null || req.getParameter("btnVenteTerminee") != "on")
 
                 )
         ) {
@@ -143,7 +135,6 @@ public class PageAccueilEnchere extends HttpServlet {
                         }
                         req.setAttribute("mesEncheresRemportees", mesEncheresRemportees);
                     }
-
                 }
 
                 if (req.getParameter("AchatsVentes") != null && req.getParameter("AchatsVentes").equals("v")) {
