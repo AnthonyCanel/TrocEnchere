@@ -93,7 +93,7 @@
                                             </a>
                                         </div>
                                         <div class="row">
-                                            <label>Prix : ${unElement.prixArticle} banane</label>
+                                            <label>Prix : ${unElement.prixArticle} ${(unElement.prixArticle > 1)? "point" : "points"}</label>
                                         </div>
                                         <div class="row">
                                             <label>Fin de l'enchère : ${unElement.finEnchere}</label>
@@ -135,7 +135,7 @@
                                             </a>
                                         </div>
                                         <div class="row">
-                                            <label>Prix : ${maVenteEnCours.prixArticle} banane</label>
+                                            <label>Prix : ${maVenteEnCours.prixArticle} ${(unElement.prixArticle > 1)? "point" : "points"}</label>
                                         </div>
                                         <div class="row">
                                             <label>Fin de l'enchère : ${maVenteEnCours.finEnchere}</label>
@@ -176,7 +176,7 @@
                                             </a>
                                         </div>
                                         <div class="row">
-                                            <label>Prix : ${maVenteNonDebutee.prixArticle} banane</label>
+                                            <label>Prix : ${maVenteNonDebutee.prixArticle} ${(unElement.prixArticle > 1)? "point" : "points"}</label>
                                         </div>
                                         <div class="row">
                                             <label>Fin de l'enchère : ${maVenteNonDebutee.finEnchere}</label>
@@ -218,7 +218,7 @@
                                             </a>
                                         </div>
                                         <div class="row">
-                                            <label>Prix : ${maVenteTerminee.prixArticle} banane</label>
+                                            <label>Prix : ${maVenteTerminee.prixArticle} ${(unElement.prixArticle > 1)? "point" : "points"}</label>
                                         </div>
                                         <div class="row">
                                             <label>Fin de l'enchère : ${maVenteTerminee.finEnchere}</label>
@@ -258,7 +258,7 @@
                                         </div>
 
                                         <div class="row">
-                                            <label>Prix : ${enchereOuverte.prixArticle} banane</label>
+                                            <label>Prix : ${enchereOuverte.prixArticle} ${(unElement.prixArticle > 1)? "point" : "points"}</label>
                                         </div>
                                         <div class="row">
                                             <label>Fin de l'enchère : ${enchereOuverte.finEnchere}</label>
@@ -299,7 +299,7 @@
                                             </a>
                                         </div>
                                         <div class="row">
-                                            <label>Prix : ${enchereEnCours.prixArticle} banane</label>
+                                            <label>Prix : ${enchereEnCours.prixArticle} ${(unElement.prixArticle > 1)? "point" : "points"}</label>
                                         </div>
                                         <div class="row">
                                             <label>Fin de l'enchère : ${enchereEnCours.finEnchere}</label>
@@ -340,7 +340,7 @@
                                             </a>
                                         </div>
                                         <div class="row">
-                                            <label>Prix : ${enchereRemportee.prixArticle} banane</label>
+                                            <label>Prix : ${enchereRemportee.prixArticle} ${(unElement.prixArticle > 1)? "point" : "points"}</label>
                                         </div>
                                         <div class="row">
                                             <label>Fin de l'enchère
