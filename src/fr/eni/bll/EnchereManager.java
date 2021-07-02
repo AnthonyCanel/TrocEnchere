@@ -57,6 +57,7 @@ public class EnchereManager {
             //Vérification du montant enchère avec crédit dispo de l'utilisateur
             //Création de l'objet Utilisateur
             utilisateurDAO = DAOFactory.getUtilisateurDAO();
+            generiqueDao = DAOFactory.getEnchereDAO();
             Utilisateur util = utilisateurDAO.selectById(enchere.getNoUtilisateur());
             if(enchere.getMontantEnchere() < util.getCredit()) {
                 generiqueDao.update(enchere);
