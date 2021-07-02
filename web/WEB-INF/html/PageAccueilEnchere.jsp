@@ -87,7 +87,7 @@
                                 <div class="col-9">
                                     <div>
                                         <div class="row">
-                                            <a href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${unElement.idArticle}"
+                                            <a class="nav-link text-dark" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${unElement.idArticle}"
                                                name="nomArticle" value="${unElement.idArticle}">
                                             <h5 class="font-weight-bold">${unElement.nomArticle}</h5>
                                             </a>
@@ -129,7 +129,7 @@
                                 <div class="col-9">
                                     <div>
                                         <div class="row">
-                                            <a href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteEnCours.idArticle}"
+                                            <a class="nav-link text-dark" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteEnCours.idArticle}"
                                                name="nomArticle" value="${maVenteEnCours.idArticle}">
                                             <h5 class="font-weight-bold">${maVenteEnCours.nomArticle}</h5>
                                             </a>
@@ -170,7 +170,7 @@
                                 <div class="col-9">
                                     <div>
                                         <div class="row">
-                                            <a href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteNonDebutee.idArticle}"
+                                            <a class="nav-link text-dark" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteNonDebutee.idArticle}"
                                                name="nomArticle" value="${maVenteNonDebutee.idArticle}">
                                             <h5 class="font-weight-bold">${maVenteNonDebutee.nomArticle}</h5>
                                             </a>
@@ -211,7 +211,7 @@
                                 <div class="col-9">
                                     <div>
                                         <div class="row">
-                                            <a
+                                            <a class="nav-link text-dark"
                                                href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${maVenteTerminee.idArticle}"
                                                name="nomArticle" value="${maVenteTerminee.idArticle}">
                                             <h5 class="font-weight-bold">${maVenteTerminee.nomArticle}</h5>
@@ -251,7 +251,7 @@
                                 <div class="col-9">
                                     <div>
                                         <div class="row">
-                                            <a href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereOuverte.idArticle}"
+                                            <a class="nav-link text-dark" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereOuverte.idArticle}"
                                                     name="nomArticle" value="${enchereOuverte.idArticle}">
                                             <h5 class="font-weight-bold">${enchereOuverte.nomArticle}</h5>
                                             </a>
@@ -293,7 +293,7 @@
                                 <div class="col-9">
                                     <div>
                                         <div class="row">
-                                            <a  href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereEnCours.idArticle}"
+                                            <a class="nav-link text-dark"  href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereEnCours.idArticle}"
                                                 name="nomArticle" value="${enchereEnCours.idArticle}">
                                             <h5 class="font-weight-bold">${enchereEnCours.nomArticle}</h5>
                                             </a>
@@ -334,7 +334,7 @@
                                 <div class="col-9">
                                     <div>
                                         <div class="row">
-                                            <a href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereRemportee.idArticle}"
+                                            <a class="nav-link text-dark" href="${pageContext.request.contextPath}/PageEncherir?nomArticle=${enchereRemportee.idArticle}"
                                                     name="nomArticle" value="${enchereRemportee.idArticle}">
                                             <h5 class="font-weight-bold">${enchereRemportee.nomArticle}</h5>
                                             </a>

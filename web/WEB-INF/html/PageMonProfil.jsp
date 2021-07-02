@@ -97,7 +97,7 @@
                 <div class="row m-5 mt-3">
                     <div class="col d-flex justify-content-center mt-2 mb-2">
                         <a href="${pageContext.request.contextPath}/PageModifierProfil">
-                            <button type="button" class="btn btn-outline-dark">Modifier</button>
+                            <button type="button" class="btn btn-dark">Modifier</button>
                         </a>
                     </div>
                 </div>
