@@ -42,8 +42,15 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
     private static String SELECT_BY_NOM_ARTICLE_NO_CATEGORIE                ="SELECT articles.no_article, articles.nom_article,articles.prix_initial,articles.prix_vente,pseudo,ARTICLES.date_fin_encheres,montant_enchere,libelle, C.no_categorie FROM V_UTILISATEURS_ENCHERES_ARTICLES LEFT OUTER JOIN ARTICLES ON V_UTILISATEURS_ENCHERES_ARTICLES.no_utilisateur = ARTICLES.no_utilisateur LEFT JOIN CATEGORIES C on C.no_categorie = ARTICLES.no_categorie WHERE der_ench = 1 and pseudo<>'compte supprimé' ";
 
     //Données pour la page enchère
-    private static String SELECT_BY_ID_VIEW                                 = "SELECT V.no_utilisateur, V.pseudo, V.nom, V.prenom, V.email, V.telephone, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, V.credit, date_enchere, montant_enchere, etat_enchere, no_acquereur, no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, " +
-                                                                              "etat_article, rueRetrait, codePostalRetrait, villeRetrait, no_categorie, libelle, U.pseudo AS pseudoEnchere FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS AS V INNER JOIN UTILISATEURS AS U ON U.no_utilisateur = V.utilisateurEnchere WHERE no_article = ? ORDER BY montant_enchere DESC";
+    private static String SELECT_BY_ID_VIEW                                 = "SELECT U.no_utilisateur, U.pseudo, U.nom, U.prenom, U.email, U.telephone, U.rue AS rueUtilisateur, U.code_postal AS codePostalUtilisateur, U.ville AS villeUtilisateur, U.credit, E.date_enchere, E.montant_enchere, E.etat_enchere, E.no_acquereur, A.no_article, A.nom_article, A.description, A.date_debut_encheres, A.date_fin_encheres, A.prix_initial, A.prix_vente, " +
+                                                                              "A.etat_article,  R.rue AS rueRetrait, R.code_postal AS codePostalRetrait, R.ville AS villeRetrait, C.no_categorie, C.libelle, UEncheres.pseudo AS pseudoEnchere " +
+                                                                              "FROM UTILISATEURS  AS U " +
+                                                                              "INNER JOIN ARTICLES AS A ON U.no_utilisateur = A.no_utilisateur " +
+                                                                              "LEFT JOIN ENCHERES AS E ON A.no_article = E.no_article " +
+                                                                              "INNER JOIN CATEGORIES AS C ON A.no_categorie = C.no_categorie " +
+                                                                              "LEFT JOIN RETRAITS AS R ON R.no_article = A.no_article " +
+                                                                              "LEFT JOIN UTILISATEURS AS UEncheres ON E.no_utilisateur = UEncheres.no_utilisateur " +
+                                                                              "WHERE A.no_article = ? ORDER BY montant_enchere DESC";
     //Données pour la page Acquisition
     private static String SELECT_BY_ENCHERE_REMPORTEE                       ="SELECT nom_article, description, prix_vente, prix_initial, rueUtilisateur, codePostalUtilisateur, villeUtilisateur, rueRetrait, codePostalRetrait, villeRetrait, pseudo, telephone FROM V_UTIL_ENCHERES_ARTICLES_CATEGORIES_LEFT_RETRAITS where no_acquereur = ?";
 
