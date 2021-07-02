@@ -12,6 +12,7 @@ public class InfoArticle {
     int prixArticle;
     LocalDate finEnchere;
     String vendeur;
+    int idVendeur;
 
     public InfoArticle(){    }
 

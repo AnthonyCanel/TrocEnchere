@@ -61,7 +61,6 @@ public class PageModifierProfil extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             //Récupère la session
             HttpSession session = req.getSession();
-            if(!req.getParameter("button").equals("supprimer") ) {
                 util = (Utilisateur) session.getAttribute("utilisateur");
                 //Si utilisateur est connecté
                 if (session.getAttribute("utilisateur") != null) {
@@ -99,15 +98,6 @@ public class PageModifierProfil extends HttpServlet {
                     }
                 }
                 req.getRequestDispatcher("WEB-INF/html/PageMonProfil.jsp").forward(req, resp);
-            }else{
-                try {
-                    um.supprimer(util.getNoUtilisateur());
-                    //efface la session
-                    session.invalidate();
-                    req.getRequestDispatcher("WEB-INF/html/PageAccueilEnchere.jsp").forward(req, resp);
-                } catch (BusinessException e) {
-                    e.printStackTrace();
-                }
             }
     }
-}
+

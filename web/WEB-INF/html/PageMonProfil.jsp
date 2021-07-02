@@ -30,6 +30,7 @@
                     <label name="pseudo">${pseudo}</label>
                 </div>
             </div>
+<c:if test="${sessionScope.utilisateur.pseudo == pseudoVendeur}">
             <div class="row">
                 <div class="col-4 mt-2 mb-2">
                     <label>Nom :</label>
@@ -46,6 +47,7 @@
                     <label name="prenom">${prenom}</label>
                 </div>
             </div>
+</c:if>
             <div class="row">
                 <div class="col-4 mt-2 mb-2">
                     <label>Email : </label>
@@ -54,45 +56,52 @@
                     <label name="email">${email}</label>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-4 mt-2 mb-2">
-                    <label>Téléphone : </label>
+
+            <c:if test="${sessionScope.utilisateur.pseudo == pseudoVendeur}">
+                <div class="row">
+                    <div class="col-4 mt-2 mb-2">
+                        <label>Téléphone : </label>
+                    </div>
+                    <div class="col-8 mt-2 mb-2">
+                        <label name="telephone">${telephone}</label>
+                    </div>
                 </div>
-                <div class="col-8 mt-2 mb-2">
-                    <label name="telephone">${telephone}</label>
+                <div class="row">
+                    <div class="col-4 mt-2 mb-2">
+                        <label>Rue </label>
+                    </div>
+                    <div class="col-8 mt-2 mb-2">
+                        <label name="rue">${rue}</label>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-4 mt-2 mb-2">
-                    <label>Rue </label>
+                <div class="row">
+                    <div class="col-4 mt-2 mb-2">
+                        <label>Code postal </label>
+                    </div>
+                    <div class="col-8 mt-2 mb-2">
+                        <label name="CP">${CP}</label>
+                    </div>
                 </div>
-                <div class="col-8 mt-2 mb-2">
-                    <label name="rue">${rue}</label>
+            </c:if>
+                <div class="row">
+                    <div class="col-4 mt-2 mb-2">
+                        <label>Ville </label>
+                    </div>
+                    <div class="col-8 mt-2 mb-2">
+                        <label name="ville">${ville}</label>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-4 mt-2 mb-2">
-                    <label>Code postal </label>
+            <c:if test="${sessionScope.utilisateur.pseudo == pseudoVendeur}">
+
+
+                <div class="row m-5 mt-3">
+                    <div class="col d-flex justify-content-center mt-2 mb-2">
+                        <a href="${pageContext.request.contextPath}/PageModifierProfil">
+                            <button type="button" class="btn btn-outline-dark">Modifier</button>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-8 mt-2 mb-2">
-                    <label name="CP">${CP}</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4 mt-2 mb-2">
-                    <label>Ville </label>
-                </div>
-                <div class="col-8 mt-2 mb-2">
-                    <label name="ville">${ville}</label>
-                </div>
-            </div>
-            <div class="row m-5 mt-3">
-                <div class="col d-flex justify-content-center mt-2 mb-2">
-                    <a href="${pageContext.request.contextPath}/PageModifierProfil">
-                        <button type="button" class="btn btn-outline-dark">Modifier</button>
-                    </a>
-                </div>
-            </div>
+            </c:if>
         </div>
     </div>
 </div>

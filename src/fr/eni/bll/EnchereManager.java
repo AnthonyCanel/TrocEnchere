@@ -15,7 +15,10 @@ public class EnchereManager {
     private BusinessException businessException = new BusinessException();
     private DAO<Utilisateur> utilisateurDAO;
 
-
+    /**
+     * return List of enchere 's table
+     * @throws BusinessException
+     */
     public void EnchereManager() throws BusinessException {
 
         this.generiqueDao = DAOFactory.getEnchereDAO();

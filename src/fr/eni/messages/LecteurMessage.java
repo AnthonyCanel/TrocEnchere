@@ -1,5 +1,6 @@
 package fr.eni.messages;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
 /**
@@ -12,7 +13,7 @@ public class LecteurMessage {
     {
         try
         {
-            rb = ResourceBundle.getBundle("fr.eni.javaee.gestionlistescourses.messages.messages_erreur");
+            rb = ResourceBundle.getBundle("fr.eni.messages.messages_erreur", new UTF8Control());
         }
         catch (Exception e)
         {
@@ -47,6 +48,9 @@ public class LecteurMessage {
             message="Une erreur inconnue est survenue";
         }
         System.out.println("message="+message);
+
+
+
         return message;
     }
 }

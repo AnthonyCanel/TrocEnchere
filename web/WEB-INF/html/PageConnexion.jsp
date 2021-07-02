@@ -49,7 +49,7 @@
 
             <div class="row">
                 <div class="col-5 mb-3">
-                    <button  name="Connexion" class="btn btn-outline-dark mb-3 mb-5">
+                    <button  name="Connexion" class="btn btn-dark mb-3 mb-5">
                         Connexion
                     </button>
                 </div>
@@ -72,7 +72,7 @@
         <form action="PageCreerCompte" method="get">
             <div class="row mb-2">
                 <div class="d-flex justify-content-center">
-                    <button type="submit" name="CreerUnCompte" class="btn btn-outline-dark btn-lg "
+                    <button type="submit" name="CreerUnCompte" class="btn btn-dark btn-lg "
                             style="width: 400px">Créer un compte
                     </button>
                 </div>

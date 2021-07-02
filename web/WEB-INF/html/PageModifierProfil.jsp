@@ -10,24 +10,20 @@
 </head>
 <body>
 <header>
-    <div class="row">
-        <div class="col">
-            <h1 class="m-5 mt-3">ENI-Enchères</h1>
-        </div>
-        <c:choose>
-            <c:when test="${sessionScope.utilisateur != null}">
-                <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
-            </c:when>
-            <c:otherwise>
-                <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
-            </c:otherwise>
-        </c:choose>
-    </div>
+    <c:choose>
+        <c:when test="${sessionScope.utilisateur != null}">
+            <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
+        </c:otherwise>
+    </c:choose>
 </header>
 <div class="container shadow p-4">
     <h1 class="row d-flex justify-content-center mb-5 p-2">Mon Profil</h1>
-    <form action="PageMonProfil" method="post">
         <div class="p-3">
+            <form action="PageMonProfil" method="post">
+
             <div class="row mb-3">
                 <div class="col">
                     <div class="row">
@@ -48,8 +44,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="nom" id="nom" value="${nom}" required
-                                       pattern="[A-Za-z]{1,30}">
+                                <input class="w-100" type="text" name="nom" id="nom" value="${nom}" required pattern="[A-Za-z]{1,30}">
                             </div>
                         </div>
                     </div>
@@ -64,8 +59,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="prenom" id="prenom" value="${prenom}" required
-                                       pattern="[A-Za-z]{1,30}">
+                                <input class="w-100" type="text" name="prenom" id="prenom" value="${prenom}" required pattern="[A-Za-z]{1,30}">
                             </div>
                         </div>
                     </div>
@@ -95,8 +89,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="telephone" id="telephone" value="${telephone}"
-                                       pattern="^[0-9-.// |]{1,15}">
+                                <input class="w-100" type="text" name="telephone" id="telephone" value="${telephone}" pattern="^[0-9-.// |]{1,15}">
                             </div>
                         </div>
                     </div>
@@ -123,8 +116,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="CP" id="codePostal" value="${CP}" required
-                                       pattern="[0-9]{5}">
+                                <input class="w-100" type="text" name="CP" id="codePostal" value="${CP}" required pattern="[0-9]{5}">
                             </div>
                         </div>
                     </div>
@@ -136,8 +128,7 @@
                         </div>
                         <div class="col-8">
                             <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="text" name="ville" id="ville" value="${ville}" required
-                                       pattern="[0-9A-Za-zÀ-ÖØ-öø-ÿ-' ]{1,30}">
+                                <input class="w-100" type="text" name="ville" id="ville" value="${ville}" required pattern="^[A-Za-z'- ]{1,30}">
                             </div>
                         </div>
                     </div>
@@ -169,61 +160,57 @@
                 </div>
             </div>
 
-            <div class="row mb-3">
-                <div class="col">
-                    <div class="row">
-                        <div class="col-4">
-                            <label>Nouveau mot de passe : </label>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Nouveau mot de passe : </label>
+                            </div>
+                            <div class="col-8">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input class="w-100" type="password" name="nmdp" id="nouveauMotPasse">
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-8">
-                            <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="password" name="nmdp" id="nouveauMotPasse">
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Confirmation : </label>
+                            </div>
+                            <div class="col-8">
+                                <div class="input-group input-group-sm mb-3">
+                                    <input class="w-100" type="password" name="cmdp" id="confirmationMotPasse">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="row">
-                        <div class="col-4">
-                            <label>Confirmation : </label>
-                        </div>
-                        <div class="col-8">
-                            <div class="input-group input-group-sm mb-3">
-                                <input class="w-100" type="password" name="cmdp" id="confirmationMotPasse">
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-2">
+                                <label>Crédit : </label>
+                            </div>
+                            <div class="col-1">
+                                <div class="input-group input-group-sm mb-3">
+                                    <label id="credit" name="credit">${credit}</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="row mb-3">
-                <div class="col">
-                    <div class="row">
-                        <div class="col-2">
-                            <label>Crédit : </label>
-                        </div>
-                        <div class="col-1">
-                            <div class="input-group input-group-sm mb-3">
-                                <label id="credit" name="credit">${credit}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="row mb-3">
+        <div class="col d-flex justify-content-center">
+                <button type="submit" name="button" class="btn btn-dark" value="valider">Enregistrer</button>
+        </div>
+        <div class="col">
+            <div class="col d-flex justify-content-center">
+                <button type="submit" name="button" class="btn btn-dark" value="supprimer">Supprimer mon compte</button>
             </div>
         </div>
-        <div class="row mb-3">
-            <div class="col  d-flex justify-content-center">
-                <input type="hidden" name="action" value="valider"/>
-                <button type="submit" name="button" class="btn btn-outline-dark" value="valider">Enregistrer</button>
-            </div>
-        </div>
-    </form>
-
-        <form method="get" action="${pageContext.request.contextPath}/SupprimerCompte">
-            <div class="col  d-flex justify-content-center">
-                <input type="hidden" name="action" value="supprimer"/>
-                    <button type="submit" name="button" class="btn btn-outline-dark" value="supprimer">Supprimer mon compte</button>
-            </div>
         </form>
     </div>
 </div>

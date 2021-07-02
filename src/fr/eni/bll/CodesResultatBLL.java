@@ -62,12 +62,11 @@ public class CodesResultatBLL {
      * Echec suite à import des données à la bll
      */
     public static final int IMPORT_BLL_ENCHERE = 20050;
-
     public static final int IMPORT_BLL_ENCHERES_GAGNEES=20051;
-
     public static final int UTILISATEUR_CONNECTION_IMPOSSIBLE = 20052;
-
     public static final int UPDATE_BLL_ENCHERES = 20053;
+
+    public static final int PSEUDO_UTILISATEUR_ECHEC = 20054;
     /**
      * Echec de la sélection par Id de catégorie
      */

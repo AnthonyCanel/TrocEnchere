@@ -6,24 +6,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
-<body class="container-fluid">
+<body>
 <header>
-        <c:choose>
-            <c:when test="${sessionScope.utilisateur != null}">
-                <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
-            </c:when>
-            <c:otherwise>
-                <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
-            </c:otherwise>
-        </c:choose>
-    </div>
+    <c:choose>
+        <c:when test="${sessionScope.utilisateur != null}">
+            <jsp:include page="inclusion/NavBarCo.jsp"></jsp:include>
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="inclusion/NavBarDeco.jsp"></jsp:include>
+        </c:otherwise>
+    </c:choose>
 </header>
 <div class=" row m-2 p-3 ">
     <div class="col-4">
         <div class="w-100 bg-secondary shadow"><img src="" alt=""></div>
     </div>
     <div class="col-8 shadow p-3">
-        <h3 class="row m-2">Enchère</h3>
+        <div class="row m-2">
+            <h3 class="font-weight-bold">Enchère</h3>
+        </div>
+
         <div class="row m-2">
             <div class="col-3">
                 <h5>${nom_art}</h5>
@@ -98,6 +100,7 @@
                 <p>${vendeur}</p>
             </div>
         </div>
+
         <div class=" row m-2">
             <div class="col-4">
                 <label for="maProposition">Ma proposition</label>

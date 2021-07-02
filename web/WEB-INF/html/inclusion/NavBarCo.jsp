@@ -1,4 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"  pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="fr.eni.messages.LecteurMessage" %>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/PageAccueilEnchere">ENI Enchère</a>
@@ -24,11 +26,15 @@
         </div>
     </div>
 </nav>
-<div class="row text-center text-danger my-3">
-    <h5>${messageErreur}</h5>
+<div class="row my-3">
+    <c:if test="${!empty listeCodesErreur}">
+        <ul>
+            <c:forEach var="code" items="${listeCodesErreur}">
+                <li><h5 class=" text-center text-danger">${LecteurMessage.getMessageErreur(code)}</h5></li>
+            </c:forEach>
+        </ul>
+    </c:if>
 </div>
-
-
 
 
 

@@ -15,4 +15,14 @@ public class CodesResultatServlet {
     public static final int IMPORT_UTILISATEUR=30052;
 
     public static final int ENCHERE_MONTANT_ECHEC=30053;
+    /**
+     * Les passes sont pas identiques
+     */
+    public static final int MDP_DIFFERENT=30100;
+    /**
+     * Echec lors de la lecture des données utilisateur
+     */
+    public static final int LECTURE_UTILISATEUR_ECHEC=30054;
+
+    public static final int ERREUR_REGLE_DE_GESTION = 30055;
 }
