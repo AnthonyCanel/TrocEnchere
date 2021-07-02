@@ -2,6 +2,7 @@ package fr.eni.bll;
 
 import fr.eni.BusinessException;
 import fr.eni.bo.Utilisateur;
+import fr.eni.dal.CodesResultatDAL;
 import fr.eni.dal.DAO;
 import fr.eni.dal.DAOFactory;
 
@@ -36,6 +37,28 @@ public class UtilisateurManager {
      */
     public Utilisateur choisirUtilisateur(int id) throws BusinessException {
         return utilisateurDao.selectById(id);
+    }
+
+    /**
+     * retourne l'id du pseudo en parametre.
+     * @param pseudo
+     * @return
+     * @throws BusinessException
+     */
+    public Utilisateur choisirUtilisateurPseudo(String pseudo) throws BusinessException {
+
+        utilisateurDao = DAOFactory.getUtilisateurDAO();
+
+        Utilisateur Vendeur = null;
+        try {
+            Vendeur = utilisateurDao.selectByPseudo(pseudo);
+        } catch (BusinessException e) {
+            e.printStackTrace();
+            businessException.ajouterErreur(CodesResultatDAL.PSEUDO_UTILISATEUR_ECHEC);
+            throw businessException;
+        }
+
+        return Vendeur;
     }
 
     /**

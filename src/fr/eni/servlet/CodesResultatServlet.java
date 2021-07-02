@@ -19,4 +19,10 @@ public class CodesResultatServlet {
      * Les passes sont pas identiques
      */
     public static final int MDP_DIFFERENT=30100;
+    /**
+     * Echec lors de la lecture des données utilisateur
+     */
+    public static final int LECTURE_UTILISATEUR_ECHEC=30054;
+
+    public static final int ERREUR_REGLE_DE_GESTION = 30055;
 }
