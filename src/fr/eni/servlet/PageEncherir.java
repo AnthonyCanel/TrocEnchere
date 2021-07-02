@@ -77,11 +77,13 @@ public class PageEncherir  extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
         //Gestion du bouton Enchérir
         Enchere enchere = new Enchere();
         Timestamp ts = Timestamp.from(Instant.now());
         enchere.setDateEnchere(ts);
         enchere.setNoUtilisateur(util.getNoUtilisateur());
+        enchere.setNoArticle(Integer.parseInt((String) session.getAttribute("idArticle")));
         enchere.setMontantEnchere(Integer.parseInt(req.getParameter("maProposition")));
         //Vérification du crédit utilisateur par rapport à la proposition
         if (Integer.parseInt(req.getParameter("maProposition")) < util.getCredit()) {

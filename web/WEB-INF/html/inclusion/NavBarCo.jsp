@@ -16,7 +16,7 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/PageVendreUnArticle">Vendre un article</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/PageMonProfil">Mon profil</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/PageMonProfil?pseudoVendeur=${utilisateur.pseudo}">Mon profil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/PageDeconnexion">Déconnexion</a>
