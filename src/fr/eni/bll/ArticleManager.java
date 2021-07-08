@@ -76,8 +76,6 @@ public class ArticleManager {
     public List<InfoArticle> rechercheParFiltreEtNoCategorie(int idUtilisateur, String filtre, int idCategorie) throws BusinessException {
         List<InfoArticle> listInfoArticle = null;
 
-        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
-
         listInfoArticle =   articleDAO.rechercheParFiltreEtNoCategorie(idUtilisateur,filtre, idCategorie);
         return listInfoArticle;
     }
@@ -91,15 +89,12 @@ public class ArticleManager {
     public List<InfoArticle> MesVentesEnCours(int idUtilisateur, String filtre, int idCategorie) throws BusinessException {
         List<InfoArticle> listInfoArticle = null;
 
-       DAO<Article> articleDAO = DAOFactory.getArticleDAO();
-
         listInfoArticle =   articleDAO.selectByIdAndDatesEnchere(idUtilisateur,filtre, idCategorie);
         return listInfoArticle;
     }
 
     public List<InfoArticle> encheresOuvertes(int idUtilisateur, String filtre, int noCategorie) throws BusinessException {
         List<InfoArticle> listInfoArticles = null;
-        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
 
         listInfoArticles = articleDAO.selectByDateSupDebEnchereAndInfFinEnchere(idUtilisateur, filtre, noCategorie );
 
@@ -109,7 +104,6 @@ public class ArticleManager {
 
     public List<InfoArticle> MesVentesNonDebutees(int idUtilisateur, String filtreSaisi, int noCatSelect) throws BusinessException {
         List<InfoArticle> listInfoArticles = null;
-        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
 
         listInfoArticles = articleDAO.selectByIdDateInfDebEnchere(idUtilisateur, filtreSaisi, noCatSelect);
         return listInfoArticles;
@@ -118,7 +112,6 @@ public class ArticleManager {
 
     public List<InfoArticle> mesEncheresEnCours(int idUtilisateur, String filtreSaisi, int noCatSelect) throws BusinessException {
         List<InfoArticle> listInfoArticles = null;
-        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
 
         listInfoArticles = articleDAO.selectByIdDateDerEnchere(idUtilisateur, filtreSaisi, noCatSelect);
         return listInfoArticles;
@@ -128,7 +121,6 @@ public class ArticleManager {
 
     public List<InfoArticle> MesVentesTerminees(int idUtilisateur, String filtreSaisi, int noCatSelect) throws BusinessException {
         List<InfoArticle> listInfoArticles = null;
-        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
 
         listInfoArticles = articleDAO.selectByIdAndDateSupFinEnchere(idUtilisateur, filtreSaisi, noCatSelect);
         return listInfoArticles;
@@ -151,7 +143,6 @@ public class ArticleManager {
     public List<InfoArticle> mesEncheresRemportees(int idUtilisateur, String filtreSaisi, int noCatSelect) throws BusinessException {
 
         List<InfoArticle> listInfoArticles = null;
-        DAO<Article> articleDAO = DAOFactory.getArticleDAO();
 
         listInfoArticles = articleDAO.selectByIdAndEtatEnchere(idUtilisateur, filtreSaisi, noCatSelect);
         return listInfoArticles;

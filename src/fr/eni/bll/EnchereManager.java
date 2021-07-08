@@ -22,6 +22,7 @@ public class EnchereManager {
     public void EnchereManager() throws BusinessException {
 
         this.generiqueDao = DAOFactory.getEnchereDAO();
+        utilisateurDAO = DAOFactory.getUtilisateurDAO();
     }
 
     public List<Enchere> importEncheres() throws BusinessException {
@@ -56,11 +57,14 @@ public class EnchereManager {
         try {
             //Vérification du montant enchère avec crédit dispo de l'utilisateur
             //Création de l'objet Utilisateur
-            utilisateurDAO = DAOFactory.getUtilisateurDAO();
-            generiqueDao = DAOFactory.getEnchereDAO();
             Utilisateur util = utilisateurDAO.selectById(enchere.getNoUtilisateur());
             if(enchere.getMontantEnchere() < util.getCredit()) {
-                generiqueDao.update(enchere);
+                if(!enchere.isDer_ench()) {
+                    generiqueDao.update(enchere);
+                }
+                else{
+                    businessException.ajouterErreur(CodesResultatBLL.ENCHERES_DEJA_REALISEES);
+                }
             }else{
                 businessException.ajouterErreur(CodesResultatBLL.UPDATE_BLL_ENCHERES);
             }

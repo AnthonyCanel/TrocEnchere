@@ -16,6 +16,8 @@ public class Article {
     private int prixVente;
     private String etat_Article;
     private String photo;
+    private String dateDebutFormat;
+    private String dateFinFormat;
     private Utilisateur utilisateur;
     private Categorie categorie;
     private Retrait retrait;

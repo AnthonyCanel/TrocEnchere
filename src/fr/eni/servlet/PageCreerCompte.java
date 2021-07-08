@@ -23,7 +23,7 @@ public class PageCreerCompte extends HttpServlet {
 
        String s = LecteurMessage.getMessageErreur(30000);
        System.out.println(s);
-req.setAttribute("error", s);
+        req.setAttribute("error", s);
         req.getRequestDispatcher("WEB-INF/html/PageCreerCompte.jsp").forward(req, resp);
     }
 
@@ -51,11 +51,13 @@ req.setAttribute("error", s);
 
             if (req.getParameter("mdp").equals(req.getParameter("mdpC")) && req.getParameter("mdp")!="" && req.getParameter("mdp")!=null) {
                 UtilisateurManager uM = new UtilisateurManager();
-                util.setMotDePasse(req.getParameter("mdp"));
-                HttpSession session = req.getSession();
-                session.setAttribute("utilisateur", util);
+
                 try {
                     uM.ajouterUtilisateur(util);
+                    util.setMotDePasse(req.getParameter("mdp"));
+                    HttpSession session = req.getSession();
+                    session.setAttribute("utilisateur", util);
+                    creationCompteValide = true;
                 } catch (BusinessException e) {
                     e.printStackTrace();
                     businessException.ajouterErreur(CodesResultatServlet.RECORD_UTILISATEUR);
@@ -65,7 +67,6 @@ req.setAttribute("error", s);
                         req.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
                     }
                 }
-                creationCompteValide = true;
 
             } else {
                 businessException.ajouterErreur(CodesResultatServlet.MDP_DIFFERENT);

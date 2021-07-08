@@ -22,7 +22,6 @@ public class PageAcquisition extends HttpServlet {
         HttpSession session = req.getSession();
         util = (Utilisateur) session.getAttribute("utilisateur");
         //Récupère l'enchère remportée
-        //TODO passage de paramètre
         int id = util.getNoUtilisateur();
         //Si utilisateur est connecté
         if(session.getAttribute("utilisateur") != null ) {

@@ -7,15 +7,10 @@ import fr.eni.bo.Retrait;
 import fr.eni.bo.Enchere;
 import fr.eni.bo.InfoArticle;
 import fr.eni.bo.Utilisateur;
-import sun.invoke.empty.Empty;
-
-import javax.sound.sampled.Line;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class ArticleDAOJdbcImpl implements DAO<Article> {
@@ -624,8 +619,13 @@ public class ArticleDAOJdbcImpl implements DAO<Article> {
                 articleEnCours.setNoArticle(rs.getInt("no_article"));
                 articleEnCours.setNomArticle(rs.getString("nom_article"));
                 articleEnCours.setDescription(rs.getString("description"));
-                articleEnCours.setDateDebutEncheres(rs.getDate("date_debut_encheres").toLocalDate());
-                articleEnCours.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
+                LocalDate dateDebut = rs.getDate("date_debut_encheres").toLocalDate();
+                LocalDate dateFin = rs.getDate("date_fin_encheres").toLocalDate();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                String dateDebutFormat = dateDebut.format(formatter);
+                String dateFinFormat = dateFin.format(formatter);
+                articleEnCours.setDateDebutFormat(dateDebutFormat);
+                articleEnCours.setDateFinFormat(dateFinFormat);
                 articleEnCours.setPrixInitial(rs.getInt("prix_initial"));
                 articleEnCours.setPrixVente(rs.getInt("prix_vente"));
                 articleEnCours.setEtat_Article(rs.getString("etat_article"));

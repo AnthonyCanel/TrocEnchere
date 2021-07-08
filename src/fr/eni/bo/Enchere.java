@@ -13,6 +13,7 @@ public class Enchere {
     private int montantEnchere;
 
     private String etatEnchere;
+    private boolean der_ench;
     private int noAcquereur;
 
     private String nomAcquereur;

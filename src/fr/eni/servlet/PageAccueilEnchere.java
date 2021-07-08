@@ -87,12 +87,11 @@ public class PageAccueilEnchere extends HttpServlet {
 
             try {
                 rechercheParDefaut = aM.rechercheParFiltreEtNoCategorie(idUtilisateur, filtreSaisi, noCatSelect);
+                req.setAttribute("rechercheParDefaut", rechercheParDefaut);
             } catch (BusinessException e) {
                 e.printStackTrace();
                 businessException.ajouterErreur(CodesResultatServlet.IMPORT_UTILISATEUR);
             }
-            req.setAttribute("rechercheParDefaut", rechercheParDefaut);
-
         } else {
 
             if ((session.getAttribute("utilisateur")) != null) {
@@ -110,30 +109,30 @@ public class PageAccueilEnchere extends HttpServlet {
                         try {
 
                             encheresOuvertes = aM.encheresOuvertes(idUtilisateur, filtreSaisi, noCatSelect);
+                            req.setAttribute("encheresOuvertes", encheresOuvertes);
                         } catch (BusinessException e) {
                             e.printStackTrace();
                             businessException.ajouterErreur(CodesResultatServlet.IMPORT_UTILISATEUR);
                         }
-                        req.setAttribute("encheresOuvertes", encheresOuvertes);
                     }
 
                     if (req.getParameter("btnEnchereEnCour") != null && req.getParameter("btnEnchereEnCour").equals("on")) {
                         try {
                             mesEncheresEnCours = aM.mesEncheresEnCours(idUtilisateur, filtreSaisi, noCatSelect);
+                            req.setAttribute("mesEncheresEnCours", mesEncheresEnCours);
                         } catch (BusinessException e) {
                             e.printStackTrace();
                             businessException.ajouterErreur(CodesResultatServlet.IMPORT_UTILISATEUR);
                         }
-                        req.setAttribute("mesEncheresEnCours", mesEncheresEnCours);
                     }
                     if (req.getParameter("btnEnchereRemporte") != null && req.getParameter("btnEnchereRemporte").equals("on")) {
                         try {
                             mesEncheresRemportees = aM.mesEncheresRemportees(idUtilisateur, filtreSaisi, noCatSelect);
+                            req.setAttribute("mesEncheresRemportees", mesEncheresRemportees);
                         } catch (BusinessException e) {
                             e.printStackTrace();
                             businessException.ajouterErreur(CodesResultatServlet.IMPORT_UTILISATEUR);
                         }
-                        req.setAttribute("mesEncheresRemportees", mesEncheresRemportees);
                     }
                 }
 
@@ -142,40 +141,37 @@ public class PageAccueilEnchere extends HttpServlet {
                     if (req.getParameter("btnVenteEnCour") != null && req.getParameter("btnVenteEnCour").equals("on")) {
                         try {
                             mesVentesEnCours = aM.MesVentesEnCours(idUtilisateur, filtreSaisi, noCatSelect);
+                            req.setAttribute("mesVentesEnCours", mesVentesEnCours);
                         } catch (BusinessException e) {
                             e.printStackTrace();
                             businessException.ajouterErreur(CodesResultatServlet.IMPORT_UTILISATEUR);
 
                         }
-                        req.setAttribute("mesVentesEnCours", mesVentesEnCours);
                     }
 
                     if (req.getParameter("btnVenteNonDebute") != null && req.getParameter("btnVenteNonDebute").equals("on")) {
                         try {
                             mesVentesNonDebutees = aM.MesVentesNonDebutees(idUtilisateur, filtreSaisi, noCatSelect);
+                            req.setAttribute("mesVentesNonDebutees", mesVentesNonDebutees);
                         } catch (BusinessException e) {
                             e.printStackTrace();
                             businessException.ajouterErreur(CodesResultatServlet.IMPORT_UTILISATEUR);
                         }
-                        req.setAttribute("mesVentesNonDebutees", mesVentesNonDebutees);
                     }
 
                     if (req.getParameter("btnVenteTerminee") != null && req.getParameter("btnVenteTerminee").equals("on")) {
                         try {
                             mesVentesTerminees = aM.MesVentesTerminees(idUtilisateur, filtreSaisi, noCatSelect);
+                            req.setAttribute("mesVentesTerminees", mesVentesTerminees);
                         } catch (BusinessException e) {
                             e.printStackTrace();
                             businessException.ajouterErreur(CodesResultatServlet.IMPORT_UTILISATEUR);
                         }
-                        req.setAttribute("mesVentesTerminees", mesVentesTerminees);
+
                     }
-
                 }
-
             }
         }
-
-
         doGet(req, resp);
     }
 

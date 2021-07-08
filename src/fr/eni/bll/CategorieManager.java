@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategorieManager {
-    private final DAO<Categorie> categorieDAO;
-    private final BusinessException businessException = new BusinessException();
+    private DAO<Categorie> categorieDAO;
+    private BusinessException businessException = new BusinessException();
 
     public CategorieManager() {
         categorieDAO = DAOFactory.getCategorieDAO();
