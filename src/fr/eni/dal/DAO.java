@@ -2,6 +2,7 @@ package fr.eni.dal;
 
 import fr.eni.BusinessException;
 import fr.eni.bo.Article;
+import fr.eni.bo.Enchere;
 import fr.eni.bo.InfoArticle;
 import fr.eni.bo.Utilisateur;
 
@@ -34,11 +35,12 @@ public interface DAO<T>{
 
     /**
      * Selection d'un article avec les informations pour PageEncherir
-     * @param id
+     * @param idArticle
+     * @param idEncherisseur
      * @return
      * @throws BusinessException
      */
-    default List<Article> selectByEnchere(int id) throws BusinessException{
+    default List<Article> selectByEnchere(int idArticle, int idEncherisseur) throws BusinessException {
         return null;
     }
 
@@ -59,4 +61,6 @@ public interface DAO<T>{
     default List<InfoArticle> rechercheParFiltreEtNoCategorie(int idUtilisateur, String filtre, int noCategorie)throws BusinessException{return null;}
 
     default Utilisateur selectByPseudo(String pseudo) throws BusinessException {return null;}
+
+    default List<Enchere> selectByAcqEtArtVendu(int acquereur) throws BusinessException {return null;}
 }

@@ -88,5 +88,17 @@ public class CodesResultatBLL {
      * Echec de la sélection par Id de catégorie
      */
     public static final int REGLE_ARTICLE_NOM_SAISIE_ERREUR = 20104;
+    /**
+     * Echec de la date de début enchère
+     */
+    public static final int REGLE_ARTICLE_DATE_DEBUT_ENCHERE = 20105;
+    /**
+     * Echec de la date de fin enchère
+     */
+    public static final int REGLE_ARTICLE_DATE_FIN_ENCHERE = 20106;
+    /**
+     * Echec de la date de début par rapport à la date de fin d'enchère
+     */
+    public static final int REGLE_ARTICLE_DATE_DEBUT_DATE_FIN_ENCHERE = 20107;
 
 }

@@ -13,6 +13,8 @@ public class InfoArticle {
     LocalDate finEnchere;
     String vendeur;
     int idVendeur;
+    private String dateDebutFormat;
+    private String dateFinFormat;
 
     public InfoArticle(){    }
 

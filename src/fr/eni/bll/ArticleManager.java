@@ -20,8 +20,15 @@ public class ArticleManager {
         articleDAO = DAOFactory.getArticleDAO();
     }
 
+    /**
+     * ajouter un article dans la base
+     * @param article
+     * @return
+     * @throws BusinessException
+     */
     public Article ajouterArticle(Article article) throws BusinessException {
         validerCaracteristique(article, businessException);
+        VerifDates(article.getDateDebutEncheres(), article.getDateFinEncheres());
         if(!businessException.hasErreurs()){
             articleDAO.insert(article);
         }
@@ -46,9 +53,10 @@ public class ArticleManager {
         }
     }
 
-
-
-
+    /**
+     * Ramène tous les articles en base
+     * @return
+     */
     public List<Article> affichageArticles(String categorie, String motCle) {
         List<Article> listeArticle = new ArrayList<>();
         try {
@@ -60,8 +68,22 @@ public class ArticleManager {
     }
 
 
-    public boolean VerifDates(LocalDate dateDebutArticle, LocalDate dateFinArticle) {
-        return true;
+    /**
+     * Vérification des dates de début et de fin d'enchère
+     * @param dateDebutArticle
+     * @param dateFinArticle
+     * @return
+     */
+    public void VerifDates(LocalDate dateDebutArticle, LocalDate dateFinArticle) {
+        if(dateDebutArticle.toString().isEmpty()){
+            businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DATE_DEBUT_ENCHERE);
+        }
+        if(dateFinArticle.toString().isEmpty()){
+            businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DATE_FIN_ENCHERE);
+        }
+        if(dateFinArticle.isBefore(dateDebutArticle)){
+            businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DATE_DEBUT_DATE_FIN_ENCHERE);
+        }
     }
 
 
@@ -130,10 +152,10 @@ public class ArticleManager {
     /**
      * Choisir un Article selon les enchères pour PageEncherir
      */
-    public List<Article> ChoisirArticlesEncherir(int idArticle){
+    public List<Article> ChoisirArticlesEncherir(int idArticle, int idEncherisseur){
         List<Article> listeArticles = null;
         try {
-            listeArticles = articleDAO.selectByEnchere(idArticle);
+            listeArticles = articleDAO.selectByEnchere(idArticle, idEncherisseur);
         } catch (BusinessException e) {
             e.printStackTrace();
         }

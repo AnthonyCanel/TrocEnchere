@@ -23,6 +23,12 @@ public class Article {
     private Retrait retrait;
     private int vues;
     private Enchere enchere;
+    private String pseudoVendeur;
+
+
+    public Article() {
+
+    }
 
     public Article(int noArticle,String nomArticle, int articlePrixInitial, LocalDate articleDateDebutEncheres,int encherePrix,String nomUtilisateur,int noUtilisateur,int noCategorie,String categorieLabelle){
         this.noArticle=noArticle;
@@ -36,9 +42,7 @@ public class Article {
         this.categorie.setLibelle(categorieLabelle);
     }
 
-    public Article() {
 
-    }
 
     public Article(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int prixInitial, int prixVente, String etat_Article, String photo, int vues) {
         this.nomArticle = nomArticle;
